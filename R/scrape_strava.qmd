@@ -9,6 +9,7 @@ editor_options:
 #..........................load packages.........................
 library(rStrava) # devtools::install_github('fawda123/rStrava')
 library(tidyverse)
+library(lubridate)
 library(leaflet)
 library(googleway)
 library(htmlwidgets)
@@ -26,7 +27,7 @@ my_token <- httr::config(token = strava_oauth(app_name, app_client_id, app_secre
                                               app_scope = "activity:read_all"))
 ```
 
-## Get data & prep
+## Scrape data & wrangle
 
 ```{r}
 #....................scrape strava activities....................
@@ -39,10 +40,14 @@ length(my_actvities) # 231 activities as of 11/8/2022
 my_acts <- rStrava::compile_activities(my_actvities) |> 
   
   # convert units
-  mutate(total_miles = round(distance * 0.62137, digits = 2),
-         elevation_gain_ft = round(total_elevation_gain * 3.28084, digits = 2),
-         elev_high_ft = round(elev_high * 3.28084, digits = 2), 
-         elev_low_ft = round(elev_low * 3.28084, digits = 2)) |> 
+  mutate(total_miles = round(distance * 0.62137, digits = 2), # convert km to miles
+         elevation_gain_ft = round(total_elevation_gain * 3.28084, digits = 2), # convert meters to ft
+         elev_high_ft = round(elev_high * 3.28084, digits = 2), # convert meters to ft
+         elev_low_ft = round(elev_low * 3.28084, digits = 2), # convert meters to ft
+         avg_speed_mi_hr = round(average_speed/1.609, digits = 2), # convert km/hr to mi/hr 
+         max_speed_mi_hr = round(max_speed/1.609, digits = 2), # convert km/hr to mi/hr 
+         moving_time_hrs_mins = seconds_to_period(moving_time), # convert sec to hr/min/sec
+         elapsed_time_hrs_mins = seconds_to_period(elapsed_time)) |> # convert sec to hr/min/sec
   
   # remove columns that were mutated above  
   dplyr::select(-c(distance, total_elevation_gain)) |> 
@@ -52,7 +57,7 @@ my_acts <- rStrava::compile_activities(my_actvities) |>
     # activity & athlete info
     name, visibility, sport_type, start_date_local, timezone, athlete_count, achievement_count, pr_count,
     # activity stats
-    total_miles, elevation_gain_ft, average_speed, max_speed, moving_time_sec = moving_time, elapsed_time_sec = elapsed_time, elev_high_ft, elev_low_ft,
+    total_miles, elevation_gain_ft, avg_speed_mi_hr, max_speed_mi_hr, moving_time_hrs_mins, moving_time_sec = moving_time, elapsed_time_hrs_mins, elapsed_time_sec = elapsed_time, elev_high_ft, elev_low_ft,
     # map info
     map.id, map.resource_state, map.summary_polyline, lat = start_latlng1, lng = start_latlng2, end_latlng1, end_latlng2,
     # other vars
@@ -71,7 +76,7 @@ my_acts <- rStrava::compile_activities(my_actvities) |>
 # write_csv(my_acts, here::here("data/strava_acts_2022-11-08.csv"))
 ```
 
-The above processed data does not contain the following variables (they were removed because they felt unncessary to keep, at least for now, and/or it was unclear what they represented):
+The above processed data does not contain the following variables (they were removed because they felt unnecessary to keep, at least for now, and/or it was unclear what they represented):
 
 -   `commute`
 -   `display_hide_heartrate_option`
