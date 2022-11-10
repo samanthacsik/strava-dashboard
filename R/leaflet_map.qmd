@@ -1,0 +1,150 @@
+---
+title: "leaflet_map"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+**LAST UPDATED: 08 November 2022**
+
+## Load packages
+```{r}
+#..........................load packages.........................
+library(rStrava) # devtools::install_github('fawda123/rStrava')
+library(tidyverse)
+library(leaflet)
+library(googleway)
+library(htmlwidgets)
+library(htmltools)
+```
+
+
+## Import data & prep (data scraped/wrangled in `R/scrape_strava.Rmd`)
+```{r}
+
+#............load data (wrangled in scrape_strava.Rmd)...........
+acts <- readRDS("data/strava_acts_2022-11-08.rds")
+
+#...................create subsets by activity...................
+hike_data <- acts %>% filter(sport_type == "Hike")
+ride_data <- acts %>% filter(sport_type == "Ride")
+walk_data <- acts %>% filter(sport_type == "Walk")
+
+```
+
+## Create base map & add icons and heatmap legend
+```{r}
+#........................make custom icons.......................
+# activity_icons <- iconList(
+#   "Hike" = makeIcon(iconUrl = "media/hiker.png", iconWidth = 20, iconHeight = 20),
+#   "Ride" = makeIcon(iconUrl = "media/bike.png", iconWidth = 20, iconHeight = 20),
+#   "Walk" = makeIcon(iconUrl = "media/walk.png", iconWidth = 20, iconHeight = 20)
+# )
+
+hiker_icon_custom <- makeIcon(
+  iconUrl = "media/hiker.png",
+  iconWidth = 20, iconHeight = 20
+)
+
+bike_icon_custom <- makeIcon(
+  iconUrl = "media/bike.png",
+  iconWidth = 22, iconHeight = 25
+)
+
+walk_icon_custom <- makeIcon(
+  iconUrl = "media/walker.png",
+  iconWidth = 13, iconHeight = 18
+)
+
+#........................create base map.........................
+map <- leaflet() %>% 
+  
+  # add tiles
+  addProviderTiles("Esri.WorldTerrain", 
+                   options = providerTileOptions(maxNativeZoom = 19, maxZoom = 100)) %>%
+  
+  addMiniMap(toggleDisplay = TRUE) %>% 
+  
+  # set view over Santa Barbara 
+  setView(lng = -119.753042, lat = 34.484782, zoom = 10) %>% 
+  
+  # add clickable hiker markers with info about each hike
+  addMarkers(data = hike_data, icon = hiker_icon_custom, 
+             #clusterOptions = markerClusterOptions(), clusterId = "hikeCluster",
+             group = "Display Hike Icons", 
+             lng = ~jitter(lng, factor = 6), lat = ~jitter(lat, factor = 6),
+             popup = paste("Hike Title:", hike_data$name, "<br>",
+                           "Distance (miles):", hike_data$total_miles, "<br>",
+                           "Elevation gain (ft):", hike_data$elevation_gain_ft)) %>%
+
+  # add clickable bike markers with info about each ride 
+  addMarkers(data = ride_data, icon = bike_icon_custom, 
+             #clusterOptions = markerClusterOptions(), clusterId = "bikeCluster",
+             group = "Display Bike Ride Icons",
+             lng = ~jitter(lng, factor = 6), lat = ~jitter(lat, factor = 6),
+             popup = paste("Ride Title:", ride_data$name, "<br>",
+                           "Distance (miles):", ride_data$total_miles, "<br>",
+                           "Elevation gain (ft):", ride_data$elevation_gain_ft)) %>%
+
+  # add clickable walker markers with info about each  walk
+  addMarkers(data = walk_data, icon = walk_icon_custom, 
+             #clusterOptions = markerClusterOptions(), clusterId = "walkCluster",
+             group = "Display Walk Icons",
+             lng = ~jitter(lng, factor = 6), lat = ~jitter(lat, factor = 6),
+             # clusterOptions = markerClusterOptions(),
+             popup = paste("Walk Title:", walk_data$name, "<br>",
+                           "Distance (miles):", walk_data$total_miles, "<br>",
+                           "Elevation gain (ft):", walk_data$elevation_gain_ft)) %>%
+
+  # allow for toggling makers on/off
+  addLayersControl(
+    overlayGroups = c("Display Hike Icons", "Display Bike Ride Icons", "Display Walk Icons"),
+    options = layersControlOptions(collapsed = TRUE)
+  ) %>%
+  
+  # add heatmap legend
+  addLegend(colors = c("#DF0101", "#070A8D", "#0F9020"), 
+            labels = c("Hike", "Ride", "Walk"), 
+            position = "bottomleft")
+
+
+map
+```
+
+## Loop through `my_acts` and convert Google Polylines to dataframe of lat/lon; add color-coded activities to map
+```{r}
+#....................get unique activity ids.....................
+unique_acts_ids <- unique(acts$id)
+
+#.............iterate over activities and add to map.............
+for (i in unique_acts_ids) {
+  
+  # 1) get activity
+  activity <- filter(acts, id == i)
+  
+  # 2) decode polyline
+  coords <- googleway::decode_pl(activity$map.summary_polyline)
+  
+  #3) plot activity trace on basemap; color-code according to activity type
+  map <- if (activity$sport_type == "Ride") {
+    addPolylines(map, lng = coords$lon, lat = coords$lat,
+                      color = "#070A8D", opacity = 1/4, weight = 2)
+  } else if (activity$sport_type == "Hike") {
+    addPolylines(map, lng = coords$lon, lat = coords$lat,
+                      color = "#DF0101", opacity = 1/4, weight = 2)
+  } else if (activity$sport_type == "Walk") {
+    addPolylines(map, lng = coords$lon, lat = coords$lat,
+                      color = "#0F9020", opacity = 1/4, weight = 2)
+  }
+   
+}
+
+#............................print map...........................
+map
+
+#............................save map............................
+# saveWidget(map,
+#            file = "maps/sams_activity_map_20221108.html",
+#            selfcontained = TRUE)
+```

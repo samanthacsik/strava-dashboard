@@ -1,0 +1,51 @@
+---
+title: "Data Viz Testing"
+format: html
+---
+
+A space to build some data viz before making them interactive
+
+### Setup
+
+```{r}
+# load packages
+library(tidyverse)
+
+# import data
+acts <- readRDS("data/strava_acts_2022-11-08.rds")
+```
+
+### Plot theme
+
+```{r}
+mytheme <- theme_light() +
+  theme(text = element_text(family = "Avenir"), # chosen from Font Book app on my Mac
+        axis.text = element_text(color = "black", size = 12),
+        axis.title = element_text(size = 13),
+        panel.border = element_rect(colour = "black", fill = NA, size = 0.7),
+        plot.caption = element_text(size = 10, hjust = 0),
+        legend.position = "none")
+```
+
+### Histogram of activity lengths by sport
+
+-   have buttons that filter by sport_type
+
+```{r}
+hike <- acts |> filter(sport_type == "Hike")
+bike <- acts |> filter(sport_type == "Ride")
+walk <- acts |> filter(sport_type == "Walk")
+
+ggplot(hike, mapping = aes(x = total_miles)) + 
+  geom_histogram() +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  labs(x = "Total Miles",
+       y = "Number of recorded activities")
+```
+
+### Cumulative miles by activity over specified time range
+
+```{r}
+
+```

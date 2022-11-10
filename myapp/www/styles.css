@@ -1,0 +1,56 @@
+/* image resizing for banner img */
+img.banner {
+  display:block;
+  max-width: 100%;
+  width: auto;
+  margin-bottom: 1rem;
+}
+
+/* BOX TITLE STYLING */
+.intro_box_title span {
+  display: flex;
+  gap: 0.4rem;
+}
+
+/* top nav bar */
+.skin-blue .main-header .navbar {
+  background-color: #98A08D; /* dark sage green */
+}
+
+/* sidebar toggle hover*/
+.skin-blue .main-header .navbar .sidebar-toggle:hover {
+  background-color: #ad7237; /* burnt orange */
+}
+
+/* top header (left corner) */
+.skin-blue .main-header .logo {
+  background-color: #98A08D; /* dark sage green */
+}
+
+/* top header (left corner) hover */
+.skin-blue .main-header .logo:hover {
+  background-color: #ad7237; /* burnt orange */
+}
+
+/* side bar background */
+.skin-blue .left-side, .skin-blue .main-sidebar, .skin-blue .wrapper {
+  background-color: #FDFBF7; /* cream */
+}
+
+/* menu items hover */
+.skin-blue .sidebar-menu > li.active > a, .skin-blue .sidebar-menu > li.menu-open > a, .skin-blue .sidebar-menu > li:hover > a {
+  background: #cb9e72; /* light burnt orange */
+}
+
+/*.skin-blue .sidebar-menu > li.active > a {
+  background-color: red;
+} */
+
+/*.skin-blue .sidebar-menu > li.active > a {
+  border-left-color: red;
+} */
+
+/* text color */
+.skin-blue .sidebar a {
+  color: #64605f; /* gray */
+}
