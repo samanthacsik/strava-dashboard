@@ -10,9 +10,11 @@ A space to build some data viz before making them interactive
 ```{r}
 # load packages
 library(tidyverse)
+library(lubridate)
+library(plotly)
 
 # import data
-acts <- readRDS("data/strava_acts_2022-11-08.rds")
+acts <- readRDS("data/strava_acts_2022-11-11.rds")
 ```
 
 ### Plot theme
@@ -23,8 +25,26 @@ mytheme <- theme_light() +
         axis.text = element_text(color = "black", size = 12),
         axis.title = element_text(size = 13),
         panel.border = element_rect(colour = "black", fill = NA, size = 0.7),
-        plot.caption = element_text(size = 10, hjust = 0),
-        legend.position = "none")
+        plot.caption = element_text(size = 10, hjust = 0))
+
+hike_color <- "#b35702"
+bike_color <- "#744082"
+walk_color <- "#366643"
+```
+
+### Filter by `sport_type`
+```{r}
+hikes <- acts |> filter(sport_type == "Hike")
+bikes <- acts |> filter(sport_type == "Ride")
+walks <- acts |> filter(sport_type == "Walk")
+```
+
+### Cumulative miles by activity over specified time range
+
+```{r}
+totalHikes <- length(hikes$name)
+totalRides <- length(bikes$name)
+totalWalks <- length(walks$name)
 ```
 
 ### Histogram of activity lengths by sport
@@ -32,20 +52,62 @@ mytheme <- theme_light() +
 -   have buttons that filter by sport_type
 
 ```{r}
-hike <- acts |> filter(sport_type == "Hike")
-bike <- acts |> filter(sport_type == "Ride")
-walk <- acts |> filter(sport_type == "Walk")
-
-ggplot(hike, mapping = aes(x = total_miles)) + 
+ggplot(hikes, mapping = aes(x = total_miles)) + 
   geom_histogram() +
   scale_x_continuous(expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
   labs(x = "Total Miles",
-       y = "Number of recorded activities")
+       y = "Number of recorded activities") +
+  mytheme
 ```
 
-### Cumulative miles by activity over specified time range
-
+### Number of activities by week
+- select activity
+- select year
+- double slider to show date range
 ```{r}
+# wrangle
+hike_by_week <- acts |> 
+  # filter(sport_type == "Hike") |> 
+  group_by(sport_type, year, week_number) |> 
+  summarize(total_miles_by_week = sum(total_miles)) |> 
+  filter(year == "2021")
 
+# TODO: add rows of 0 miles traveled for missing weeks
+
+ggplot(hike_by_week, aes(x = as.numeric(week_number), y = total_miles_by_week, color = sport_type)) +
+  geom_line() + 
+  geom_point() + 
+  labs(x = "Week",
+       y = "Total Distance") +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 5)) +
+  mytheme
 ```
+
+### Elevation ~ Distance 
+- select activity
+```{r}
+elev_dist <- ggplot(acts, aes(x = total_miles, y = elevation_gain_ft, color = sport_type, shape = sport_type, label = name)) +
+  #geom_point(size = 3.2) +
+  geom_point(alpha = 0.8, size = 4) +
+  #facet_wrap(~sport_type) +
+  labs(x = "Total Distance Traveled (miles)",
+       y = "Total Elevation Gain (feet)") +
+  scale_color_manual(name = "Sport", 
+                     values = c(hike_color, bike_color, walk_color)) +
+  scale_shape_manual(name = "Sport",
+                     values = c(15, 16, 17)) +
+   geom_smooth(method = "lm", se = FALSE) +
+  #scale_y_continuous(breaks = scales::pretty_breaks(n = 3)) +
+  mytheme
+
+# elev_dist
+# 
+# ggplotly(elev_dist,
+#          tooltip = c("name", "total_miles", "elevation_gain_ft", "moving_time_sec"))
+```
+
+
+
+

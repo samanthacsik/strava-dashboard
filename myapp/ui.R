@@ -1,7 +1,13 @@
 # ~~~~~~~~~ user interface (UI) ~~~~~~~~~ #
 
 # ------------------------------------------ header ------------------------------------------
-header <- dashboardHeader(title = "Sam's Strava Stats")
+header <- dashboardHeader(
+  title = span(tags$a(img(src = "media/strava_logo.png"),
+                      href = "https://www.strava.com/",
+                      target = "_blank"), # _blank opens link in new tab
+               "Sam's Strava Stats"
+               ) # END span
+  ) # END dashboardHeader
 
 # ------------------------------------------ sidebar ------------------------------------------
 sidebar <- dashboardSidebar(
@@ -25,10 +31,10 @@ body <- dashboardBody(
     tags$link(rel = "stylesheet", type = "text/css", href = "styles.css")
   ), # END tags$head
 
-  # START tabItems()
+  # tabItems() ----
   tabItems(
 
-    # START about tab ----
+    # ---------- about tab ----------
     tabItem(
       tabName = "about",
       tags$img(class = "banner",
@@ -36,13 +42,38 @@ body <- dashboardBody(
       h2("Welcome to my app")
     ), # END "about" tabItem
 
-    # START dashboard tab ----
+    # ---------- dashboard tab ----------
     tabItem(
       tabName = "dashboard",
-      h1("Explore the data")
+      h1("Explore the data"),
+
+      # START total hikes info box ---
+      # infoBoxOutput(inputId = "totalHikes") # END total hikes info box
+
+      # # START total rides info box ---
+      # infoBox(title = "Total Rides", value = NULL,
+      #         icon = shiny::icon("bike"), color = "green", width = 4,
+      #         href = NULL, fill = TRUE), # END total rides info box
+      #
+      # # START total walks info box ---
+      # infoBox(title = "Total Walks", value = NULL,
+      #         icon = shiny::icon("person-walking"), color = "orange", width = 4,
+      #         href = NULL, fill = TRUE) # END total walks info box
+
+      # sport type input ----
+      pickerInput(inputId = "sport", label = "Select an activity:",
+                  choices = c("Hike", "Bike" = "Ride", "Walk"),
+                  options = pickerOptions(actionsBox = TRUE),
+                  selected = c("Hike", "Bike" = "Ride", "Walk"),
+                  multiple = T),
+
+      # output ----
+      plotOutput(outputId = "elev_dist_scatterplot")
+
+
     ), # END "dashboard" tab
 
-    # START tutorials tab ----
+    # ---------- tutorials tab ----------
     tabItem(
       tabName = "tutorials",
       h1("Want to learn how to work with your own Strava data?")

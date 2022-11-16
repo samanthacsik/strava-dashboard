@@ -1,7 +1,6 @@
 ---
 title: "leaflet_map"
 format: html
-editor: visual
 editor_options: 
   chunk_output_type: console
 ---
@@ -9,6 +8,7 @@ editor_options:
 **LAST UPDATED: 08 November 2022**
 
 ## Load packages
+
 ```{r}
 #..........................load packages.........................
 library(rStrava) # devtools::install_github('fawda123/rStrava')
@@ -19,12 +19,12 @@ library(htmlwidgets)
 library(htmltools)
 ```
 
-
 ## Import data & prep (data scraped/wrangled in `R/scrape_strava.Rmd`)
+
 ```{r}
 
 #............load data (wrangled in scrape_strava.Rmd)...........
-acts <- readRDS("data/strava_acts_2022-11-08.rds")
+acts <- readRDS("data/strava_acts_2022-11-11.rds")
 
 #...................create subsets by activity...................
 hike_data <- acts %>% filter(sport_type == "Hike")
@@ -34,6 +34,7 @@ walk_data <- acts %>% filter(sport_type == "Walk")
 ```
 
 ## Create base map & add icons and heatmap legend
+
 ```{r}
 #........................make custom icons.......................
 # activity_icons <- iconList(
@@ -104,7 +105,7 @@ map <- leaflet() %>%
   ) %>%
   
   # add heatmap legend
-  addLegend(colors = c("#DF0101", "#070A8D", "#0F9020"), 
+  addLegend(colors = c("#b35702", "#744082", "#366643"), # "#DF0101", "#070A8D", "#0F9020"
             labels = c("Hike", "Ride", "Walk"), 
             position = "bottomleft")
 
@@ -113,6 +114,7 @@ map
 ```
 
 ## Loop through `my_acts` and convert Google Polylines to dataframe of lat/lon; add color-coded activities to map
+
 ```{r}
 #....................get unique activity ids.....................
 unique_acts_ids <- unique(acts$id)
@@ -129,13 +131,13 @@ for (i in unique_acts_ids) {
   #3) plot activity trace on basemap; color-code according to activity type
   map <- if (activity$sport_type == "Ride") {
     addPolylines(map, lng = coords$lon, lat = coords$lat,
-                      color = "#070A8D", opacity = 1/4, weight = 2)
-  } else if (activity$sport_type == "Hike") {
+                      color = "#744082", opacity = 2/4, weight = 2) #070A8D
+  } else if (activity$sport_type == "Hike") { 
     addPolylines(map, lng = coords$lon, lat = coords$lat,
-                      color = "#DF0101", opacity = 1/4, weight = 2)
+                      color = "#b35702", opacity = 2/4, weight = 2) #DF0101 #b35702
   } else if (activity$sport_type == "Walk") {
     addPolylines(map, lng = coords$lon, lat = coords$lat,
-                      color = "#0F9020", opacity = 1/4, weight = 2)
+                      color = "#366643", opacity = 2/4, weight = 2) #0F9020
   }
    
 }
