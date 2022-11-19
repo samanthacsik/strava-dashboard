@@ -54,3 +54,8 @@ img.banner {
 .skin-blue .sidebar a {
   color: #64605f; /* gray */
 }
+
+/* valueBox color */
+.small-box .hike-green {
+  background-color: #b35702 !important;
+}

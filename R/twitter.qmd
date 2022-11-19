@@ -1,0 +1,15 @@
+---
+title: "Twitter Scraping Panic"
+format: html
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(rtweet)
+
+auth_setup_default()
+sam <- get_timeline("@SamanthaCsik", n=3200)
+
+write_csv(sam, "sams_tweets.csv")
+```

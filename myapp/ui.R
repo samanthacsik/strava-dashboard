@@ -2,11 +2,10 @@
 
 # ------------------------------------------ header ------------------------------------------
 header <- dashboardHeader(
-  title = span(tags$a(img(src = "media/strava_logo.png"),
-                      href = "https://www.strava.com/",
-                      target = "_blank"), # _blank opens link in new tab
-               "Sam's Strava Stats"
-               ) # END span
+  title = span(img(src="media/strava_logo.png", width = 38,
+                   href = "https://www.strava.com/",
+                   target = "_blank"),
+               span("Sam's Strava Stats", style = "font-size: 18px;"))
   ) # END dashboardHeader
 
 # ------------------------------------------ sidebar ------------------------------------------
@@ -38,8 +37,7 @@ body <- dashboardBody(
     tabItem(
       tabName = "about",
       tags$img(class = "banner",
-               src = "media/sc_tallie_cropped.jpeg"),
-      h2("Welcome to my app")
+               src = "media/camuesa_cropped.jpeg")
     ), # END "about" tabItem
 
     # ---------- dashboard tab ----------
@@ -47,14 +45,18 @@ body <- dashboardBody(
       tabName = "dashboard",
       h1("Explore the data"),
 
-      # START total hikes info box ---
-      # infoBoxOutput(inputId = "totalHikes") # END total hikes info box
+      valueBoxOutput(outputId = "totalHikes"),
+      valueBoxOutput(outputId = "totalRides"),
+      valueBoxOutput(outputId = "totalWalks"),
 
-      # # START total rides info box ---
-      # infoBox(title = "Total Rides", value = NULL,
+      # START total hikes info box ---
+      # infoBoxOutput(inputId = "totalHikes"), # END total hikes info box
+
+      # START total rides info box ---
+      # infoBox(title = "Total Rides", value = "10",
       #         icon = shiny::icon("bike"), color = "green", width = 4,
       #         href = NULL, fill = TRUE), # END total rides info box
-      #
+
       # # START total walks info box ---
       # infoBox(title = "Total Walks", value = NULL,
       #         icon = shiny::icon("person-walking"), color = "orange", width = 4,

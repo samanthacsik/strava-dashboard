@@ -2,13 +2,49 @@
 
 server <- function(input, output) {
 
-  # filter for total hikes ----
-  # hikes_only <- acts |> filter(sport_type == "Hike")
+  # valueBoxes ------------
+  # filter for total activities by sport-type (for valueBoxes) ----
+  hikes_only <- acts |>
+    filter(sport_type == "Hike") |>
+    nrow()
 
-  # total hikes info box ----
-  # output$totalHikes <- renderInfoBox({
-  #
-  # })
+  rides_only <- acts |>
+    filter(sport_type == "Ride") |>
+    nrow()
+
+  walks_only <- acts |>
+    filter(sport_type == "Walk") |>
+    nrow()
+
+  # totalHikes valueBox ----
+  output$totalHikes <- renderValueBox({
+
+    valueBox("Total Number of Recorded Hikes",
+             value = hikes_only,
+             icon = icon("mountain", lib = "font-awesome"),
+             color = "light-blue")
+
+  }) # END totalHkes valueBox
+
+  # totalRides valueBox ----
+  output$totalRides <- renderValueBox({
+
+    valueBox("Total Number of Recorded Bike Rides",
+             value = rides_only,
+             icon = icon("bicycle", lib = "font-awesome"),
+             color = "olive")
+
+  }) # END totalRides valueBox
+
+  # totalWalks valueBox ----
+  output$totalWalks <- renderValueBox({
+
+    valueBox("Total Number of Recorded Walks",
+             value = walks_only,
+             icon = icon("user", lib = "font-awesome"),
+             color = "green")
+
+  }) # END totalRides valueBox
 
   # filter by sport_type ----
   sport <- reactive({
