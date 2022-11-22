@@ -12,6 +12,10 @@ library(fontawesome)
 # IMPORT DATA ----
 acts <- readRDS("data/strava_acts_2022-11-21.rds")
 
+# IMPORT FUNCTIONS ----
+source("R/sport_type_pickerInput.R")
+source("R/date_range_inputs.R")
+
 # GGPLOT THEME ----
 stravaTheme <- theme_light() +
   theme(text = element_text(family = "Avenir"), # chosen from Font Book app on my Mac
@@ -27,8 +31,8 @@ hike_color <- "#b35702" # orange
 bike_color <- "#744082" # purple
 walk_color <- "#366643" # green
 
-# SPINNER STYLING ----
-options(spinner.type = 6, spinner.size = 2 , spinner.color = "#cb9e72")
+# SPINNER STYLING (NOT WORKING) ----
+# options(spinner.type = 6, spinner.size = 2 , spinner.color = "#cb9e72")
 
 # DATA FRAMES ----
 

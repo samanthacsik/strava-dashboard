@@ -43,7 +43,6 @@ body <- dashboardBody(
     # ---------- dashboard tab ----------
     tabItem(
       tabName = "dashboard",
-      #h1("Explore the data"),
 
       # style valueBox colors (tried moving this to styles.css but haven't got it working yet)
       tags$style(".small-box.bg-orange { background-color: #b35702 !important; color: #FFFFFF !important; }"),
@@ -64,21 +63,11 @@ body <- dashboardBody(
             # solidHeader = TRUE,
             # status = "navy",
 
-          # sport type input ----
-          pickerInput(inputId = "sport", label = "Select an activity:",
-                      choices = c("Hike", "Bike" = "Ride", "Walk"),
-                      options = pickerOptions(actionsBox = TRUE),
-                      selected = c("Hike", "Bike" = "Ride", "Walk"),
-                      multiple = T),
+          # sport type input (see R/sport_type_pickerInput.R) ----
+          sport_type_pickerInput(inputId = "sport_scatterplot"),
 
           # date range input ----
-          # sliderInput(inputId = "date", label = "Select a date range:",
-          #             min = min(acts$start_date_local),
-          #             max = max(acts$start_date_local),
-          #             value = c(min(acts$start_date_local, max(acts$start_date_local)))),
-          dateRangeInput(inputId = "date", label = "Select a date range:",
-                         min = min(acts$start_date_local), max = max(acts$start_date_local),
-                         start = min(acts$start_date_local), end = max(acts$start_date_local)),
+          date_range_dateRangeInput(inputId = "date_scatterplot"),
 
           # elev ~ dist scatterplot output ----
           plotOutput(outputId = "elev_dist_scatterplot") |> withSpinner(color = "#cb9e72", type = 1)
@@ -89,21 +78,19 @@ body <- dashboardBody(
       fluidRow(
         box(width = 12,
             title = "Title here",
-            solidHeader = TRUE,
+            # solidHeader = TRUE,
             # status = "navy",
 
             # sport type input ----
-            pickerInput(inputId = "sport", label = "Select an activity:",
-                        choices = c("Hike", "Bike" = "Ride", "Walk"),
-                        options = pickerOptions(actionsBox = TRUE),
-                        selected = c("Hike", "Bike" = "Ride", "Walk"),
-                        multiple = T),
+            sport_type_pickerInput(inputId = "sport_histogram"),
 
-            # distance histogram output ----
-            plotOutput(outputId = "dist_histogram"),
+            # date range input ----
+            date_range_dateRangeInput(inputId = "date_histogram"),
 
-            # elevation histogram output ----
-            plotOutput(outputId = "elev_histogram")
+            # histogram outputs (side-by-side) ----
+            splitLayout(cellWidths = c("50%", "50%"),
+                        plotOutput(outputId = "dist_histogram") |> withSpinner(color = "#cb9e72", type = 1),
+                        plotOutput(outputId = "elev_histogram") |> withSpinner(color = "#cb9e72", type = 1))
 
         ) # END box
       ) # END fluidRow
