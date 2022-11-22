@@ -57,7 +57,7 @@ server <- function(input, output) {
       labs(x = "Total Distance Traveled (miles)",
            y = "Total Elevation Gain (feet)") +
       scale_color_manual(name = "Sport", values = c("Hike" = "#b35702", "Bike" = "#744082", "Walk" = "#366643")) +
-      scale_shape_manual(name = "Sport", values = c("Hike" = 15, "Bike" = 16, "Walk" =17)) +
+      scale_shape_manual(name = "Sport", values = c("Hike" = 15, "Bike" = 16, "Walk" = 17)) +
       stravaTheme
 
   })

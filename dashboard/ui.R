@@ -50,51 +50,76 @@ body <- dashboardBody(
       tags$style(".small-box.bg-purple { background-color: #744082 !important; color: #FFFFFF !important; }"),
       tags$style(".small-box.bg-green { background-color: #366643 !important; color: #FFFFFF !important; }"),
 
-      # valueBoxes in first row
+      # valueBoxes ----
       fluidRow(
         valueBoxOutput(outputId = "totalHikes"),
         valueBoxOutput(outputId = "totalRides"),
         valueBoxOutput(outputId = "totalWalks")
       ), # END fluidRow
 
-      # BOX (1) elev ~ dist plot
+      # distance & elevation plots ----
       fluidRow(
-        box(width = 12,
-            title = tags$strong("Explore distance and elevation stats"),
-            # solidHeader = TRUE,
-            # status = "navy",
+        tabBox(width = 12,
+               title = tags$strong("Explore distance and elevation stats"),
+               side = "right", selected = "Distance & Elevation Summary Stats",
 
-          # sport type input (see R/sport_type_pickerInput.R) ----
-          sport_type_pickerInput(inputId = "sport_scatterplot"),
+               # elev ~ dist scatterplot ----
+               tabPanel("Elevation Gained ~ Distance Traveled",
+                        sport_type_pickerInput(inputId = "sport_scatterplot"), # sport type input )
+                        date_range_airDatepickerInput(inputId = "date_scatterplot"), # date range input
+                        plotOutput(outputId = "elev_dist_scatterplot") |> withSpinner(color = "#cb9e72", type = 1) # elev ~ dist scatterplot output
+               ), # END tabPanel (scatterplot)
 
-          # date range input ----
-          date_range_airDatepickerInput(inputId = "date_scatterplot"),
-
-          # elev ~ dist scatterplot output ----
-          plotOutput(outputId = "elev_dist_scatterplot") |> withSpinner(color = "#cb9e72", type = 1)
-        ) # END box
+               # dist & elev histograms ----
+               tabPanel("Distance & Elevation Summary Stats",
+                        sport_type_pickerInput(inputId = "sport_histogram"), # sport type input
+                        date_range_airDatepickerInput(inputId = "date_histogram"), # date range input
+                        splitLayout(cellWidths = c("50%", "50%"), # histogram outputs
+                                    plotOutput(outputId = "dist_histogram") |> withSpinner(color = "#cb9e72", type = 1),
+                                    plotOutput(outputId = "elev_histogram") |> withSpinner(color = "#cb9e72", type = 1))
+               ) # END tabPanel (histograms)
+              ) # END tabBox
       ), # END fluidRow
 
-      # BOX (1) distance histogram & (2) elevation histogram
-      fluidRow(
-        box(width = 12,
-            title = "Title here",
-            # solidHeader = TRUE,
-            # status = "navy",
 
-            # sport type input ----
-            sport_type_pickerInput(inputId = "sport_histogram"),
-
-            # date range input ----
-            date_range_airDatepickerInput(inputId = "date_histogram"),
-
-            # histogram outputs (side-by-side) ----
-            splitLayout(cellWidths = c("50%", "50%"),
-                        plotOutput(outputId = "dist_histogram") |> withSpinner(color = "#cb9e72", type = 1),
-                        plotOutput(outputId = "elev_histogram") |> withSpinner(color = "#cb9e72", type = 1))
-
-        ) # END box
-      ) # END fluidRow
+      # # BOX (1) elev ~ dist plot
+      # fluidRow(
+      #   box(width = 12,
+      #       title = tags$strong("Explore distance and elevation stats"),
+      #       # solidHeader = TRUE,
+      #       # status = "navy",
+      #
+      #     # sport type input (see R/sport_type_pickerInput.R) ----
+      #     sport_type_pickerInput(inputId = "sport_scatterplot"),
+      #
+      #     # date range input ----
+      #     date_range_airDatepickerInput(inputId = "date_scatterplot"),
+      #
+      #     # elev ~ dist scatterplot output ----
+      #     plotOutput(outputId = "elev_dist_scatterplot") |> withSpinner(color = "#cb9e72", type = 1)
+      #   ) # END box
+      # ), # END fluidRow
+      #
+      # # BOX (1) distance histogram & (2) elevation histogram
+      # fluidRow(
+      #   box(width = 12,
+      #       title = "Title here",
+      #       # solidHeader = TRUE,
+      #       # status = "navy",
+      #
+      #       # sport type input ----
+      #       sport_type_pickerInput(inputId = "sport_histogram"),
+      #
+      #       # date range input ----
+      #       date_range_airDatepickerInput(inputId = "date_histogram"),
+      #
+      #       # histogram outputs (side-by-side) ----
+      #       splitLayout(cellWidths = c("50%", "50%"),
+      #                   plotOutput(outputId = "dist_histogram") |> withSpinner(color = "#cb9e72", type = 1),
+      #                   plotOutput(outputId = "elev_histogram") |> withSpinner(color = "#cb9e72", type = 1))
+      #
+      #   ) # END box
+      # ) # END fluidRow
     ), # END "dashboard" tab
 
     # ---------- tutorials tab ----------
