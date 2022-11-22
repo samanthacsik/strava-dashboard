@@ -60,7 +60,7 @@ body <- dashboardBody(
 
       # leaflet map ----
       fluidRow(
-        leafletOutput(outputId = "strava_map", height = 500)
+        leafletOutput(outputId = "strava_map", height = 500) |> withSpinner(color = "#cb9e72", type = 1)
       ), # END fluidRow
 
       # add some space between map and plots ----

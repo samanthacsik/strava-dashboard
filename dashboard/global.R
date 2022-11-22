@@ -48,17 +48,17 @@ walk_color <- "#366643" # green
 
 # LEAFLET ICONS ----
 hiker_icon_custom <- makeIcon(
-  iconUrl = "media/hiker.png",
+  iconUrl = "www/media/hiker.png",
   iconWidth = 20, iconHeight = 20
 )
 
 bike_icon_custom <- makeIcon(
-  iconUrl = "media/bike.png",
+  iconUrl = "www/media/bike.png",
   iconWidth = 22, iconHeight = 25
 )
 
 walk_icon_custom <- makeIcon(
-  iconUrl = "media/walker.png",
+  iconUrl = "www/media/walker.png",
   iconWidth = 13, iconHeight = 18
 )
 

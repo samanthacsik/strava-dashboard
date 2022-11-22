@@ -6,21 +6,12 @@ server <- function(input, output) {
 # value boxes
 ##############################
 
-  # valueBoxes ----
-  # calculate total activities for each sport_type
-  hikes_only <- acts |>
-    filter(sport_type == "Hike") |>
-    nrow()
+  # calculate total activities for each sport_type (also used in leaflet map, below) ----
+  hikes_only <- acts |> filter(sport_type == "Hike") |> nrow()
+  rides_only <- acts |> filter(sport_type == "Ride") |> nrow()
+  walks_only <- acts |> filter(sport_type == "Walk") |> nrow()
 
-  rides_only <- acts |>
-    filter(sport_type == "Ride") |>
-    nrow()
-
-  walks_only <- acts |>
-    filter(sport_type == "Walk") |>
-    nrow()
-
-  # total activity by sport valueBoxes
+  # total activity by sport valueBoxes ----
   output$totalHikes <- renderValueBox({
     valueBox("Total Number of Recorded Hikes", value = hikes_only, color = "orange", icon = icon("mountain", lib = "font-awesome"))
   })
@@ -36,21 +27,60 @@ server <- function(input, output) {
 # leaflet map
 ##############################
 
-output$strava_map <- renderLeaflet({
+  # filter data by sport_type for mapping ----
+  hike_data <- acts |> filter(sport_type == "Hike")
+  ride_data <- acts |> filter(sport_type == "Ride")
+  walk_data <- acts |> filter(sport_type == "Walk")
 
-  map <- leaflet() %>%
+  # map ----
+  output$strava_map <- renderLeaflet({
+    map <- leaflet() |>
 
-    # add tiles
-    addProviderTiles("Esri.WorldTerrain",
-                     options = providerTileOptions(maxNativeZoom = 19, maxZoom = 100)) %>%
+      # add tiles
+      addProviderTiles("Esri.WorldTerrain",
+                       options = providerTileOptions(maxNativeZoom = 19, maxZoom = 100)) |>
 
-    # add miniMap (corner)
-    addMiniMap(toggleDisplay = TRUE) %>%
+      # add miniMap (corner)
+      addMiniMap(toggleDisplay = TRUE) |>
 
-    # set view over Santa Barbara
-    setView(lng = -119.753042, lat = 34.484782, zoom = 10)
+      # set view over Santa Barbara
+      setView(lng = -119.753042, lat = 34.484782, zoom = 10) |>
 
-})
+      # add clickable hiker markers with info about each hike
+      addMarkers(data = hike_data, icon = hiker_icon_custom,
+                 group = "Display Hike Icons",
+                 lng = ~jitter(lng, factor = 6), lat = ~jitter(lat, factor = 6),
+                 popup = paste("Hike Title:", hike_data$name, "<br>",
+                               "Distance (miles):", hike_data$total_miles, "<br>",
+                               "Elevation gain (ft):", hike_data$elevation_gain_ft)) |>
+
+      # add clickable bike markers with info about each ride
+      addMarkers(data = ride_data, icon = bike_icon_custom,
+                 group = "Display Bike Ride Icons",
+                 lng = ~jitter(lng, factor = 6), lat = ~jitter(lat, factor = 6),
+                 popup = paste("Ride Title:", ride_data$name, "<br>",
+                               "Distance (miles):", ride_data$total_miles, "<br>",
+                               "Elevation gain (ft):", ride_data$elevation_gain_ft)) |>
+
+      # add clickable walker markers with info about each  walk
+      addMarkers(data = walk_data, icon = walk_icon_custom,
+                 group = "Display Walk Icons",
+                 lng = ~jitter(lng, factor = 6), lat = ~jitter(lat, factor = 6),
+                 popup = paste("Walk Title:", walk_data$name, "<br>",
+                               "Distance (miles):", walk_data$total_miles, "<br>",
+                               "Elevation gain (ft):", walk_data$elevation_gain_ft)) |>
+
+      # allow for toggling makers on/off
+      addLayersControl(
+        overlayGroups = c("Display Hike Icons", "Display Bike Ride Icons", "Display Walk Icons"),
+        options = layersControlOptions(collapsed = TRUE)
+      ) |>
+
+      # add heatmap legend
+      addLegend(colors = c("#b35702", "#744082", "#366643"), # "#DF0101", "#070A8D", "#0F9020"
+                labels = c("Hike", "Ride", "Walk"),
+                position = "bottomleft")
+  })
 
 
 ##############################
