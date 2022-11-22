@@ -6,7 +6,9 @@ library(shinycssloaders)
 # library(shinydashboardPlus)
 library(tidyverse)
 # library(plotly)
+library(leaflet)
 library(fontawesome)
+library(markdown)
 
 
 # IMPORT DATA ----

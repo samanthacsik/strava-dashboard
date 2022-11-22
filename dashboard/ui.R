@@ -37,7 +37,8 @@ body <- dashboardBody(
     tabItem(
       tabName = "about",
       tags$img(class = "banner",
-               src = "media/camuesa_cropped.jpeg")
+               src = "media/camuesa_cropped.jpeg"),
+      includeMarkdown("text/home_page_footer.md")
     ), # END "about" tabItem
 
     # ---------- dashboard tab ----------
