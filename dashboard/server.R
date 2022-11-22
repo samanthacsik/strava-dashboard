@@ -2,9 +2,9 @@
 
 server <- function(input, output) {
 
-  ##############################
-  # breathing room - value boxes
-  ##############################
+##############################
+# value boxes
+##############################
 
   # valueBoxes ----
   # calculate total activities for each sport_type
@@ -33,7 +33,28 @@ server <- function(input, output) {
 
 
 ##############################
-# breathing room - elevation & distance data viz
+# leaflet map
+##############################
+
+output$strava_map <- renderLeaflet({
+
+  map <- leaflet() %>%
+
+    # add tiles
+    addProviderTiles("Esri.WorldTerrain",
+                     options = providerTileOptions(maxNativeZoom = 19, maxZoom = 100)) %>%
+
+    # add miniMap (corner)
+    addMiniMap(toggleDisplay = TRUE) %>%
+
+    # set view over Santa Barbara
+    setView(lng = -119.753042, lat = 34.484782, zoom = 10)
+
+})
+
+
+##############################
+# elevation & distance data viz
 ##############################
 
 
@@ -61,8 +82,7 @@ server <- function(input, output) {
       stravaTheme
 
     plotly::ggplotly(elev_dist_scatterplot,
-                     tooltip = c("total_miles", "elevation_gain_ft")) |>
-      config(displaylogo = FALSE)
+                     tooltip = c("total_miles", "elevation_gain_ft"))
 
   })
 
@@ -104,7 +124,7 @@ server <- function(input, output) {
 
 
 ##############################
-# breathing room - DT table ("raw" data)
+# elevation & distance summary stats table
 ##############################
 
   # filter acts and calc summary stats ----
@@ -140,7 +160,7 @@ server <- function(input, output) {
 
 
 ##############################
-# breathing room - DT table ("raw" data)
+# DT table ("raw" data)
 ##############################
 
   output$strava_data_trimmed <- DT::renderDataTable({

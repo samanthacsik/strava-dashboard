@@ -65,6 +65,7 @@ map <- leaflet() %>%
   addProviderTiles("Esri.WorldTerrain", 
                    options = providerTileOptions(maxNativeZoom = 19, maxZoom = 100)) %>%
   
+  # add miniMap (corner)
   addMiniMap(toggleDisplay = TRUE) %>% 
   
   # set view over Santa Barbara 

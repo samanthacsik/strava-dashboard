@@ -58,6 +58,14 @@ body <- dashboardBody(
         valueBoxOutput(outputId = "totalWalks")
       ), # END fluidRow
 
+      # leaflet map ----
+      fluidRow(
+        leafletOutput(outputId = "strava_map", height = 500)
+      ), # END fluidRow
+
+      # add some space between map and plots ----
+      headerPanel(""),
+
       # distance & elevation plots ----
       fluidRow(
         tabBox(width = 12,
