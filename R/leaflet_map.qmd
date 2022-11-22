@@ -24,7 +24,7 @@ library(htmltools)
 ```{r}
 
 #............load data (wrangled in scrape_strava.Rmd)...........
-acts <- readRDS("data/strava_acts_2022-11-11.rds")
+acts <- readRDS("data/strava_acts_2022-11-21.rds")
 
 #...................create subsets by activity...................
 hike_data <- acts %>% filter(sport_type == "Hike")
@@ -44,17 +44,17 @@ walk_data <- acts %>% filter(sport_type == "Walk")
 # )
 
 hiker_icon_custom <- makeIcon(
-  iconUrl = "media/hiker.png",
+  iconUrl = "R/media/hiker.png",
   iconWidth = 20, iconHeight = 20
 )
 
 bike_icon_custom <- makeIcon(
-  iconUrl = "media/bike.png",
+  iconUrl = "R/media/bike.png",
   iconWidth = 22, iconHeight = 25
 )
 
 walk_icon_custom <- makeIcon(
-  iconUrl = "media/walker.png",
+  iconUrl = "R/media/walker.png",
   iconWidth = 13, iconHeight = 18
 )
 

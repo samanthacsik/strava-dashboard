@@ -16,9 +16,10 @@ library(markdown)
 # IMPORT DATA ----
 acts <- readRDS("data/strava_acts_2022-11-21.rds")
 
-# IMPORT FUNCTIONS ----
+# IMPORT FUNCTIONS & PLOTS ----
 source("R/sport_type_pickerInput.R")
 source("R/date_range_inputs.R")
+source("R/leaflet.R")
 
 # DATA WRANGLING FOR DATA TAB ----
 acts_trimmed <- acts |>
@@ -45,22 +46,6 @@ stravaTheme <- theme_light() +
 hike_color <- "#b35702" # orange
 bike_color <- "#744082" # purple
 walk_color <- "#366643" # green
-
-# LEAFLET ICONS ----
-hiker_icon_custom <- makeIcon(
-  iconUrl = "www/media/hiker.png",
-  iconWidth = 20, iconHeight = 20
-)
-
-bike_icon_custom <- makeIcon(
-  iconUrl = "www/media/bike.png",
-  iconWidth = 22, iconHeight = 25
-)
-
-walk_icon_custom <- makeIcon(
-  iconUrl = "www/media/walker.png",
-  iconWidth = 13, iconHeight = 18
-)
 
 # SPINNER STYLING (NOT WORKING) ----
 # options(spinner.type = 6, spinner.size = 2 , spinner.color = "#cb9e72")

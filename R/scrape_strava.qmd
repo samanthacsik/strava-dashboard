@@ -86,7 +86,7 @@ my_acts <- rStrava::compile_activities(my_actvities) |>
   # select, rename & reorder columns
   dplyr::select(
     # activity & athlete info
-    name, visibility, sport_type, sport_type_alt, start_date_time_local, start_date_local,
+    id, name, visibility, sport_type, sport_type_alt, start_date_time_local, start_date_local,
     year, month, day, hour, minute, second, week_number, timezone, 
     athlete_count, achievement_count, pr_count,
     # activity stats
@@ -128,7 +128,7 @@ wrangled_acts <- rbind(y2022, y2021, y2020)
 #............................save data...........................
 # saveRDS(wrangled_acts, here::here("data/strava_acts_2022-11-21.rds"))
 # write_csv(wrangled_acts, here::here("data/strava_acts_2022-11-21.csv"))
-# saveRDS(wrangled_acts, here::here("myapp/data/strava_acts_2022-11-21.rds"))
+# saveRDS(wrangled_acts, here::here("dashboard/data/strava_acts_2022-11-21.rds"))
 ```
 
 The above processed data does not contain the following variables (they were removed because they felt unnecessary to keep, at least for now, and/or it was unclear what they represented):
