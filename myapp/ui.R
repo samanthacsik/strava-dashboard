@@ -43,45 +43,79 @@ body <- dashboardBody(
     # ---------- dashboard tab ----------
     tabItem(
       tabName = "dashboard",
-      h1("Explore the data"),
+      #h1("Explore the data"),
 
-      valueBoxOutput(outputId = "totalHikes"),
-      valueBoxOutput(outputId = "totalRides"),
-      valueBoxOutput(outputId = "totalWalks"),
+      # style valueBox colors (tried moving this to styles.css but haven't got it working yet)
+      tags$style(".small-box.bg-orange { background-color: #b35702 !important; color: #FFFFFF !important; }"),
+      tags$style(".small-box.bg-purple { background-color: #744082 !important; color: #FFFFFF !important; }"),
+      tags$style(".small-box.bg-green { background-color: #366643 !important; color: #FFFFFF !important; }"),
 
-      # START total hikes info box ---
-      # infoBoxOutput(inputId = "totalHikes"), # END total hikes info box
+      # valueBoxes in first row
+      fluidRow(
+        valueBoxOutput(outputId = "totalHikes"),
+        valueBoxOutput(outputId = "totalRides"),
+        valueBoxOutput(outputId = "totalWalks")
+      ), # END fluidRow
 
-      # START total rides info box ---
-      # infoBox(title = "Total Rides", value = "10",
-      #         icon = shiny::icon("bike"), color = "green", width = 4,
-      #         href = NULL, fill = TRUE), # END total rides info box
+      # BOX (1) elev ~ dist plot
+      fluidRow(
+        box(width = 12,
+            title = tags$strong("Explore distance and elevation stats"),
+            # solidHeader = TRUE,
+            # status = "navy",
 
-      # # START total walks info box ---
-      # infoBox(title = "Total Walks", value = NULL,
-      #         icon = shiny::icon("person-walking"), color = "orange", width = 4,
-      #         href = NULL, fill = TRUE) # END total walks info box
+          # sport type input ----
+          pickerInput(inputId = "sport", label = "Select an activity:",
+                      choices = c("Hike", "Bike" = "Ride", "Walk"),
+                      options = pickerOptions(actionsBox = TRUE),
+                      selected = c("Hike", "Bike" = "Ride", "Walk"),
+                      multiple = T),
 
-      # sport type input ----
-      pickerInput(inputId = "sport", label = "Select an activity:",
-                  choices = c("Hike", "Bike" = "Ride", "Walk"),
-                  options = pickerOptions(actionsBox = TRUE),
-                  selected = c("Hike", "Bike" = "Ride", "Walk"),
-                  multiple = T),
+          # date range input ----
+          # sliderInput(inputId = "date", label = "Select a date range:",
+          #             min = min(acts$start_date_local),
+          #             max = max(acts$start_date_local),
+          #             value = c(min(acts$start_date_local, max(acts$start_date_local)))),
+          dateRangeInput(inputId = "date", label = "Select a date range:",
+                         min = min(acts$start_date_local), max = max(acts$start_date_local),
+                         start = min(acts$start_date_local), end = max(acts$start_date_local)),
 
-      # output ----
-      plotOutput(outputId = "elev_dist_scatterplot")
+          # elev ~ dist scatterplot output ----
+          plotOutput(outputId = "elev_dist_scatterplot") |> withSpinner(color = "#cb9e72", type = 1)
+        ) # END box
+      ), # END fluidRow
 
+      # BOX (1) distance histogram & (2) elevation histogram
+      fluidRow(
+        box(width = 12,
+            title = "Title here",
+            solidHeader = TRUE,
+            # status = "navy",
 
+            # sport type input ----
+            pickerInput(inputId = "sport", label = "Select an activity:",
+                        choices = c("Hike", "Bike" = "Ride", "Walk"),
+                        options = pickerOptions(actionsBox = TRUE),
+                        selected = c("Hike", "Bike" = "Ride", "Walk"),
+                        multiple = T),
+
+            # distance histogram output ----
+            plotOutput(outputId = "dist_histogram"),
+
+            # elevation histogram output ----
+            plotOutput(outputId = "elev_histogram")
+
+        ) # END box
+      ) # END fluidRow
     ), # END "dashboard" tab
 
     # ---------- tutorials tab ----------
     tabItem(
       tabName = "tutorials",
-      h1("Want to learn how to work with your own Strava data?")
+      # h1("Want to learn how to work with your own Strava data?")
     ) # END "tutorials" tab
 
-  ) # END tabItems()
+  ), # END tabItems
 
 ) # END dashboardBody
 

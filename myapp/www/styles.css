@@ -42,20 +42,27 @@ img.banner {
   background: #cb9e72; /* light burnt orange */
 }
 
-/*.skin-blue .sidebar-menu > li.active > a {
-  background-color: red;
-} */
-
-/*.skin-blue .sidebar-menu > li.active > a {
-  border-left-color: red;
-} */
-
-/* text color */
+/* sidebar text color */
 .skin-blue .sidebar a {
   color: #64605f; /* gray */
 }
 
-/* valueBox color */
-.small-box .hike-green {
-  background-color: #b35702 !important;
+/* NOT WORKING Box header background color*/
+/*.box-header .with-border {
+  background-color: #cb9e72;
+  color: #FFFFFF;
+} */
+
+/* DOES NOT WORK (UPDATED IN UI INSTEAD) change default valueBox colors -- NOTE: must use valid valueBox color names, but can update the colors that those names represent using CSS here*/
+/* .small-box .bg-orange {
+  background-color: #b35702 !important; color: #FFFFFF !important;
 }
+.small-box .bg-purple {
+  background-color: #b35702 !important; color: #FFFFFF !important;
+}
+.small-box .bg-green {
+  background-color: #366643 !important; color: #FFFFFF !important;
+} */
+
+
+

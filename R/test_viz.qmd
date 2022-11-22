@@ -23,9 +23,13 @@ acts <- readRDS("data/strava_acts_2022-11-11.rds")
 mytheme <- theme_light() +
   theme(text = element_text(family = "Avenir"), # chosen from Font Book app on my Mac
         axis.text = element_text(color = "black", size = 12),
-        axis.title = element_text(size = 13),
+        axis.title = element_text(size = 14, face = "bold"),
+        legend.title = element_text(size = 14, face = "bold"),
+        legend.text = element_text(size = 13),
         panel.border = element_rect(colour = "black", fill = NA, size = 0.7),
         plot.caption = element_text(size = 10, hjust = 0))
+
+mycolors <- scale_color_manual(name = "Sport", values = c("Hike" = "#b35702", "Bike" = "#744082", "Walk" = "#366643"))
 
 hike_color <- "#b35702"
 bike_color <- "#744082"
@@ -45,6 +49,12 @@ walks <- acts |> filter(sport_type == "Walk")
 totalHikes <- length(hikes$name)
 totalRides <- length(bikes$name)
 totalWalks <- length(walks$name)
+```
+
+### Filter date range
+```{r}
+filtered_dates <- acts |> 
+  filter(start_date_local > "2021-07-27" & start_date_local < "2022-03-10")
 ```
 
 ### Histogram of activity lengths by sport
@@ -108,6 +118,27 @@ elev_dist <- ggplot(acts, aes(x = total_miles, y = elevation_gain_ft, color = sp
 #          tooltip = c("name", "total_miles", "elevation_gain_ft", "moving_time_sec"))
 ```
 
+### Elevation & Distance histograms
+```{r}
+# elevation
+ggplot(acts, aes(x = elevation_gain_ft, fill = sport_type_alt)) +
+  geom_histogram() +
+  scale_x_continuous(expand = c(0, 0), breaks = scales::pretty_breaks(n = 8)) +
+  scale_y_continuous(expand = c(0, 0), breaks = scales::pretty_breaks(n = 8)) +
+  labs(x = "Total Elevation Gain (ft)",
+       y = "Count") +
+  scale_fill_manual(name = "Sport", values = c("Hike" = "#b35702", "Bike" = "#744082", "Walk" = "#366643")) +
+  mytheme
 
+# distance
+ggplot(acts, aes(x = total_miles, fill = sport_type_alt)) +
+  geom_histogram() +
+  scale_x_continuous(expand = c(0, 0), breaks = scales::pretty_breaks(n = 8)) +
+  scale_y_continuous(expand = c(0, 0), breaks = scales::pretty_breaks(n = 5)) +
+  labs(x = "Total Distance (miles)",
+       y = "Count") +
+  scale_fill_manual(name = "Sport", values = c("Hike" = "#b35702", "Bike" = "#744082", "Walk" = "#366643")) +
+  mytheme
+```
 
 
