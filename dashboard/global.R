@@ -3,13 +3,12 @@ library(shiny)
 library(shinydashboard)
 library(shinyWidgets)
 library(shinycssloaders)
-# library(shinydashboardPlus)
 library(tidyverse)
-# library(plotly)
+library(plotly)
+library(DT)
 library(leaflet)
 library(fontawesome)
 library(markdown)
-
 
 # IMPORT DATA ----
 acts <- readRDS("data/strava_acts_2022-11-21.rds")
@@ -17,6 +16,17 @@ acts <- readRDS("data/strava_acts_2022-11-21.rds")
 # IMPORT FUNCTIONS ----
 source("R/sport_type_pickerInput.R")
 source("R/date_range_inputs.R")
+
+# DATA WRANGLING FOR DATA TAB ----
+acts_trimmed <- acts |>
+  select(`Activity Title` = name, `Sport` = sport_type_alt, `Date` = start_date_local,
+         `Distance Traveled (miles)` = total_miles, `Elevation Gain (ft)` = elevation_gain_ft,
+         `Highest Elevation (ft)` = elev_high_ft, `Lowest Elevation (ft)` = elev_low_ft,
+         `Average Speed (miles/hr)` = avg_speed_mi_hr, `Max Speed (miles/hr)` = max_speed_mi_hr,
+         `Moving Time` = moving_time_hrs_mins, `Elapsed Time` = elapsed_time_hrs_mins,
+         `Achievement Count` = achievement_count, `PR Count` = pr_count,) |>
+  mutate(`Moving Time` = as.character(`Moving Time`),
+         `Elapsed Time` = as.character(`Elapsed Time`))
 
 # GGPLOT THEME ----
 stravaTheme <- theme_light() +
@@ -33,8 +43,22 @@ hike_color <- "#b35702" # orange
 bike_color <- "#744082" # purple
 walk_color <- "#366643" # green
 
+# LEAFLET ICONS ----
+hiker_icon_custom <- makeIcon(
+  iconUrl = "media/hiker.png",
+  iconWidth = 20, iconHeight = 20
+)
+
+bike_icon_custom <- makeIcon(
+  iconUrl = "media/bike.png",
+  iconWidth = 22, iconHeight = 25
+)
+
+walk_icon_custom <- makeIcon(
+  iconUrl = "media/walker.png",
+  iconWidth = 13, iconHeight = 18
+)
+
 # SPINNER STYLING (NOT WORKING) ----
 # options(spinner.type = 6, spinner.size = 2 , spinner.color = "#cb9e72")
-
-# DATA FRAMES ----
 

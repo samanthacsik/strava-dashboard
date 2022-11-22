@@ -15,7 +15,8 @@ sidebar <- dashboardSidebar(
   sidebarMenu(
 
     menuItem("About the app", tabName = "about", icon = icon("star")),
-    menuItem("Strava Dashboard", tabName = "dashboard", icon = icon("dashboard")),
+    menuItem("Strava Dashboard", tabName = "dashboard", icon = icon("tachometer-alt")),
+    menuItem("Data", tabName = "data", icon = icon("table")),
     menuItem("Tutorials", tabName = "tutorials", icon = icon("laptop-code"))
 
   ) # END sidebarMenu
@@ -67,7 +68,7 @@ body <- dashboardBody(
                tabPanel("Elevation Gained ~ Distance Traveled",
                         sport_type_pickerInput(inputId = "sport_scatterplot"), # sport type input )
                         date_range_airDatepickerInput(inputId = "date_scatterplot"), # date range input
-                        plotOutput(outputId = "elev_dist_scatterplot") |> withSpinner(color = "#cb9e72", type = 1) # elev ~ dist scatterplot output
+                        plotly::plotlyOutput(outputId = "elev_dist_scatterplot") |> withSpinner(color = "#cb9e72", type = 1) # elev ~ dist scatterplot output
                ), # END tabPanel (scatterplot)
 
                # dist & elev histograms ----
@@ -76,51 +77,19 @@ body <- dashboardBody(
                         date_range_airDatepickerInput(inputId = "date_histogram"), # date range input
                         splitLayout(cellWidths = c("50%", "50%"), # histogram outputs
                                     plotOutput(outputId = "dist_histogram") |> withSpinner(color = "#cb9e72", type = 1),
-                                    plotOutput(outputId = "elev_histogram") |> withSpinner(color = "#cb9e72", type = 1))
-               ) # END tabPanel (histograms)
+                                    plotOutput(outputId = "elev_histogram") |> withSpinner(color = "#cb9e72", type = 1)),
+                        tableOutput(outputId = "dist_elev_stats_table")
+               ), # END tabPanel (histograms)
+
               ) # END tabBox
       ), # END fluidRow
-
-
-      # # BOX (1) elev ~ dist plot
-      # fluidRow(
-      #   box(width = 12,
-      #       title = tags$strong("Explore distance and elevation stats"),
-      #       # solidHeader = TRUE,
-      #       # status = "navy",
-      #
-      #     # sport type input (see R/sport_type_pickerInput.R) ----
-      #     sport_type_pickerInput(inputId = "sport_scatterplot"),
-      #
-      #     # date range input ----
-      #     date_range_airDatepickerInput(inputId = "date_scatterplot"),
-      #
-      #     # elev ~ dist scatterplot output ----
-      #     plotOutput(outputId = "elev_dist_scatterplot") |> withSpinner(color = "#cb9e72", type = 1)
-      #   ) # END box
-      # ), # END fluidRow
-      #
-      # # BOX (1) distance histogram & (2) elevation histogram
-      # fluidRow(
-      #   box(width = 12,
-      #       title = "Title here",
-      #       # solidHeader = TRUE,
-      #       # status = "navy",
-      #
-      #       # sport type input ----
-      #       sport_type_pickerInput(inputId = "sport_histogram"),
-      #
-      #       # date range input ----
-      #       date_range_airDatepickerInput(inputId = "date_histogram"),
-      #
-      #       # histogram outputs (side-by-side) ----
-      #       splitLayout(cellWidths = c("50%", "50%"),
-      #                   plotOutput(outputId = "dist_histogram") |> withSpinner(color = "#cb9e72", type = 1),
-      #                   plotOutput(outputId = "elev_histogram") |> withSpinner(color = "#cb9e72", type = 1))
-      #
-      #   ) # END box
-      # ) # END fluidRow
     ), # END "dashboard" tab
+
+    # ---------- data tab ----------
+    tabItem(
+      tabName = "data",
+      DT::dataTableOutput(outputId = "strava_data_trimmed")
+    ), # END "data" tab
 
     # ---------- tutorials tab ----------
     tabItem(

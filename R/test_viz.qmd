@@ -141,4 +141,25 @@ ggplot(acts, aes(x = total_miles, fill = sport_type_alt)) +
   mytheme
 ```
 
+### Elevation & Distance Summary Stats
+```{r}
+summary_stats <- acts |> 
+  summarize(
+    `Total # of Activities` = nrow(name),
+    `Min Distance Traveled (miles)` = min(total_miles),
+    `Avg Distance Traveled (miles)` = mean(total_miles),
+    `Max Distance Traveled (miles)` = max(total_miles),
+    `Aggregated Distance Traveled (miles)` = sum(total_miles),
+    `Min Elevation Gain (ft)` = min(elevation_gain_ft),
+    `Avg Elevation Gain (ft)` = mean(elevation_gain_ft),
+    `Max Elevation Gain (ft)` = max(elevation_gain_ft),
+    `Aggregated Elevation Gain (ft)` = sum(elevation_gain_ft)
+  )
+
+summary_stats
+
+hikes_test <- acts |> 
+  filter(sport_type == "Hike") |> 
+  nrow()
+```
 
