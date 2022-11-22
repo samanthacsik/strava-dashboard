@@ -4,7 +4,7 @@
 header <- dashboardHeader(
   title = span(img(src="media/strava_logo.png", width = 38,
                    href = "https://www.strava.com/",
-                   target = "_blank"),
+                   target = "_blank"), # target = "_blank" opens link in new tab
                span("Sam's Strava Stats", style = "font-size: 18px;"))
   ) # END dashboardHeader
 
@@ -68,7 +68,7 @@ body <- dashboardBody(
           sport_type_pickerInput(inputId = "sport_scatterplot"),
 
           # date range input ----
-          date_range_dateRangeInput(inputId = "date_scatterplot"),
+          date_range_airDatepickerInput(inputId = "date_scatterplot"),
 
           # elev ~ dist scatterplot output ----
           plotOutput(outputId = "elev_dist_scatterplot") |> withSpinner(color = "#cb9e72", type = 1)
@@ -86,7 +86,7 @@ body <- dashboardBody(
             sport_type_pickerInput(inputId = "sport_histogram"),
 
             # date range input ----
-            date_range_dateRangeInput(inputId = "date_histogram"),
+            date_range_airDatepickerInput(inputId = "date_histogram"),
 
             # histogram outputs (side-by-side) ----
             splitLayout(cellWidths = c("50%", "50%"),

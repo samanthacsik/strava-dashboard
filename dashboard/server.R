@@ -39,6 +39,11 @@ server <- function(input, output) {
 
   # filter by sport_type and select a date range for SCATTERPLOT ----
   filtered_sport_date_scatterplot <- reactive({
+
+    validate(
+    need(length(input$date_scatterplot) > 0, "Please select a date range to visualize activities for.")
+    )
+
     acts |>
       filter(sport_type %in% input$sport_scatterplot) |>
       filter(start_date_local > input$date_scatterplot[1] & start_date_local < input$date_scatterplot[2])
@@ -59,6 +64,11 @@ server <- function(input, output) {
 
   # filter by sport_type and select a date range for HISTOGRAMS ----
   filtered_sport_date_histogram <- reactive({
+
+    validate(
+      need(length(input$date_histogram) > 0, "Please select a date range to visualize activities for.")
+    )
+
     acts |>
       filter(sport_type %in% input$sport_histogram) |>
       filter(start_date_local > input$date_histogram[1] & start_date_local < input$date_histogram[2])
