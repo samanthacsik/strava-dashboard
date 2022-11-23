@@ -13,6 +13,7 @@ library(htmltools)
 library(fontawesome)
 library(markdown)
 library(fresh)
+library(reactlog)
 
 # IMPORT DATA ----
 acts <- readRDS("data/strava_acts_2022-11-21.rds")
@@ -20,8 +21,24 @@ acts <- readRDS("data/strava_acts_2022-11-21.rds")
 # IMPORT FUNCTIONS, PLOTS, THEMES ----
 source("R/sport_type_pickerInput.R")
 source("R/date_range_inputs.R")
-source("R/leaflet.R")
+# source("R/leaflet.R")
 # source("R/fresh_theme.R")
+
+# create icons for leaflet ----
+hiker_icon_custom <- makeIcon(
+  iconUrl = "www/media/hiker.png",
+  iconWidth = 20, iconHeight = 20
+)
+
+bike_icon_custom <- makeIcon(
+  iconUrl = "www/media/bike.png",
+  iconWidth = 22, iconHeight = 25
+)
+
+walk_icon_custom <- makeIcon(
+  iconUrl = "www/media/walker.png",
+  iconWidth = 13, iconHeight = 18
+)
 
 # DATA WRANGLING FOR DATA TAB ----
 acts_trimmed <- acts |>
