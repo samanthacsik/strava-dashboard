@@ -16,7 +16,7 @@ sidebar <- dashboardSidebar(
 
     menuItem("About the app", tabName = "about", icon = icon("star")),
     menuItem("Strava Dashboard", tabName = "dashboard", icon = icon("tachometer-alt")),
-    menuItem("Data", tabName = "data", icon = icon("table")),
+    menuItem("Data", tabName = "data", icon = icon("database")),
     menuItem("Tutorials", tabName = "tutorials", icon = icon("laptop-code"))
 
   ) # END sidebarMenu
@@ -25,6 +25,9 @@ sidebar <- dashboardSidebar(
 
 # ------------------------------------------ body ------------------------------------------
 body <- dashboardBody(
+
+  # import theme (HAVEN'T QUITE FIGURED THIS OUT YET) ----
+  # use_theme(mytheme),
 
   # load stylesheet ----
   tags$head(
@@ -56,6 +59,18 @@ body <- dashboardBody(
         valueBoxOutput(outputId = "totalHikes"),
         valueBoxOutput(outputId = "totalRides"),
         valueBoxOutput(outputId = "totalWalks")
+      ), # END fluidRow
+
+      # separator box ----
+      fluidRow(
+        box(width = 12,
+            title = "Heatmap of all recorded Strava activities",
+            collapsible = TRUE, collapsed = FALSE,
+            span(
+              tags$div(includeMarkdown("text/map_info.md"))
+            ), # END span
+            background = "black"
+        ) # END box
       ), # END fluidRow
 
       # leaflet map ----
@@ -96,6 +111,19 @@ body <- dashboardBody(
     # ---------- data tab ----------
     tabItem(
       tabName = "data",
+
+      # separator box ----
+      fluidRow(
+        box(width = 12,
+            title = "Strava Data",
+            collapsible = TRUE, collapsed = FALSE,
+            span(
+              tags$div(includeMarkdown("text/data_info.md"))
+            ), # END span
+            background = "black"
+        ) # END box
+      ), # END fluidRow
+
       DT::dataTableOutput(outputId = "strava_data_trimmed")
     ), # END "data" tab
 

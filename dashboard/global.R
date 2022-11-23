@@ -12,14 +12,16 @@ library(htmlwidgets)
 library(htmltools)
 library(fontawesome)
 library(markdown)
+library(fresh)
 
 # IMPORT DATA ----
 acts <- readRDS("data/strava_acts_2022-11-21.rds")
 
-# IMPORT FUNCTIONS & PLOTS ----
+# IMPORT FUNCTIONS, PLOTS, THEMES ----
 source("R/sport_type_pickerInput.R")
 source("R/date_range_inputs.R")
 source("R/leaflet.R")
+# source("R/fresh_theme.R")
 
 # DATA WRANGLING FOR DATA TAB ----
 acts_trimmed <- acts |>
@@ -43,9 +45,9 @@ stravaTheme <- theme_light() +
         plot.caption = element_text(size = 10, hjust = 0))
 
 # STYLING ----
-hike_color <- "#b35702" # orange
-bike_color <- "#744082" # purple
-walk_color <- "#366643" # green
+# hike_color <- "#b35702" # orange
+# bike_color <- "#744082" # purple
+# walk_color <- "#366643" # green
 
 # SPINNER STYLING (NOT WORKING) ----
 # options(spinner.type = 6, spinner.size = 2 , spinner.color = "#cb9e72")
