@@ -1,21 +1,21 @@
 # IMPORT DATA ----
 # acts <- readRDS("data/strava_acts_2022-11-21.rds")
 
-# create icons ----
-hiker_icon_custom <- makeIcon(
-  iconUrl = "www/media/hiker.png",
-  iconWidth = 20, iconHeight = 20
-)
-
-bike_icon_custom <- makeIcon(
-  iconUrl = "www/media/bike.png",
-  iconWidth = 22, iconHeight = 25
-)
-
-walk_icon_custom <- makeIcon(
-  iconUrl = "www/media/walker.png",
-  iconWidth = 13, iconHeight = 18
-)
+# # create icons (MOVED TO GLOBAL.R) ----
+# hiker_icon_custom <- makeIcon(
+#   iconUrl = "www/media/hiker.png",
+#   iconWidth = 20, iconHeight = 20
+# )
+#
+# bike_icon_custom <- makeIcon(
+#   iconUrl = "www/media/bike.png",
+#   iconWidth = 22, iconHeight = 25
+# )
+#
+# walk_icon_custom <- makeIcon(
+#   iconUrl = "www/media/walker.png",
+#   iconWidth = 13, iconHeight = 18
+# )
 
 # filter data by sport_type for mapping icons ----
 hike_data <- acts |> filter(sport_type == "Hike")

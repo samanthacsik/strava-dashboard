@@ -75,7 +75,15 @@ body <- dashboardBody(
 
       # leaflet map ----
       fluidRow(
-        leafletOutput(outputId = "strava_map", height = 500) |> withSpinner(color = "#cb9e72", type = 1)
+        box(width = 12,
+            sliderInput(inputId = "distance_sliderInput", label = "Select a distance (miles) range:",
+                        min = min(acts$total_miles), max = max(acts$total_miles),
+                        value = c(5, 10)),
+            sliderInput(inputId = "elevation_sliderInput", label = "Select a range of elevation gain (ft):",
+                        min = min(acts$elevation_gain_ft), max = max(acts$elevation_gain_ft),
+                        value = c(1000, 2000)),
+            leafletOutput(outputId = "strava_map", height = 500) |> withSpinner(color = "#cb9e72", type = 1)
+            ) # END box
       ), # END fluidRow
 
       # add some space between map and plots ----

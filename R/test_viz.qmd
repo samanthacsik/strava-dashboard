@@ -163,3 +163,9 @@ hikes_test <- acts |>
   nrow()
 ```
 
+## filter for distance
+```{r}
+distance <- acts |> 
+  filter(total_miles >= 10 & total_miles <= 15)
+```
+
