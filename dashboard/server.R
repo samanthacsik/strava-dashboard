@@ -27,7 +27,21 @@ server <- function(input, output) {
 # leaflet map
 ##############################
 
+  # # filter for date range ----
+  # filtered_date_map <- reactive({
+  #
+  #   validate(
+  #     need(length(input$date_scatterplot) > 0, "Please select a date range to visualize activities for.")
+  #   )
+  #
+  #   acts |>
+  #     filter(start_date_local > input$date_scatterplot[1] & start_date_local < input$date_scatterplot[2])
+  # })
 
+  # # filter data by sport_type for mapping icons ----
+  # hike_data <- acts |> filter(sport_type == "Hike")
+  # ride_data <- acts |> filter(sport_type == "Ride")
+  # walk_data <- acts |> filter(sport_type == "Walk")
 
   # map ----
   output$strava_map <- renderLeaflet({

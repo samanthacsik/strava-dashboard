@@ -17,7 +17,7 @@ walk_icon_custom <- makeIcon(
   iconWidth = 13, iconHeight = 18
 )
 
-# filter data by sport_type for mapping ----
+# filter data by sport_type for mapping icons ----
 hike_data <- acts |> filter(sport_type == "Hike")
 ride_data <- acts |> filter(sport_type == "Ride")
 walk_data <- acts |> filter(sport_type == "Walk")
