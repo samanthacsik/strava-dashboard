@@ -102,30 +102,31 @@ server <- function(input, output) {
     ############################## heatmap ##############################
 
      # get unique activity ids ----
-     # unique_acts_ids <- unique(filtered_map()$id)
+     unique_acts_ids <- unique(filtered_map()$id)
 
-     # for (i in unique_acts_ids) {
-     #
-     #   # 1) get activity
-     #   activity <- filter(filtered_map(), id == i)
-     #
+     for (i in unique_acts_ids) {
+
+       # 1) get activity
+       activity <- filter(filtered_map(), id == i)
+
      #   # 2) decode polyline
-     #   coords <- googleway::decode_pl(activity$map.summary_polyline)
-     #
-     #   #3) plot activity trace on basemap; color-code according to activity type
-     #   heatmap <- if (activity$sport_type == "Ride") {
-     #     addPolylines(heatmap, lng = coords$lon, lat = coords$lat,
-     #                  color = "#744082", opacity = 2/4, weight = 2) #070A8D
-     #   } else if (activity$sport_type == "Hike") {
-     #     addPolylines(heatmap, lng = coords$lon, lat = coords$lat,
-     #                  color = "#b35702", opacity = 2/4, weight = 2) #DF0101 #b35702
-     #   } else if (activity$sport_type == "Walk") {
-     #     addPolylines(heatmap, lng = coords$lon, lat = coords$lat,
-     #                  color = "#366643", opacity = 2/4, weight = 2) #0F9020
-     #   } # END if else
-     #
-     # } # END for loop
+       coords <- googleway::decode_pl(activity$map.summary_polyline)
 
+       #3) plot activity trace on basemap; color-code according to activity type
+       if (activity$sport_type == "Ride") {
+         heatmap <- addPolylines(heatmap, lng = coords$lon, lat = coords$lat,
+                      color = "#744082", opacity = 2/4, weight = 2) #070A8D
+       } else if (activity$sport_type == "Hike") {
+         heatmap <- addPolylines(heatmap, lng = coords$lon, lat = coords$lat,
+                      color = "#b35702", opacity = 2/4, weight = 2) #DF0101 #b35702
+       } else if (activity$sport_type == "Walk") {
+         heatmap <- addPolylines(heatmap, lng = coords$lon, lat = coords$lat,
+                      color = "#366643", opacity = 2/4, weight = 2) #0F9020
+       } # END if else
+
+     } # END for loop
+
+     return(heatmap)
    }) # END renderLeaflet
 
 
