@@ -1,0 +1,11 @@
+name: strava_dashboard
+title:
+username:
+account: samanthacsik
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 7719626
+bundleId: 6549006
+url: https://samanthacsik.shinyapps.io/strava_dashboard/
+when: 1669250551.42601
+lastSyncTime: 1669250551.42602
