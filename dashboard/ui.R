@@ -54,12 +54,12 @@ body <- dashboardBody(
       tags$style(".small-box.bg-purple { background-color: #744082 !important; color: #FFFFFF !important; }"),
       tags$style(".small-box.bg-green { background-color: #366643 !important; color: #FFFFFF !important; }"),
 
-      # valueBoxes ----
-      fluidRow(
-        valueBoxOutput(outputId = "totalHikes"),
-        valueBoxOutput(outputId = "totalRides"),
-        valueBoxOutput(outputId = "totalWalks")
-      ), # END fluidRow
+      # # valueBoxes ----
+      # fluidRow(
+      #   valueBoxOutput(outputId = "totalHikes"),
+      #   valueBoxOutput(outputId = "totalRides"),
+      #   valueBoxOutput(outputId = "totalWalks")
+      # ), # END fluidRow
 
       # separator box ----
       fluidRow(
@@ -76,12 +76,16 @@ body <- dashboardBody(
       # leaflet map ----
       fluidRow(
         box(width = 12,
+            # valueBoxOutput(outputId = "total_filtered_activities"),
+            valueBoxOutput(outputId = "total_filtered_hikes"),
+            valueBoxOutput(outputId = "total_filtered_rides"),
+            valueBoxOutput(outputId = "total_filtered_walks"),
             sliderInput(inputId = "distance_sliderInput", label = "Select a distance (miles) range:",
                         min = min(acts$total_miles), max = max(acts$total_miles),
-                        value = c(5, 10)),
+                        value = c(min(acts$total_miles), max(acts$total_miles))),
             sliderInput(inputId = "elevation_sliderInput", label = "Select a range of elevation gain (ft):",
                         min = min(acts$elevation_gain_ft), max = max(acts$elevation_gain_ft),
-                        value = c(1000, 2000)),
+                        value = c(min(acts$elevation_gain_ft), max(acts$elevation_gain_ft))),
             leafletOutput(outputId = "strava_map", height = 500) |> withSpinner(color = "#cb9e72", type = 1)
             ) # END box
       ), # END fluidRow
