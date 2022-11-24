@@ -6,28 +6,28 @@ server <- function(input, output) {
 # value boxes
 ##############################
 
-  # calculate total activities for each sport_type (also used in leaflet map, below) ----
-  hikes_only <- acts |> filter(sport_type == "Hike") |> nrow()
-  rides_only <- acts |> filter(sport_type == "Ride") |> nrow()
-  walks_only <- acts |> filter(sport_type == "Walk") |> nrow()
+  # # calculate total activities for each sport_type (also used in leaflet map, below) ----
+  # hikes_only <- acts |> filter(sport_type == "Hike") |> nrow()
+  # rides_only <- acts |> filter(sport_type == "Ride") |> nrow()
+  # walks_only <- acts |> filter(sport_type == "Walk") |> nrow()
 
-  # total activity by sport valueBoxes ----
-  output$totalHikes <- renderValueBox({
-    valueBox("Total Number of Recorded Hikes", value = hikes_only, color = "orange", icon = icon("mountain", lib = "font-awesome"))
-  })
-  output$totalRides <- renderValueBox({
-    valueBox("Total Number of Recorded Rides", value = rides_only, color = "purple", icon = icon("bicycle", lib = "font-awesome"))
-  })
-  output$totalWalks <- renderValueBox({
-    valueBox("Total Number of Recorded Walks", value = walks_only, color = "green", icon = icon("user", lib = "font-awesome"))
-  })
-
+  # # total activity by sport valueBoxes ----
+  # output$totalHikes <- renderValueBox({
+  #   valueBox("Total Number of Recorded Hikes", value = hikes_only, color = "orange", icon = icon("mountain", lib = "font-awesome"))
+  # })
+  # output$totalRides <- renderValueBox({
+  #   valueBox("Total Number of Recorded Rides", value = rides_only, color = "purple", icon = icon("bicycle", lib = "font-awesome"))
+  # })
+  # output$totalWalks <- renderValueBox({
+  #   valueBox("Total Number of Recorded Walks", value = walks_only, color = "green", icon = icon("user", lib = "font-awesome"))
+  # })
+  #
 
 ##############################
-# leaflet map
+# leaflet map & valueBoxes
 ##############################
 
-  # filter for date range ----
+  # filter for distance and elevation ranges ----
   filtered_map <- reactive({
     acts |>
       filter(total_miles >= input$distance_sliderInput[1] & total_miles <= input$distance_sliderInput[2]) |>
@@ -45,6 +45,34 @@ server <- function(input, output) {
 
   walk_data <- reactive({
     filtered_map() |> filter(sport_type == "Walk")
+  })
+
+  ############################## total # of activities ##############################
+
+  # calculate number of activities displayed on map ----
+  total_filtered_hikes <- reactive({
+    hike_data() |> nrow()
+  })
+
+  total_filtered_rides <- reactive({
+    ride_data() |> nrow()
+  })
+
+  total_filtered_walks <- reactive({
+    walk_data() |> nrow()
+  })
+
+  # total activity by sport valueBoxes ----
+  output$total_filtered_hikes <- renderValueBox({
+    valueBox("Total Number of Recorded Hikes", value = total_filtered_hikes(), color = "orange", icon = icon("mountain", lib = "font-awesome"))
+  })
+
+  output$total_filtered_rides <- renderValueBox({
+    valueBox("Total Number of Recorded Rides", value = total_filtered_rides(), color = "purple", icon = icon("bicycle", lib = "font-awesome"))
+  })
+
+  output$total_filtered_walks <- renderValueBox({
+    valueBox("Total Number of Recorded Walks", value = total_filtered_walks(), color = "green", icon = icon("user", lib = "font-awesome"))
   })
 
   ############################## basemap & markers ##############################
@@ -68,7 +96,7 @@ server <- function(input, output) {
       # add clickable hiker markers with info about each hike
       addMarkers(data = hike_data(), icon = hiker_icon_custom,
                  group = "Display Hike Icons",
-                 lng = ~jitter(lng, factor = 6), lat = ~jitter(lat, factor = 6),
+                 lng = ~jitter(lng, factor = 6), lat = ~jitter(lat, factor = 4),
                  popup = paste("Hike Title:", hike_data()$name, "<br>",
                                "Distance (miles):", hike_data()$total_miles, "<br>",
                                "Elevation gain (ft):", hike_data()$elevation_gain_ft)) |>
@@ -76,7 +104,7 @@ server <- function(input, output) {
       # add clickable bike markers with info about each ride
      addMarkers(data = ride_data(), icon = bike_icon_custom,
                 group = "Display Bike Ride Icons",
-                lng = ~jitter(lng, factor = 6), lat = ~jitter(lat, factor = 6),
+                lng = ~jitter(lng, factor = 6), lat = ~jitter(lat, factor = 4),
                 popup = paste("Ride Title:", ride_data()$name, "<br>",
                               "Distance (miles):", ride_data()$total_miles, "<br>",
                               "Elevation gain (ft):", ride_data()$elevation_gain_ft)) |>
@@ -84,7 +112,7 @@ server <- function(input, output) {
      # add clickable walker markers with info about each  walk
      addMarkers(data = walk_data(), icon = walk_icon_custom,
                 group = "Display Walk Icons",
-                lng = ~jitter(lng, factor = 6), lat = ~jitter(lat, factor = 6),
+                lng = ~jitter(lng, factor = 6), lat = ~jitter(lat, factor = 4),
                 popup = paste("Walk Title:", walk_data()$name, "<br>",
                               "Distance (miles):", walk_data()$total_miles, "<br>",
                               "Elevation gain (ft):", walk_data()$elevation_gain_ft)) |>
@@ -93,6 +121,8 @@ server <- function(input, output) {
      addLayersControl(
        overlayGroups = c("Display Hike Icons", "Display Bike Ride Icons", "Display Walk Icons"),
        options = layersControlOptions(collapsed = TRUE)) |>
+
+      hideGroup(c("Display Hike Icons", "Display Bike Ride Icons", "Display Walk Icons")) |>
 
      # add heatmap legend
      addLegend(colors = c("#b35702", "#744082", "#366643"), # "#DF0101", "#070A8D", "#0F9020"
@@ -126,59 +156,10 @@ server <- function(input, output) {
 
      } # END for loop
 
+     # return heatmap  ----
      return(heatmap)
+
    }) # END renderLeaflet
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  # # filter data by sport_type for mapping icons ----
-  # hike_data <- acts |> filter(sport_type == "Hike")
-  # ride_data <- acts |> filter(sport_type == "Ride")
-  # walk_data <- acts |> filter(sport_type == "Walk")
-
-  # map ----
-  # output$strava_map <- renderLeaflet({
-  #
-  #   heatmap # find code in R/leaflet.R
-  #
-  # })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ##############################
