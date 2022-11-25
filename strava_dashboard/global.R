@@ -21,7 +21,7 @@ acts <- readRDS("data/strava_acts_2022-11-21.rds")
 # IMPORT FUNCTIONS, PLOTS, THEMES ----
 source("R/sport_type_pickerInput.R")
 source("R/date_range_inputs.R")
-# source("R/leaflet.R")
+source("R/leaflet.R")
 # source("R/fresh_theme.R")
 
 # create icons for leaflet ----
