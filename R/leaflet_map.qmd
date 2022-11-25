@@ -75,7 +75,7 @@ map <- leaflet() %>%
   addMarkers(data = hike_data, icon = hiker_icon_custom, 
              #clusterOptions = markerClusterOptions(), clusterId = "hikeCluster",
              group = "Display Hike Icons", 
-             lng = ~jitter(lng, factor = 6), lat = ~jitter(lat, factor = 6),
+             lng = ~jitter(lng, factor = 0.01), lat = ~jitter(lat, factor = 0.01),
              popup = paste("Hike Title:", hike_data$name, "<br>",
                            "Distance (miles):", hike_data$total_miles, "<br>",
                            "Elevation gain (ft):", hike_data$elevation_gain_ft)) %>%
@@ -84,7 +84,7 @@ map <- leaflet() %>%
   addMarkers(data = ride_data, icon = bike_icon_custom, 
              #clusterOptions = markerClusterOptions(), clusterId = "bikeCluster",
              group = "Display Bike Ride Icons",
-             lng = ~jitter(lng, factor = 6), lat = ~jitter(lat, factor = 6),
+             lng = ~jitter(lng, factor = 0.01), lat = ~jitter(lat, factor = 0.01),
              popup = paste("Ride Title:", ride_data$name, "<br>",
                            "Distance (miles):", ride_data$total_miles, "<br>",
                            "Elevation gain (ft):", ride_data$elevation_gain_ft)) %>%
@@ -93,7 +93,7 @@ map <- leaflet() %>%
   addMarkers(data = walk_data, icon = walk_icon_custom, 
              #clusterOptions = markerClusterOptions(), clusterId = "walkCluster",
              group = "Display Walk Icons",
-             lng = ~jitter(lng, factor = 6), lat = ~jitter(lat, factor = 6),
+             lng = ~jitter(lng, factor = 0.01), lat = ~jitter(lat, factor = 0.01),
              # clusterOptions = markerClusterOptions(),
              popup = paste("Walk Title:", walk_data$name, "<br>",
                            "Distance (miles):", walk_data$total_miles, "<br>",
@@ -130,14 +130,14 @@ for (i in unique_acts_ids) {
   coords <- googleway::decode_pl(activity$map.summary_polyline)
   
   #3) plot activity trace on basemap; color-code according to activity type
-  map <- if (activity$sport_type == "Ride") {
-    addPolylines(map, lng = coords$lon, lat = coords$lat,
+  if (activity$sport_type == "Ride") {
+    map <- addPolylines(map, lng = coords$lon, lat = coords$lat,
                       color = "#744082", opacity = 2/4, weight = 2) #070A8D
   } else if (activity$sport_type == "Hike") { 
-    addPolylines(map, lng = coords$lon, lat = coords$lat,
+    map <- addPolylines(map, lng = coords$lon, lat = coords$lat,
                       color = "#b35702", opacity = 2/4, weight = 2) #DF0101 #b35702
   } else if (activity$sport_type == "Walk") {
-    addPolylines(map, lng = coords$lon, lat = coords$lat,
+   map  <- addPolylines(map, lng = coords$lon, lat = coords$lat,
                       color = "#366643", opacity = 2/4, weight = 2) #0F9020
   }
    
