@@ -96,7 +96,7 @@ server <- function(input, output) {
       # add clickable hiker markers with info about each hike
       addMarkers(data = hike_data(), icon = hiker_icon_custom,
                  group = "Display Hike Icons",
-                 lng = ~jitter(lng, factor = 6), lat = ~jitter(lat, factor = 4),
+                 lng = ~jitter(lng, factor = 0.01), lat = ~jitter(lat, factor = 0.01),
                  popup = paste("Hike Title:", hike_data()$name, "<br>",
                                "Distance (miles):", hike_data()$total_miles, "<br>",
                                "Elevation gain (ft):", hike_data()$elevation_gain_ft)) |>
@@ -104,7 +104,7 @@ server <- function(input, output) {
       # add clickable bike markers with info about each ride
      addMarkers(data = ride_data(), icon = bike_icon_custom,
                 group = "Display Bike Ride Icons",
-                lng = ~jitter(lng, factor = 6), lat = ~jitter(lat, factor = 4),
+                lng = ~jitter(lng, factor = 0.01), lat = ~jitter(lat, factor = 0.01),
                 popup = paste("Ride Title:", ride_data()$name, "<br>",
                               "Distance (miles):", ride_data()$total_miles, "<br>",
                               "Elevation gain (ft):", ride_data()$elevation_gain_ft)) |>
@@ -112,7 +112,7 @@ server <- function(input, output) {
      # add clickable walker markers with info about each  walk
      addMarkers(data = walk_data(), icon = walk_icon_custom,
                 group = "Display Walk Icons",
-                lng = ~jitter(lng, factor = 6), lat = ~jitter(lat, factor = 4),
+                lng = ~jitter(lng, factor = 0.01), lat = ~jitter(lat, factor = 0.01),
                 popup = paste("Walk Title:", walk_data()$name, "<br>",
                               "Distance (miles):", walk_data()$total_miles, "<br>",
                               "Elevation gain (ft):", walk_data()$elevation_gain_ft)) |>

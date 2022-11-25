@@ -16,8 +16,8 @@ sidebar <- dashboardSidebar(
 
     menuItem("About the app", tabName = "about", icon = icon("star")),
     menuItem("Strava Dashboard", tabName = "dashboard", icon = icon("tachometer-alt")),
-    menuItem("Data", tabName = "data", icon = icon("database")),
-    menuItem("Tutorials", tabName = "tutorials", icon = icon("laptop-code"))
+    menuItem("Data", tabName = "data", icon = icon("database"))
+    # menuItem("Tutorials", tabName = "tutorials", icon = icon("laptop-code"))
 
   ) # END sidebarMenu
 
@@ -62,16 +62,16 @@ body <- dashboardBody(
       # ), # END fluidRow
 
       # separator box ----
-      fluidRow(
-        box(width = 12,
-            title = "Heatmap of all recorded Strava activities",
-            collapsible = TRUE, collapsed = FALSE,
-            span(
-              tags$div(includeMarkdown("text/map_info.md"))
-            ), # END span
-            background = "black"
-        ) # END box
-      ), # END fluidRow
+      # fluidRow(
+      #   box(width = 12,
+      #       title = "Heatmap of all recorded Strava activities",
+      #       collapsible = TRUE, collapsed = FALSE,
+      #       span(
+      #         tags$div(includeMarkdown("text/map_info.md"))
+      #       ), # END span
+      #       background = "black"
+      #   ) # END box
+      # ), # END fluidRow
 
       # leaflet map ----
       fluidRow(
@@ -137,15 +137,15 @@ body <- dashboardBody(
       ), # END fluidRow
 
       DT::dataTableOutput(outputId = "strava_data_trimmed")
-    ), # END "data" tab
+    ) # END "data" tab
 
     # ---------- tutorials tab ----------
-    tabItem(
-      tabName = "tutorials",
-      # h1("Want to learn how to work with your own Strava data?")
-    ) # END "tutorials" tab
-
-  ), # END tabItems
+  #   tabItem(
+  #     tabName = "tutorials",
+  #     # h1("Want to learn how to work with your own Strava data?")
+  #   ) # END "tutorials" tab
+  #
+  ) # END tabItems
 
 ) # END dashboardBody
 
