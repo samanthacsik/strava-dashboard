@@ -2,6 +2,10 @@
 
 # ------------------------------------------ header ------------------------------------------
 header <- dashboardHeader(
+  # load fa kit ----
+  # tags$script(src = "https://kit.fontawesome.com/b7f4c476ba.js"),
+
+  # add title ----
   title = span(img(src="media/strava_logo.png", width = 38,
                    href = "https://www.strava.com/",
                    target = "_blank"), # target = "_blank" opens link in new tab
@@ -29,9 +33,10 @@ body <- dashboardBody(
   # import theme (HAVEN'T QUITE FIGURED THIS OUT YET) ----
   # use_theme(mytheme),
 
-  # load stylesheet ----
+  # load stylesheet & fontawesome kit ----
   tags$head(
-    tags$link(rel = "stylesheet", type = "text/css", href = "styles.css")
+    tags$link(rel = "stylesheet", type = "text/css", href = "styles.css"),
+    tags$script(src = "https://kit.fontawesome.com/b7f4c476ba.js"),
   ), # END tags$head
 
   # tabItems() ----
@@ -53,25 +58,6 @@ body <- dashboardBody(
       tags$style(".small-box.bg-orange { background-color: #b35702 !important; color: #FFFFFF !important; }"),
       tags$style(".small-box.bg-purple { background-color: #744082 !important; color: #FFFFFF !important; }"),
       tags$style(".small-box.bg-green { background-color: #366643 !important; color: #FFFFFF !important; }"),
-
-      # # valueBoxes ----
-      # fluidRow(
-      #   valueBoxOutput(outputId = "totalHikes"),
-      #   valueBoxOutput(outputId = "totalRides"),
-      #   valueBoxOutput(outputId = "totalWalks")
-      # ), # END fluidRow
-
-      # separator box ----
-      # fluidRow(
-      #   box(width = 12,
-      #       title = "Heatmap of all recorded Strava activities",
-      #       collapsible = TRUE, collapsed = FALSE,
-      #       span(
-      #         tags$div(includeMarkdown("text/map_info.md"))
-      #       ), # END span
-      #       background = "black"
-      #   ) # END box
-      # ), # END fluidRow
 
       # leaflet map ----
       fluidRow(

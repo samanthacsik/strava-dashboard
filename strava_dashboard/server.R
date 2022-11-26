@@ -64,15 +64,15 @@ server <- function(input, output) {
 
   # total activity by sport valueBoxes ----
   output$total_filtered_hikes <- renderValueBox({
-    valueBox("Total Number of Recorded Hikes", value = total_filtered_hikes(), color = "orange", icon = icon("mountain", lib = "font-awesome"))
+    valueBox("Total Number of Recorded Hikes", value = total_filtered_hikes(), color = "orange", icon = icon("person-hiking", lib = "font-awesome"))
   })
 
   output$total_filtered_rides <- renderValueBox({
-    valueBox("Total Number of Recorded Rides", value = total_filtered_rides(), color = "purple", icon = icon("bicycle", lib = "font-awesome"))
+    valueBox("Total Number of Recorded Bike Rides", value = total_filtered_rides(), color = "purple", icon = icon("bicycle", lib = "font-awesome"))
   })
 
   output$total_filtered_walks <- renderValueBox({
-    valueBox("Total Number of Recorded Walks", value = total_filtered_walks(), color = "green", icon = icon("user", lib = "font-awesome"))
+    valueBox("Total Number of Recorded Walks", value = total_filtered_walks(), color = "green", icon = icon("person-walking", lib = "font-awesome"))
   })
 
   ############################## basemap & markers ##############################
