@@ -24,6 +24,33 @@ server <- function(input, output) {
   #
 
 ##############################
+# value boxes
+##############################
+
+  # calculate total mileage (shoes)
+  filtered_shoes <- reactive({
+    acts |> filter(gear_name == input$gear_shoes) |>
+      summarize(total = sum(total_miles))
+  })
+
+  # shoe infoBox outputs
+  output$gear_shoes_milage <- renderInfoBox({
+    valueBox("Total Milage | Hiking boots should be replaced every ~500-1,000 miles", value = filtered_shoes(), color = "black", icon = icon("shoe-prints", lib = "font-awesome"))
+  })
+
+  # calculate total mileage (bike)
+  filtered_bikes <- reactive({
+    acts |> filter(gear_name == input$gear_bike) |>
+      summarize(total = sum(total_miles))
+  })
+
+  # shoe infoBox outputs
+  output$gear_bike_milage <- renderInfoBox({
+    valueBox("Total Milage ", value = filtered_bikes(), color = "black", icon = icon("bicycle", lib = "font-awesome"))
+  })
+
+
+##############################
 # leaflet map & valueBoxes
 ##############################
 

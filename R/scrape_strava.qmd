@@ -87,6 +87,7 @@ my_acts <- rStrava::compile_activities(my_actvities) |>
     gear_id == "g9707381" ~ "danner3",
     gear_id == "g10199228" ~ "lowa",
     gear_id == "g10257186" ~ "nano",
+    gear_id == "b9318843" ~ "grail",
     gear_id == "b9263591" ~ "tandem",
     gear_id == "b9263606" ~ "yeti",
     gear_id == "b9263624" ~ "trek",

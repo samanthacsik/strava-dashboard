@@ -32,7 +32,7 @@ sidebar <- dashboardSidebar(
 body <- dashboardBody(
 
   # import theme (HAVEN'T QUITE FIGURED THIS OUT YET) ----
-  # use_theme(mytheme),
+  # use_theme(my_theme),
 
   # load stylesheet & fontawesome kit ----
   tags$head(
@@ -59,24 +59,45 @@ body <- dashboardBody(
       tags$style(".small-box.bg-orange { background-color: #b35702 !important; color: #FFFFFF !important; }"),
       tags$style(".small-box.bg-purple { background-color: #744082 !important; color: #FFFFFF !important; }"),
       tags$style(".small-box.bg-green { background-color: #366643 !important; color: #FFFFFF !important; }"),
+      tags$style(".small-box.bg-black { background-color: #64605f !important; color: #FFFFFF !important; }"),
 
       # style box header colors
-      tags$style(".box.box-solid.box-primary>.box-header {background-color: #98A08D!important; } color: #FFFFFF !important; }"),
+      # tags$style(".box.box-solid.box-primary>.box-header {background-color: #98A08D!important; } color: #FFFFFF !important; }"),
 
       # leaflet map ----
       fluidRow(
 
-        # text box
+        # gear garage box
         box(width = 5, height = 870,
             status = "primary", solidHeader = TRUE,
-            title = "Welcome to my Strava Dashboard!",
+            title = "Gear Garage",
             # collapsible = TRUE, collapsed = FALSE,
             span(
-              tags$div(includeMarkdown("text/dashboard_info.md"))
+              tags$div(includeMarkdown("text/gear_garage.md"))
             ), # END span
 
-            "more content here"
-            ), # END text box
+            # gear_shoes  pickerInput
+            pickerInput(inputId = "gear_shoes", label = "Select shoes:",
+                        choices = c("Danner Jag #3" = "danner3", "Danner Jag #2" = "danner2", "Danner Jag #1" = "danner1",
+                                    "Lowa Renegade" = "lowa", "Reebok Nano (black/white)" = "nano"),
+                        # options = pickerOptions(actionsBox = TRUE),
+                        selected = "Danner Jag #3",
+                        multiple = FALSE), # END gear pickerInput
+
+            # shoes mileage infoBoxOutput
+            valueBoxOutput(outputId = "gear_shoes_milage", width = 12) |> withSpinner(color = "#cb9e72", type = 1),
+
+            # gear_bike pickerInput
+            pickerInput(inputId = "gear_bike", label = "Select bike:",
+                        choices = c("Canyon Grail 7 (gravel)" = "grail", "Tandemania (tandem road bike)" = "tandem", "Yeti (MTB)" = "yeti",
+                                    "Trek (MTB)" = "trek", "Cannondale (MTB)" = "cannondale"),
+                        selected = "Canyon Grail 7 (gravel)",
+                        multiple = FALSE), # END gear pickerInput
+
+
+            # bike mileage infoBoxOutput
+            valueBoxOutput(outputId = "gear_bike_milage", width = 12) |> withSpinner(color = "#cb9e72", type = 1)
+            ), # END gear garage box
 
         # leaflet box
         box(width = 7, height = 870,
