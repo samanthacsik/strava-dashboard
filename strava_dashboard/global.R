@@ -25,19 +25,6 @@ source("R/sport_type_pickerInput.R")
 source("R/date_range_inputs.R")
 # source("R/fresh_theme.R")
 
-# GEAR IDS ----
-danner1 <- "g8567330"
-danner2 <- "g8567301"
-danner3 <- "g9707381"
-lowa <- "g10199228"
-nanos <- "g10257186"
-tandem <- "b9263591"
-grail <- "b9318843"
-yeti <- "b9263606"
-trek <- "b9263624"
-cannondale <- "b9263626"
-
-
 # create icons for leaflet ----
 hiker_icon_custom <- makeIcon(
   iconUrl = "www/media/hiker.png",
