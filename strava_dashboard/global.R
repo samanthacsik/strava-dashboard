@@ -13,16 +13,30 @@ library(htmltools)
 library(fontawesome)
 library(markdown)
 library(fresh)
+# library(bsplus)
+library(slickR)
 library(reactlog)
 
 # IMPORT DATA ----
-acts <- readRDS("data/strava_acts_2022-11-21.rds")
+acts <- readRDS("data/strava_acts_2022-11-29.rds")
 
 # IMPORT FUNCTIONS, PLOTS, THEMES ----
 source("R/sport_type_pickerInput.R")
 source("R/date_range_inputs.R")
-# source("R/leaflet.R")
 # source("R/fresh_theme.R")
+
+# GEAR IDS ----
+danner1 <- "g8567330"
+danner2 <- "g8567301"
+danner3 <- "g9707381"
+lowa <- "g10199228"
+nanos <- "g10257186"
+tandem <- "b9263591"
+grail <- "b9318843"
+yeti <- "b9263606"
+trek <- "b9263624"
+cannondale <- "b9263626"
+
 
 # create icons for leaflet ----
 hiker_icon_custom <- makeIcon(
@@ -68,4 +82,7 @@ stravaTheme <- theme_light() +
 
 # SPINNER STYLING (NOT WORKING) ----
 # options(spinner.type = 6, spinner.size = 2 , spinner.color = "#cb9e72")
+
+# SLIDESHOW IMAGES ----
+imgs <- list.files("strava_dashboard/www/slideshow_photos", pattern = ".jpeg", full.names = TRUE)
 

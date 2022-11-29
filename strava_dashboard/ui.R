@@ -20,7 +20,8 @@ sidebar <- dashboardSidebar(
 
     menuItem("About the app", tabName = "about", icon = icon("star")),
     menuItem("Strava Dashboard", tabName = "dashboard", icon = icon("tachometer-alt")),
-    menuItem("Data", tabName = "data", icon = icon("database"))
+    menuItem("Data", tabName = "data", icon = icon("database")),
+    menuItem("Photo Gallery", tabName = "photos", icon = icon("camera"))
     # menuItem("Tutorials", tabName = "tutorials", icon = icon("laptop-code"))
 
   ) # END sidebarMenu
@@ -59,9 +60,26 @@ body <- dashboardBody(
       tags$style(".small-box.bg-purple { background-color: #744082 !important; color: #FFFFFF !important; }"),
       tags$style(".small-box.bg-green { background-color: #366643 !important; color: #FFFFFF !important; }"),
 
+      # style box header colors
+      tags$style(".box.box-solid.box-primary>.box-header {background-color: #98A08D!important; } color: #FFFFFF !important; }"),
+
       # leaflet map ----
       fluidRow(
-        box(width = 12,
+
+        # text box
+        box(width = 5, height = 870,
+            status = "primary", solidHeader = TRUE,
+            title = "Welcome to my Strava Dashboard!",
+            # collapsible = TRUE, collapsed = FALSE,
+            span(
+              tags$div(includeMarkdown("text/dashboard_info.md"))
+            ), # END span
+
+            "more content here"
+            ), # END text box
+
+        # leaflet box
+        box(width = 7, height = 870,
             # valueBoxOutput(outputId = "total_filtered_activities"),
             valueBoxOutput(outputId = "total_filtered_hikes"),
             valueBoxOutput(outputId = "total_filtered_rides"),
@@ -73,7 +91,7 @@ body <- dashboardBody(
                         min = min(acts$elevation_gain_ft), max = max(acts$elevation_gain_ft),
                         value = c(min(acts$elevation_gain_ft), max(acts$elevation_gain_ft))),
             leafletOutput(outputId = "strava_map", height = 500) |> withSpinner(color = "#cb9e72", type = 1)
-            ) # END box
+            ) # END leaflet box
       ), # END fluidRow
 
       # add some space between map and plots ----
@@ -123,14 +141,33 @@ body <- dashboardBody(
       ), # END fluidRow
 
       DT::dataTableOutput(outputId = "strava_data_trimmed")
-    ) # END "data" tab
+    ), # END "data" tab
 
-    # ---------- tutorials tab ----------
+  # ---------- photos tab ----------
+    tabItem(
+      tabName = "photos",
+
+      # box ----
+      box(width = 12,
+
+          # # actionButton input ----
+          # actionButton(inputId = "previous", label = "Previous"),
+          # actionButton(inputId = "next", label = "Next")
+          #
+          # # image output ----
+          # imageOutput(outputId = "image")
+
+          # slickROutput(outputId = "slick_output", width = "100%", height = "200px")
+          ), # END box
+
+    ) # END "photos" tab
+
+  # ---------- tutorials tab ----------
   #   tabItem(
   #     tabName = "tutorials",
   #     # h1("Want to learn how to work with your own Strava data?")
   #   ) # END "tutorials" tab
-  #
+
   ) # END tabItems
 
 ) # END dashboardBody

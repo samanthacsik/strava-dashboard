@@ -282,4 +282,44 @@ server <- function(input, output) {
     ) # END datatable
   })
 
-}
+  ##############################
+  # photo slideshow
+  ##############################
+
+  # # set initial value ----
+  # index <- reactiveVal(value = 1)
+  #
+  # # event handler ----
+  # observeEvent(input[["previous"]], {
+  #   index(max(index()-1, 1))
+  # })
+  # observeEvent(input[["next"]], {
+  #   index(min(index()+1, length(imgs)))
+  # })
+  #
+  # # render image ----
+  # output$image <- renderImage({
+  #   x <- imgs[index()]
+  #   list(src = x)
+  # }, deleteFile = FALSE)
+
+  # # slickR option not working ----
+  # output$slick_output <- slickR::renderSlickR({
+  #   slickR::slickR(imgs)
+  # })
+
+  ##############################
+  # END SERVER
+  ##############################
+
+} # END SERVER
+
+
+
+
+
+
+
+
+
+
