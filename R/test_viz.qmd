@@ -13,8 +13,9 @@ library(tidyverse)
 library(lubridate)
 library(plotly)
 
+
 # import data
-acts <- readRDS("data/strava_acts_2022-11-11.rds")
+acts <- readRDS("data/strava_acts_2022-11-26.rds")
 ```
 
 ### Plot theme
@@ -71,29 +72,6 @@ ggplot(hikes, mapping = aes(x = total_miles)) +
   mytheme
 ```
 
-### Number of activities by week
-- select activity
-- select year
-- double slider to show date range
-```{r}
-# wrangle
-hike_by_week <- acts |> 
-  # filter(sport_type == "Hike") |> 
-  group_by(sport_type, year, week_number) |> 
-  summarize(total_miles_by_week = sum(total_miles)) |> 
-  filter(year == "2021")
-
-# TODO: add rows of 0 miles traveled for missing weeks
-
-ggplot(hike_by_week, aes(x = as.numeric(week_number), y = total_miles_by_week, color = sport_type)) +
-  geom_line() + 
-  geom_point() + 
-  labs(x = "Week",
-       y = "Total Distance") +
-  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
-  scale_y_continuous(breaks = scales::pretty_breaks(n = 5)) +
-  mytheme
-```
 
 ### Elevation ~ Distance 
 - select activity
@@ -167,5 +145,141 @@ hikes_test <- acts |>
 ```{r}
 distance <- acts |> 
   filter(total_miles >= 10 & total_miles <= 15)
+```
+
+### Number of activities by week
+- select activity
+- select year
+- double slider to show date range
+```{r}
+# wrangle
+hike_by_week <- acts |> 
+  # filter(sport_type == "Hike") |> 
+  group_by(sport_type, year, week_number) |> 
+  summarize(total_miles_by_week = sum(total_miles)) |> 
+  filter(year == "2021")
+
+# TODO: add rows of 0 miles traveled for missing weeks
+
+ggplot(hike_by_week, aes(x = as.numeric(week_number), y = total_miles_by_week, color = sport_type)) +
+  geom_line() + 
+  geom_point() + 
+  labs(x = "Week",
+       y = "Total Distance") +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 5)) +
+  mytheme +
+  mycolors
+```
+
+### Hikes by month
+
+```{r}
+# wrangle
+hike_by_month <- acts |> 
+  # filter(sport_type == "Hike") |> 
+  group_by(sport_type_alt, year, month) |> 
+  summarize(total_miles_by_month= sum(total_miles)) |> 
+  filter(year == "2021")
+
+ggplot(hike_by_month, aes(x = as.numeric(month), y = total_miles_by_month, color = sport_type_alt)) +
+  geom_line() + 
+  geom_point() + 
+  labs(x = NULL,
+       y = "Total Distance") +
+  scale_x_discrete(limits = c(month.abb)) +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 6)) +
+  scale_color_manual(name = "Sport", values = c("Hike" = "#b35702", "Bike" = "#744082", "Walk" = "#366643")) +
+  mytheme +
+  theme(axis.text.x = element_text(angle = 45, hjust = 0.9))
+
+```
+
+### Cluster Analysis (statquest: https://www.youtube.com/watch?v=4b5d3muPQmA)
+
+- Notes on scaling: 
+
+    - Re: PCAs: "scaling (aka rescale so that all variables follow z-distribution) is advisable when you have variables of different units. If youhave original data with very different variances, those with much larger variances will disproportionately load PCAs "
+    
+- Notes (more generally):
+
+- K-means clustering tries to put the data into the number of clusters you tell it to
+- Hierarchical clustering tells you, pairwise, what two things are most similar
+
+```{r}
+library(factoextra)
+library(NbClust)
+
+# simplify data
+hikes_cluster <- acts |> 
+  filter(sport_type_alt == "Hike") |> 
+  select(name, total_miles, elevation_gain_ft, avg_speed_mi_hr, max_speed_mi_hr,  moving_time_sec, elapsed_time_sec, elev_high_ft)
+
+# scale it 
+hikes_scaled <- as.data.frame(scale(hikes_cluster[2:3])) # was 2:8
+
+# Update to add rownames (activity name)
+rownames(hikes_scaled) <- hikes_cluster$name
+
+# estimate clusters
+NbClust(hikes_scaled, min.nc = 2, max.nc = 10, method = "kmeans") # 2 or 9 when just dist & elev included
+# fviz_nbclust(hikes_scaled, kmeans, method = "silhouette") # 2
+# fviz_nbclust(hikes_scaled, kmeans, method = "wss") # ?
+# fviz_nbclust(hikes_scaled, kmeans, method = "gap_stat") # 5
+
+# calculate clusters
+kmeans <- kmeans(hikes_scaled[, 1:2], centers = 9, nstart = 25)  # was 1:7
+
+kmeans$size
+kmeans$centers
+kmeans$cluster
+
+# Bind the cluster number to the original data
+hikes_cl <- data.frame(hikes_scaled, cluster_no = factor(kmeans$cluster))
+
+ggplot(hikes_cl) +
+  geom_point(aes(x = total_miles,
+                 y = elevation_gain_ft,
+                 color = cluster_no)) +
+  scale_color_brewer(palette = "Set2")
+
+fviz_cluster(kmeans, data = hikes_cl)  +
+  scale_x_continuous(name = "Scaled Total Distance (miles)") +
+  scale_y_continuous(name = "Scaled Total Elevation (ft)") +
+  scale_color_viridis(option = "cividis", discrete = T) +
+  scale_fill_viridis(option = "cividis", discrete = T) +
+  theme_minimal()
+# -----------------------------------------------------------------------------------------------
+
+
+hikes_cluster <- acts |> 
+  filter(sport_type_alt == "Hike") |> 
+  select(name, total_miles, elevation_gain_ft, avg_speed_mi_hr, max_speed_mi_hr,  moving_time_sec, elapsed_time_sec, elev_high_ft)
+
+# estimate number of clusters
+# number_est <- NbClust(hikes_cluster[2:8], min.nc = 2, max.nc = 10, method = "kmeans")
+
+# names <- acts |>
+#   filter(sport_type_alt == "Hike") |> 
+#   select(name)
+
+# scale 
+scaled_hikes_cluster <- scale(hikes_cluster[,2:8])
+
+# estimate clusters
+number_est_scaled<- NbClust(scaled_hikes_cluster, min.nc = 2, max.nc = 10, method = "kmeans")
+# scaled_names <- cbind(names, scaled_hikes_cluster)
+fviz_nbclust(scaled_hikes_cluster, kmeans, method = "silhouette") # finding optimal number of clusters
+
+distance <- get_dist(scaled_hikes_cluster)
+fviz_dist(distance, gradient = list(low = "#00AFBB", mid = "white", high = "#FC4E07"))
+
+
+
+
+
+
+
+num_clusters_est <- NbClust()
 ```
 

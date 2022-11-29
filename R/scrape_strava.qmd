@@ -34,7 +34,7 @@ my_token <- httr::config(token = strava_oauth(app_name, app_client_id, app_secre
 my_actvities <- rStrava::get_activity_list(stoken = my_token)
 
 #......................number of activities......................
-length(my_actvities) # 235 activities as of 11/21/2022
+length(my_actvities) # 237 activities as of 11/29/2022
 ```
 
 ## Wrangle data
@@ -79,6 +79,19 @@ my_acts <- rStrava::compile_activities(my_actvities) |>
     sport_type == "Ride" ~ "Bike",
     sport_type == "Walk" ~ "Walk"
   )) |> 
+  
+  # add gear name based on gear_id
+  mutate(gear_name = case_when(
+    gear_id == "g8567330" ~ "danner1",
+    gear_id == "g8567301" ~ "danner2",
+    gear_id == "g9707381" ~ "danner3",
+    gear_id == "g10199228" ~ "lowa",
+    gear_id == "g10257186" ~ "nano",
+    gear_id == "b9263591" ~ "tandem",
+    gear_id == "b9263606" ~ "yeti",
+    gear_id == "b9263624" ~ "trek",
+    gear_id == "b9263626" ~ "cannondale"
+  )) |> 
 
   # remove columns that were mutated above  
   dplyr::select(-c(distance, total_elevation_gain)) |> 
@@ -99,7 +112,7 @@ my_acts <- rStrava::compile_activities(my_actvities) |>
     map.id, map.resource_state, map.summary_polyline, 
     lat = start_latlng1, lng = start_latlng2, end_latlng1, end_latlng2,
     # other vars
-    has_heartrate, average_heartrate, gear_id, max_heartrate,
+    has_heartrate, average_heartrate, gear_id, gear_name, max_heartrate,
     # interactions
     kudos_count, comment_count,
     # other metadata
@@ -126,9 +139,9 @@ y2022[87, 12] = 1
 wrangled_acts <- rbind(y2022, y2021, y2020)
 
 #............................save data...........................
-# saveRDS(wrangled_acts, here::here("data/strava_acts_2022-11-21.rds"))
-# write_csv(wrangled_acts, here::here("data/strava_acts_2022-11-21.csv"))
-# saveRDS(wrangled_acts, here::here("dashboard/data/strava_acts_2022-11-21.rds"))
+# saveRDS(wrangled_acts, here::here("data/strava_acts_2022-11-29.rds"))
+# write_csv(wrangled_acts, here::here("data/strava_acts_2022-11-29.csv"))
+# saveRDS(wrangled_acts, here::here("strava_dashboard/data/strava_acts_2022-11-29.rds"))
 ```
 
 The above processed data does not contain the following variables (they were removed because they felt unnecessary to keep, at least for now, and/or it was unclear what they represented):
