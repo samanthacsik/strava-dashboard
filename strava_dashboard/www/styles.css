@@ -6,7 +6,7 @@ img.banner {
   margin-bottom: 1rem;
 }
 
-/* BOX TITLE STYLING */
+/* box title styling */
 .intro_box_title span {
   display: flex;
   gap: 0.4rem;
@@ -45,6 +45,22 @@ img.banner {
 /* sidebar text color */
 .skin-blue .sidebar a {
   color: #64605f; /* gray */
+}
+
+/* dynamic image resizing (added for danner boots photo) */
+/* img {
+      border: 1;
+      max-width: 100%;
+    }
+    element.style {
+      width: 33.33%;
+    } */
+
+img {
+  display:block;
+  max-width: 100%;
+  width: auto;
+  margin-bottom: 1rem;
 }
 
 /* NOT WORKING Box header background color*/

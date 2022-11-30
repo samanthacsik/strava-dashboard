@@ -1,0 +1,28 @@
+---
+title: "Decoding Polylines for Elevation Profiles"
+format: html
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#..........................load packages.........................
+library(tidyverse)
+library(googleway)
+
+# pausing bc I'm afraid of setting up a Google API billing account??
+set_key("")
+```
+
+```{r}
+my_polylines <- read_rds("data/strava_acts_2022-11-29.rds") |> 
+  select(lat, lon = lng, map.summary_polyline)
+```
+
+```{r}
+google_elevation(df_locations = my_polylines,
+                 location_type = "path",
+                 samples = 20,
+                 simplify = TRUE)
+```
+

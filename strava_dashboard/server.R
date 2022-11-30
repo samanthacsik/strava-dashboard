@@ -3,52 +3,37 @@
 server <- function(input, output) {
 
 ##############################
-# value boxes
+# Gear Garage valueBoxes
 ##############################
 
-  # # calculate total activities for each sport_type (also used in leaflet map, below) ----
-  # hikes_only <- acts |> filter(sport_type == "Hike") |> nrow()
-  # rides_only <- acts |> filter(sport_type == "Ride") |> nrow()
-  # walks_only <- acts |> filter(sport_type == "Walk") |> nrow()
-
-  # # total activity by sport valueBoxes ----
-  # output$totalHikes <- renderValueBox({
-  #   valueBox("Total Number of Recorded Hikes", value = hikes_only, color = "orange", icon = icon("mountain", lib = "font-awesome"))
-  # })
-  # output$totalRides <- renderValueBox({
-  #   valueBox("Total Number of Recorded Rides", value = rides_only, color = "purple", icon = icon("bicycle", lib = "font-awesome"))
-  # })
-  # output$totalWalks <- renderValueBox({
-  #   valueBox("Total Number of Recorded Walks", value = walks_only, color = "green", icon = icon("user", lib = "font-awesome"))
-  # })
-  #
-
-##############################
-# value boxes
-##############################
-
-  # calculate total mileage (shoes)
+  # calculate total mileage (shoes) -----
   filtered_shoes <- reactive({
     acts |> filter(gear_name == input$gear_shoes) |>
       summarize(total = sum(total_miles))
   })
 
-  # shoe infoBox outputs
-  output$gear_shoes_milage <- renderInfoBox({
-    valueBox("Total Milage | Hiking boots should be replaced every ~500-1,000 miles", value = filtered_shoes(), color = "black", icon = icon("shoe-prints", lib = "font-awesome"))
+  # shoe valueBox outputs ----
+  output$gear_shoes_mileage <- renderInfoBox({
+    valueBox("Total Mileage | Hiking boots should be replaced every ~500-1,000 miles", value = filtered_shoes(), color = "black", icon = icon("shoe-prints", lib = "font-awesome"))
   })
 
-  # calculate total mileage (bike)
+  # calculate total mileage (bike) ----
   filtered_bikes <- reactive({
     acts |> filter(gear_name == input$gear_bike) |>
       summarize(total = sum(total_miles))
   })
 
-  # shoe infoBox outputs
-  output$gear_bike_milage <- renderInfoBox({
-    valueBox("Total Milage ", value = filtered_bikes(), color = "black", icon = icon("bicycle", lib = "font-awesome"))
+  # bike valueBox outputs ----
+  output$gear_bike_mileage <- renderInfoBox({
+    valueBox("Total Mileage ", value = filtered_bikes(), color = "black", icon = icon("bicycle", lib = "font-awesome"))
   })
 
+  # danner photo ----
+  output$danners <- renderImage({
+    list(src = "www/media/danner.jpeg", height = 250, width = "auto",
+         style = "display: block; margin-left: auto; margin-right: auto;",
+         alt = "Two sets of Danner Jag hiking boots, side by side. In the foreground are newly unboxed and unworn shoes, and in the background are very worn boots to be retired.")
+  }, deleteFile = FALSE)
 
 ##############################
 # leaflet map & valueBoxes
@@ -166,10 +151,10 @@ server <- function(input, output) {
        # 1) get activity
        activity <- filter(filtered_map(), id == i)
 
-     #   # 2) decode polyline
+       # 2) decode polyline
        coords <- googleway::decode_pl(activity$map.summary_polyline)
 
-       #3) plot activity trace on basemap; color-code according to activity type
+       # 3) plot activity trace on basemap; color-code according to activity type
        if (activity$sport_type == "Ride") {
          heatmap <- addPolylines(heatmap, lng = coords$lon, lat = coords$lat,
                       color = "#744082", opacity = 2/4, weight = 2) #070A8D
@@ -301,11 +286,8 @@ server <- function(input, output) {
 
   output$strava_data_trimmed <- DT::renderDataTable({
     DT::datatable(acts_trimmed,
-                  options = list(pageLength = 5, scrollX = TRUE),
+                  options = list(pageLength = 10, scrollX = TRUE),
                   rownames = FALSE
-                  # caption = htmltools::tags$caption(
-                  #   style = 'caption-side: top; text-align: left;',
-                  #   'Table 1: ', htmltools::em('Strava data. Only a subset of variables are displayed. Data are updated periodically and may not reflect the most recent activity recordings.')))
     ) # END datatable
   })
 

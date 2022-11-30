@@ -82,7 +82,7 @@ body <- dashboardBody(
                         multiple = FALSE), # END gear pickerInput
 
             # shoes mileage infoBoxOutput ----
-            valueBoxOutput(outputId = "gear_shoes_milage", width = 12) |> withSpinner(color = "#cb9e72", type = 1),
+            valueBoxOutput(outputId = "gear_shoes_mileage", width = 12) |> withSpinner(color = "#cb9e72", type = 1),
 
             # gear_bike pickerInput ----
             pickerInput(inputId = "gear_bike", label = "Select bike:",
@@ -93,17 +93,18 @@ body <- dashboardBody(
 
 
             # bike mileage infoBoxOutput ----
-            valueBoxOutput(outputId = "gear_bike_milage", width = 12) |> withSpinner(color = "#cb9e72", type = 1),
+            valueBoxOutput(outputId = "gear_bike_mileage", width = 12) |> withSpinner(color = "#cb9e72", type = 1),
 
             # photo of boots ----
-            tags$img(class = "banner",
-                     src = "media/danner.jpeg"),
+            # tags$img(class = "banner",
+            #          src = "media/danner.jpeg"),
+            imageOutput(outputId = "danners"),
 
             # danner description ----
             span(
               tags$div(includeMarkdown("text/danner.md"))
             )
-            ), # END gear garage box
+          ), # END gear garage box
 
         # leaflet box ----
         box(width = 7, height = 870,
@@ -158,12 +159,9 @@ body <- dashboardBody(
       # separator box ----
       fluidRow(
         box(width = 12,
-            title = "Strava Data",
-            collapsible = TRUE, collapsed = FALSE,
             span(
               tags$div(includeMarkdown("text/data_info.md"))
             ), # END span
-            background = "black"
         ) # END box
       ), # END fluidRow
 
