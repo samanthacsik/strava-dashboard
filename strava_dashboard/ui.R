@@ -64,19 +64,16 @@ body <- dashboardBody(
       # style box header colors
       # tags$style(".box.box-solid.box-primary>.box-header {background-color: #98A08D!important; } color: #FFFFFF !important; }"),
 
-      # leaflet map ----
+      # first row  ----
       fluidRow(
 
-        # gear garage box
+        # gear garage box ----
         box(width = 5, height = 870,
-            status = "primary", solidHeader = TRUE,
-            title = "Gear Garage",
-            # collapsible = TRUE, collapsed = FALSE,
             span(
               tags$div(includeMarkdown("text/gear_garage.md"))
             ), # END span
 
-            # gear_shoes  pickerInput
+            # gear_shoes pickerInput ----
             pickerInput(inputId = "gear_shoes", label = "Select shoes:",
                         choices = c("Danner Jag #3" = "danner3", "Danner Jag #2" = "danner2", "Danner Jag #1" = "danner1",
                                     "Lowa Renegade" = "lowa", "Reebok Nano (black/white)" = "nano"),
@@ -84,10 +81,10 @@ body <- dashboardBody(
                         selected = "Danner Jag #3",
                         multiple = FALSE), # END gear pickerInput
 
-            # shoes mileage infoBoxOutput
+            # shoes mileage infoBoxOutput ----
             valueBoxOutput(outputId = "gear_shoes_milage", width = 12) |> withSpinner(color = "#cb9e72", type = 1),
 
-            # gear_bike pickerInput
+            # gear_bike pickerInput ----
             pickerInput(inputId = "gear_bike", label = "Select bike:",
                         choices = c("Canyon Grail 7 (gravel)" = "grail", "Tandemania (tandem road bike)" = "tandem", "Yeti (MTB)" = "yeti",
                                     "Trek (MTB)" = "trek", "Cannondale (MTB)" = "cannondale"),
@@ -95,11 +92,20 @@ body <- dashboardBody(
                         multiple = FALSE), # END gear pickerInput
 
 
-            # bike mileage infoBoxOutput
-            valueBoxOutput(outputId = "gear_bike_milage", width = 12) |> withSpinner(color = "#cb9e72", type = 1)
+            # bike mileage infoBoxOutput ----
+            valueBoxOutput(outputId = "gear_bike_milage", width = 12) |> withSpinner(color = "#cb9e72", type = 1),
+
+            # photo of boots ----
+            tags$img(class = "banner",
+                     src = "media/danner.jpeg"),
+
+            # danner description ----
+            span(
+              tags$div(includeMarkdown("text/danner.md"))
+            )
             ), # END gear garage box
 
-        # leaflet box
+        # leaflet box ----
         box(width = 7, height = 870,
             # valueBoxOutput(outputId = "total_filtered_activities"),
             valueBoxOutput(outputId = "total_filtered_hikes"),
