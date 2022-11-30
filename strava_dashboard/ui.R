@@ -40,6 +40,20 @@ body <- dashboardBody(
     tags$script(src = "https://kit.fontawesome.com/b7f4c476ba.js"),
   ), # END tags$head
 
+  # dynamic resizing of danner boots photo (figure out how to move to styles.css) ----
+  tags$head(
+    tags$style(
+    type="text/css",
+    "#danners img {max-width: 100%; width: 100%; height: auto}")
+    ), # END tags$head
+
+  # dynamic resizing of danner boots photo (figure out how to move to styles.css) ----
+  # tags$head(
+  #   tags$style(
+  #     type="text/css",
+  #     "#strava_map img {max-width: 100%; width: 100%; height: auto}")
+  # ), # END tags$head
+
   # tabItems() ----
   tabItems(
 
@@ -60,6 +74,7 @@ body <- dashboardBody(
       tags$style(".small-box.bg-purple { background-color: #744082 !important; color: #FFFFFF !important; }"),
       tags$style(".small-box.bg-green { background-color: #366643 !important; color: #FFFFFF !important; }"),
       tags$style(".small-box.bg-black { background-color: #64605f !important; color: #FFFFFF !important; }"),
+
 
       # style box header colors
       # tags$style(".box.box-solid.box-primary>.box-header {background-color: #98A08D!important; } color: #FFFFFF !important; }"),
