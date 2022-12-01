@@ -140,8 +140,6 @@ y2022[87, 12] = 1
 wrangled_acts <- rbind(y2022, y2021, y2020)
 
 #............................save data...........................
-# saveRDS(wrangled_acts, here::here("data/strava_acts_2022-11-29.rds"))
-# write_csv(wrangled_acts, here::here("data/strava_acts_2022-11-29.csv"))
 # saveRDS(wrangled_acts, here::here("strava_dashboard/data/strava_acts_2022-11-29.rds"))
 ```
 
