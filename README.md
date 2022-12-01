@@ -83,7 +83,7 @@ my_token <- httr::config(token = strava_oauth(app_name, app_client_id, app_secre
 
 A browser window should open asking you to authorize Strava to access your data. Once you agree, it'll return a message in the browser, `Authentication complete. Please close this page and return to R.` This means things are working!
 
-You're now ready to retrieve, wrangle, and plot your data! Check out my [`leaflet_map.qmd`](https://github.com/samanthacsik/strava-hikes/blob/main/code/strava_hikes.Rmd) file to see how I created my `leaflet` heatmap.
+You're now ready to retrieve, wrangle, and plot your data! Check out my [`scrape_strava.qmd`](https://github.com/samanthacsik/strava-dashboard/blob/main/R/scrape_strava.qmd) file to see how I created my retrieved and wrangled my data in preparation for plotting and analysis.
 
 **Other resources:**
 
