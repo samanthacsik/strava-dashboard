@@ -56,12 +56,6 @@ img.banner {
       width: 33.33%;
     } */
 
-img {
-  display:block;
-  max-width: 100%;
-  width: auto;
-  margin-bottom: 1rem;
-}
 
 /* NOT WORKING Box header background color*/
 /*.box-header .with-border {

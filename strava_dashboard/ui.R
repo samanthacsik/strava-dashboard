@@ -2,8 +2,6 @@
 
 # ------------------------------------------ header ------------------------------------------
 header <- dashboardHeader(
-  # load fa kit ----
-  # tags$script(src = "https://kit.fontawesome.com/b7f4c476ba.js"),
 
   # add title ----
   title = span(img(src="media/strava_logo.png", width = 38,
@@ -41,11 +39,11 @@ body <- dashboardBody(
   ), # END tags$head
 
   # dynamic resizing of danner boots photo (figure out how to move to styles.css) ----
-  tags$head(
-    tags$style(
-    type="text/css",
-    "#danners img {max-width: 100%; width: 100%; height: auto}")
-    ), # END tags$head
+  # tags$head(
+  #   tags$style(
+  #   type="text/css",
+  #   "#danners img {max-width: 100%; width: 100%; height: auto}")
+  #   ), # END tags$head
 
   # dynamic resizing of danner boots photo (figure out how to move to styles.css) ----
   # tags$head(
@@ -83,7 +81,7 @@ body <- dashboardBody(
       fluidRow(
 
         # gear garage box ----
-        box(width = 5, height = 870,
+        box(width = 4, height = 930,
             span(
               tags$div(includeMarkdown("text/gear_garage.md"))
             ), # END span
@@ -92,7 +90,6 @@ body <- dashboardBody(
             pickerInput(inputId = "gear_shoes", label = "Select shoes:",
                         choices = c("Danner Jag #3" = "danner3", "Danner Jag #2" = "danner2", "Danner Jag #1" = "danner1",
                                     "Lowa Renegade" = "lowa", "Reebok Nano (black/white)" = "nano"),
-                        # options = pickerOptions(actionsBox = TRUE),
                         selected = "Danner Jag #3",
                         multiple = FALSE), # END gear pickerInput
 
@@ -113,17 +110,23 @@ body <- dashboardBody(
             # photo of boots ----
             # tags$img(class = "banner",
             #          src = "media/danner.jpeg"),
-            imageOutput(outputId = "danners"),
+            # imageOutput(outputId = "danners"),
 
             # danner description ----
-            span(
-              tags$div(includeMarkdown("text/danner.md"))
-            )
+            # span(
+            #   tags$div(includeMarkdown("text/danner.md"))
+            # )
           ), # END gear garage box
 
         # leaflet box ----
-        box(width = 7, height = 870,
-            # valueBoxOutput(outputId = "total_filtered_activities"),
+        box(width = 8, height = 930,
+
+            # leaflet box header text ----
+            span(
+              tags$div(includeMarkdown("text/leaflet_info.md"))
+            ), # END span
+
+            # value boxes, sliderInputs, leaflet map ----
             valueBoxOutput(outputId = "total_filtered_hikes"),
             valueBoxOutput(outputId = "total_filtered_rides"),
             valueBoxOutput(outputId = "total_filtered_walks"),
@@ -133,7 +136,7 @@ body <- dashboardBody(
             sliderInput(inputId = "elevation_sliderInput", label = "Select a range of elevation gain (ft):",
                         min = min(acts$elevation_gain_ft), max = max(acts$elevation_gain_ft),
                         value = c(min(acts$elevation_gain_ft), max(acts$elevation_gain_ft))),
-            leafletOutput(outputId = "strava_map", height = 500) |> withSpinner(color = "#cb9e72", type = 1)
+            leafletOutput(outputId = "strava_map", height = 450) |> withSpinner(color = "#cb9e72", type = 1)
             ) # END leaflet box
       ), # END fluidRow
 
@@ -148,7 +151,7 @@ body <- dashboardBody(
 
                # elev ~ dist scatterplot ----
                tabPanel("Elevation Gained ~ Distance Traveled",
-                        sport_type_pickerInput(inputId = "sport_scatterplot"), # sport type input )
+                        sport_type_pickerInput(inputId = "sport_scatterplot"), # sport type input
                         date_range_airDatepickerInput(inputId = "date_scatterplot"), # date range input
                         plotly::plotlyOutput(outputId = "elev_dist_scatterplot") |> withSpinner(color = "#cb9e72", type = 1) # elev ~ dist scatterplot output
                ), # END tabPanel (scatterplot)
@@ -177,10 +180,14 @@ body <- dashboardBody(
             span(
               tags$div(includeMarkdown("text/data_info.md"))
             ), # END span
+
+            # dataTableOutput ----
+            DT::dataTableOutput(outputId = "strava_data_trimmed") |> withSpinner(color = "#cb9e72", type = 1)
+
+
         ) # END box
       ), # END fluidRow
 
-      DT::dataTableOutput(outputId = "strava_data_trimmed")
     ), # END "data" tab
 
   # ---------- photos tab ----------
@@ -188,7 +195,7 @@ body <- dashboardBody(
       tabName = "photos",
 
       # box ----
-      box(width = 12,
+      # box(width = 12,
 
           # # actionButton input ----
           # actionButton(inputId = "previous", label = "Previous"),
@@ -198,7 +205,7 @@ body <- dashboardBody(
           # imageOutput(outputId = "image")
 
           # slickROutput(outputId = "slick_output", width = "100%", height = "200px")
-          ), # END box
+          # ), # END box
 
     ) # END "photos" tab
 
@@ -213,4 +220,4 @@ body <- dashboardBody(
 ) # END dashboardBody
 
 # ------------------------------------------ combine ------------------------------------------
-ui <- dashboardPage(header, sidebar, body)
+ui <- dashboardPage(title = "Sam's Strava Stats", header, sidebar, body)
