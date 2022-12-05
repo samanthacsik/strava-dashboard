@@ -80,7 +80,7 @@ server <- function(input, output) {
   })
 
   output$total_filtered_rides <- renderValueBox({
-    valueBox("Total Number of Recorded Bike Rides", value = total_filtered_rides(), color = "purple", icon = icon("bicycle", lib = "font-awesome"))
+    valueBox("Total Number of Recorded Bike Rides", value = total_filtered_rides(), color = "purple", icon = icon("person-biking", lib = "font-awesome"))
   })
 
   output$total_filtered_walks <- renderValueBox({
@@ -269,7 +269,8 @@ server <- function(input, output) {
   })
 
   # render dist_elev_stats_table ----
-  output$dist_elev_stats_table <- renderTable(filtered_stats())
+  output$dist_elev_stats_table <- renderTable(filtered_stats(),
+                                              bordered = TRUE)
   # DT::renderDataTable({
   #   DT::datatable(filtered_stats(),
   #                 rownames = FALSE,

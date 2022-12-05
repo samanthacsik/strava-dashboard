@@ -59,10 +59,12 @@ body <- dashboardBody(
       tabName = "about",
       tags$img(class = "banner",
                src = "media/camuesa_cropped.jpeg"),
+
+      # fluidRow with intro & getting data text boxes ----
       fluidRow(
 
         # intro box ----
-        box(width = 6,
+        box(width = 12,
             title = tags$div(#class = "intro_box_title",
               span(
                 tags$i(class="fa-solid fa-tachometer-alt"),
@@ -84,10 +86,11 @@ body <- dashboardBody(
             ), # END scrape strava box
       ), # END fluidRow,
 
-      # update data box ----
+
+      # ufluidRow with pdate data box ----
       fluidRow(
         box(width = 12,
-            title = tags$div(#class = "intro_box_title",
+            title = tags$div(
               span(
                 tags$i(class="fa-solid fa-table"),
                 tags$b("Updating App Data")
@@ -209,6 +212,8 @@ body <- dashboardBody(
                         splitLayout(cellWidths = c("50%", "50%"), # histogram outputs
                                     plotOutput(outputId = "dist_histogram") |> withSpinner(color = "#cb9e72", type = 1),
                                     plotOutput(outputId = "elev_histogram") |> withSpinner(color = "#cb9e72", type = 1)),
+                        headerPanel(""),
+                        headerPanel(""),
                         tableOutput(outputId = "dist_elev_stats_table")
                ), # END tabPanel (histograms)
 
