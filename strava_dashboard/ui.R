@@ -20,7 +20,6 @@ sidebar <- dashboardSidebar(
     menuItem("Strava Dashboard", tabName = "dashboard", icon = icon("tachometer-alt")),
     menuItem("Data", tabName = "data", icon = icon("database")),
     menuItem("Photo Gallery", tabName = "photos", icon = icon("camera"))
-    # menuItem("Tutorials", tabName = "tutorials", icon = icon("laptop-code"))
 
   ) # END sidebarMenu
 
@@ -60,7 +59,49 @@ body <- dashboardBody(
       tabName = "about",
       tags$img(class = "banner",
                src = "media/camuesa_cropped.jpeg"),
-      includeMarkdown("text/home_page_footer.md")
+      fluidRow(
+
+        # intro box ----
+        box(width = 6,
+            title = tags$div(#class = "intro_box_title",
+              span(
+                tags$i(class="fa-solid fa-tachometer-alt"),
+                tags$b("Why Build a Strava Dashboard?")
+              ), # EO span
+            ), # EO div
+          includeMarkdown("text/intro.md")
+        ), # END intro box
+
+        # scrape data box ----
+        box(width = 6,
+            title = tags$div(#class = "intro_box_title",
+                       span(
+                         tags$i(class="fa-solid fa-database"),
+                         tags$b("Getting Strava Data")
+                       ), # EO span
+              ), # EO div
+            includeMarkdown("text/getting_data.md")
+            ), # END scrape strava box
+      ), # END fluidRow,
+
+      # update data box ----
+      fluidRow(
+        box(width = 12,
+            title = tags$div(#class = "intro_box_title",
+              span(
+                tags$i(class="fa-solid fa-table"),
+                tags$b("Updating App Data")
+              ), # EO span
+            ), # EO div
+            includeMarkdown("text/updating_data.md")
+            ) # END box
+      ), # END fluidRow
+
+      # footer ----
+      fluidRow(
+        includeMarkdown("text/home_page_footer.md")
+      ) # END fluidRow
+
     ), # END "about" tabItem
 
     # ---------- dashboard tab ----------
@@ -77,11 +118,11 @@ body <- dashboardBody(
       # style box header colors
       # tags$style(".box.box-solid.box-primary>.box-header {background-color: #98A08D!important; } color: #FFFFFF !important; }"),
 
-      # first row  ----
+      # first row  (contains gear garage & leaflet boxes)----
       fluidRow(
 
         # gear garage box ----
-        box(width = 4, height = 930,
+        box(width = 4, # height = 930, (setting height causes problems with dynamic screen size)
             span(
               tags$div(includeMarkdown("text/gear_garage.md"))
             ), # END span
@@ -108,18 +149,23 @@ body <- dashboardBody(
             valueBoxOutput(outputId = "gear_bike_mileage", width = 12) |> withSpinner(color = "#cb9e72", type = 1),
 
             # photo of boots ----
-            # tags$img(class = "banner",
-            #          src = "media/danner.jpeg"),
+            # tags$img(src = "media/danner.jpeg",
+            #   align = "center",
+            #   style = "width: 100%; height: 15em; display: block; margin-left: auto; margin-right: auto;",
+            # ) # end tags$img (danner.jpeg)
+
+            tags$img(class = "banner",
+                     src = "media/danner.jpeg"),
             # imageOutput(outputId = "danners"),
 
             # danner description ----
-            # span(
-            #   tags$div(includeMarkdown("text/danner.md"))
-            # )
+            span(
+              tags$div(includeMarkdown("text/danner.md"))
+            )
           ), # END gear garage box
 
         # leaflet box ----
-        box(width = 8, height = 930,
+        box(width = 8, # height = 930,
 
             # leaflet box header text ----
             span(
@@ -136,14 +182,14 @@ body <- dashboardBody(
             sliderInput(inputId = "elevation_sliderInput", label = "Select a range of elevation gain (ft):",
                         min = min(acts$elevation_gain_ft), max = max(acts$elevation_gain_ft),
                         value = c(min(acts$elevation_gain_ft), max(acts$elevation_gain_ft))),
-            leafletOutput(outputId = "strava_map", height = 450) |> withSpinner(color = "#cb9e72", type = 1)
+            leafletOutput(outputId = "strava_map") |> withSpinner(color = "#cb9e72", type = 1)
             ) # END leaflet box
-      ), # END fluidRow
+      ), # END first fluidRow
 
       # add some space between map and plots ----
       headerPanel(""),
 
-      # distance & elevation plots ----
+      # second fluid row (contains distance & elevation plots) ----
       fluidRow(
         tabBox(width = 12,
                title = tags$strong("Explore distance and elevation stats"),
@@ -167,7 +213,7 @@ body <- dashboardBody(
                ), # END tabPanel (histograms)
 
               ) # END tabBox
-      ), # END fluidRow
+      ), # END second fluidRow
     ), # END "dashboard" tab
 
     # ---------- data tab ----------
@@ -209,15 +255,9 @@ body <- dashboardBody(
 
     ) # END "photos" tab
 
-  # ---------- tutorials tab ----------
-  #   tabItem(
-  #     tabName = "tutorials",
-  #     # h1("Want to learn how to work with your own Strava data?")
-  #   ) # END "tutorials" tab
-
   ) # END tabItems
 
 ) # END dashboardBody
 
 # ------------------------------------------ combine ------------------------------------------
-ui <- dashboardPage(title = "Sam's Strava Stats", header, sidebar, body)
+ui <- dashboardPage(title = "Sam's Strava Stats", header, sidebar, body) # title here updates how title appears in browser tab (need to define here bc title in dashboardHeader has media embedded)

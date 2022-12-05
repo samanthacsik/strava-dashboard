@@ -29,11 +29,11 @@ server <- function(input, output) {
   })
 
   # danner photo ----
-  output$danners <- renderImage({
-    list(src = "www/media/danner.jpeg", height = 250, width = "auto",
-         style = "display: block; margin-left: auto; margin-right: auto;",
-         alt = "Two sets of Danner Jag hiking boots, side by side. In the foreground are newly unboxed and unworn shoes, and in the background are very worn boots to be retired.")
-  }, deleteFile = FALSE)
+  # output$danners <- renderImage({
+  #   list(src = "www/media/danner.jpeg", height = 250, width = "auto",
+  #        style = "display: block; margin-left: auto; margin-right: auto;",
+  #        alt = "Two sets of Danner Jag hiking boots, side by side. In the foreground are newly unboxed and unworn shoes, and in the background are very worn boots to be retired.")
+  # }, deleteFile = FALSE)
 
 ##############################
 # leaflet map & valueBoxes

@@ -1,0 +1,1 @@
+The data displayed are manually updated periodically by running `R/scrape_strava.R` script, then saving the newly acquired data to `strava_dashboard/data/`. A mid-term future goal is to automate this process!
