@@ -2,7 +2,7 @@ Retrieving data first requires a Strava API Application, which you can create fr
 
 Next, I used the following [`{rStrava}`](https://cran.r-project.org/web/packages/rStrava/index.html) functions to get my data: 
 
-1. create your Strava token using [`strava_oauth()`](https://search.r-project.org/CRAN/refmans/rStrava/html/strava_oauth.html) (you'll need your app name, client ID, secred & scope)
+1. create your Strava token using [`strava_oauth()`](https://search.r-project.org/CRAN/refmans/rStrava/html/strava_oauth.html) (you'll need your app name, client ID, secret & scope)
 
 2. pull a list of desired activities using [`get_activity_list()`](https://search.r-project.org/CRAN/refmans/rStrava/html/get_activity_list.html)
 

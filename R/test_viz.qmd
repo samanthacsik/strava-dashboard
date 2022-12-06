@@ -15,7 +15,7 @@ library(plotly)
 
 
 # import data
-acts <- readRDS("strava_dashboard/data/strava_acts_2022-11-29.rds")
+acts <- readRDS("strava_dashboard/data/strava_acts_2022-12-02.rds")
 ```
 
 ### Plot theme
@@ -209,6 +209,7 @@ ggplot(hike_by_month, aes(x = as.numeric(month), y = total_miles_by_month, color
 ```{r}
 library(factoextra)
 library(NbClust)
+#library(cluster)
 
 # simplify data
 hikes_cluster <- acts |> 
@@ -216,7 +217,7 @@ hikes_cluster <- acts |>
   select(name, total_miles, elevation_gain_ft, avg_speed_mi_hr, max_speed_mi_hr,  moving_time_sec, elapsed_time_sec, elev_high_ft)
 
 # scale it 
-hikes_scaled <- as.data.frame(scale(hikes_cluster[2:3])) # was 2:8
+hikes_scaled <- as.data.frame(scale(hikes_cluster[2:8])) # was 2:8
 
 # Update to add rownames (activity name)
 rownames(hikes_scaled) <- hikes_cluster$name

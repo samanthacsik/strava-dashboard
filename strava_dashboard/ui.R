@@ -64,7 +64,7 @@ body <- dashboardBody(
       fluidRow(
 
         # intro box ----
-        box(width = 12,
+        box(width = 6,
             title = tags$div(#class = "intro_box_title",
               span(
                 tags$i(class="fa-solid fa-tachometer-alt"),
@@ -87,7 +87,7 @@ body <- dashboardBody(
       ), # END fluidRow,
 
 
-      # ufluidRow with pdate data box ----
+      # fluidRow with pdate data box ----
       fluidRow(
         box(width = 12,
             title = tags$div(
@@ -132,7 +132,7 @@ body <- dashboardBody(
 
             # gear_shoes pickerInput ----
             pickerInput(inputId = "gear_shoes", label = "Select shoes:",
-                        choices = c("Danner Jag #3" = "danner3", "Danner Jag #2" = "danner2", "Danner Jag #1" = "danner1",
+                        choices = c("Danner Jag #3" = "danner3", "Danner Jag #2" = "danner2", "Danner Jag #1 (retired)" = "danner1",
                                     "Lowa Renegade" = "lowa", "Reebok Nano (black/white)" = "nano"),
                         selected = "Danner Jag #3",
                         multiple = FALSE), # END gear pickerInput
@@ -219,6 +219,13 @@ body <- dashboardBody(
 
               ) # END tabBox
       ), # END second fluidRow
+
+      # fluidRow cluster analysis ----
+      fluidRow(
+        box(width = 12,
+            title = tags$strong("Kmeans Cluster Analysis"))
+      ) # END fluidRow
+
     ), # END "dashboard" tab
 
     # ---------- data tab ----------
@@ -234,11 +241,8 @@ body <- dashboardBody(
 
             # dataTableOutput ----
             DT::dataTableOutput(outputId = "strava_data_trimmed") |> withSpinner(color = "#cb9e72", type = 1)
-
-
         ) # END box
       ), # END fluidRow
-
     ), # END "data" tab
 
   # ---------- photos tab ----------
