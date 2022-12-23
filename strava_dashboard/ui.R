@@ -58,7 +58,8 @@ body <- dashboardBody(
     tabItem(
       tabName = "about",
       tags$img(class = "banner",
-               src = "media/camuesa_cropped.jpeg"),
+               src = "media/camuesa_cropped.jpeg",
+               alt = "A landscape photo of a golden field of grass that stretches towards rolling dark green/brown hills. The sun is rising over the hilltops to the left and the sky is clear. A narrow trail weaves down the center. In the foreground, there are a few bent metal posts with barbed wire streteched between them. In front of the fence, there is a crooked metal sign reading 'Camuesa Connector Trail'."),
 
       # fluidRow with intro & getting data text boxes ----
       fluidRow(
@@ -199,7 +200,7 @@ body <- dashboardBody(
                side = "right", selected = "Distance & Elevation Summary Stats",
 
                # elev ~ dist scatterplot ----
-               tabPanel("Elevation Gained ~ Distance Traveled",
+               tabPanel("Elevation Gain / Distance Scatterplot",
                         sport_type_pickerInput(inputId = "sport_scatterplot"), # sport type input
                         date_range_airDatepickerInput(inputId = "date_scatterplot"), # date range input
                         plotly::plotlyOutput(outputId = "elev_dist_scatterplot") |> withSpinner(color = "#cb9e72", type = 1) # elev ~ dist scatterplot output
@@ -221,10 +222,10 @@ body <- dashboardBody(
       ), # END second fluidRow
 
       # fluidRow cluster analysis ----
-      fluidRow(
-        box(width = 12,
-            title = tags$strong("Kmeans Cluster Analysis"))
-      ) # END fluidRow
+      # fluidRow(
+      #   box(width = 12,
+      #       title = tags$strong("Kmeans Cluster Analysis"))
+      # ) # END fluidRow
 
     ), # END "dashboard" tab
 
@@ -248,6 +249,8 @@ body <- dashboardBody(
   # ---------- photos tab ----------
     tabItem(
       tabName = "photos",
+
+      h3("Coming soon!")
 
       # box ----
       # box(width = 12,

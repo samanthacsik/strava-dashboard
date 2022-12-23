@@ -18,7 +18,7 @@ library(slickR)
 library(reactlog)
 
 # IMPORT DATA ----
-acts <- readRDS("data/strava_acts_2022-12-02.rds")
+acts <- readRDS("data/strava_acts_2022-12-23.rds")
 
 # IMPORT FUNCTIONS, PLOTS, THEMES ----
 source("R/sport_type_pickerInput.R")
@@ -59,7 +59,7 @@ stravaTheme <- theme_light() +
         axis.title = element_text(size = 14, face = "bold"),
         legend.title = element_text(size = 14, face = "bold"),
         legend.text = element_text(size = 13),
-        panel.border = element_rect(colour = "black", fill = NA, size = 0.7),
+        panel.border = element_rect(colour = "black", fill = NA, linewidth = 0.7),
         plot.caption = element_text(size = 10, hjust = 0))
 
 # STYLING ----

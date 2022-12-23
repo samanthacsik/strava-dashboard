@@ -15,7 +15,7 @@ library(plotly)
 
 
 # import data
-acts <- readRDS("strava_dashboard/data/strava_acts_2022-12-02.rds")
+acts <- readRDS("strava_dashboard/data/strava_acts_2022-12-23.rds")
 ```
 
 ### Plot theme
@@ -63,11 +63,19 @@ filtered_dates <- acts |>
 -   have buttons that filter by sport_type
 
 ```{r}
-ggplot(hikes, mapping = aes(x = total_miles)) + 
-  geom_histogram() +
+ggplot(acts, mapping = aes(x = total_miles)) + 
+  geom_histogram(binwidth = 3) +
   scale_x_continuous(expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
   labs(x = "Total Miles",
+       y = "Number of recorded activities") +
+  mytheme
+
+ggplot(acts, mapping = aes(x = elevation_gain_ft)) + 
+  geom_histogram(binwidth = 150) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  labs(x = "Total Elevation Gain (ft)",
        y = "Number of recorded activities") +
   mytheme
 ```
