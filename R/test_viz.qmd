@@ -15,7 +15,7 @@ library(plotly)
 
 
 # import data
-acts <- readRDS("strava_dashboard/data/strava_acts_2022-12-23.rds")
+acts <- readRDS("strava_dashboard/data/strava_acts_2022-12-27.rds")
 ```
 
 ### Plot theme

@@ -183,7 +183,12 @@ server <- function(input, output) {
   filtered_sport_date_scatterplot <- reactive({
 
     validate(
-    need(length(input$date_scatterplot) > 0, "Please select a date range to visualize activities for.")
+      need(length(input$sport_scatterplot) > 0, "Please select at least one activity to visualize data for.")
+    )
+
+    # NOT WORKING YET
+    validate(
+    need(length(input$date_scatterplot) > 0, "There are no recorded activities in the chosen date range. Try a different date range.")
     )
 
     acts |>
@@ -211,7 +216,12 @@ server <- function(input, output) {
   filtered_sport_date_histogram <- reactive({
 
     validate(
-      need(length(input$date_histogram) > 0, "Please select a date range to visualize activities for.")
+      need(length(input$sport_histogram) > 0, "Please select at least one activity to visualize data for.")
+    )
+
+    # NOT WORKING YET
+    validate(
+      need(length(input$date_histogram) > 0, "There are no recorded activities in the chosen date range. Try a different date range.")
     )
 
     acts |>

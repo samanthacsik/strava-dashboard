@@ -5,7 +5,7 @@ account: samanthacsik
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 7719626
-bundleId: 6669054
+bundleId: 6677186
 url: https://samanthacsik.shinyapps.io/strava_dashboard/
-when: 1671833558.4358
-lastSyncTime: 1671833558.43581
+when: 1672187522.3757
+lastSyncTime: 1672187522.37572
