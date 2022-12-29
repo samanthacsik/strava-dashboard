@@ -37,20 +37,6 @@ body <- dashboardBody(
     tags$script(src = "https://kit.fontawesome.com/b7f4c476ba.js"),
   ), # END tags$head
 
-  # dynamic resizing of danner boots photo (figure out how to move to styles.css) ----
-  # tags$head(
-  #   tags$style(
-  #   type="text/css",
-  #   "#danners img {max-width: 100%; width: 100%; height: auto}")
-  #   ), # END tags$head
-
-  # dynamic resizing of danner boots photo (figure out how to move to styles.css) ----
-  # tags$head(
-  #   tags$style(
-  #     type="text/css",
-  #     "#strava_map img {max-width: 100%; width: 100%; height: auto}")
-  # ), # END tags$head
-
   # tabItems() ----
   tabItems(
 
@@ -153,14 +139,8 @@ body <- dashboardBody(
             valueBoxOutput(outputId = "gear_bike_mileage", width = 12) |> withSpinner(color = "#cb9e72", type = 1),
 
             # photo of boots ----
-            # tags$img(src = "media/danner.jpeg",
-            #   align = "center",
-            #   style = "width: 100%; height: 15em; display: block; margin-left: auto; margin-right: auto;",
-            # ) # end tags$img (danner.jpeg)
-
             tags$img(class = "banner",
                      src = "media/danner.jpeg"),
-            # imageOutput(outputId = "danners"),
 
             # danner description ----
             span(
