@@ -18,7 +18,7 @@ library(slickR)
 library(reactlog)
 
 # IMPORT DATA ----
-acts <- readRDS("data/strava_acts_2022-12-27.rds")
+acts <- readRDS("data/strava_acts_2023-01-09.rds")
 
 # IMPORT FUNCTIONS, PLOTS, THEMES ----
 source("R/sport_type_pickerInput.R")
