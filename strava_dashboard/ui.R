@@ -74,7 +74,7 @@ body <- dashboardBody(
       ), # END fluidRow,
 
 
-      # fluidRow with pdate data box ----
+      # fluidRow with update data box ----
       fluidRow(
         box(width = 12,
             title = tags$div(
@@ -87,7 +87,7 @@ body <- dashboardBody(
             ) # END box
       ), # END fluidRow
 
-      # footer ----
+      # fluidRow with footer ----
       fluidRow(
         includeMarkdown("text/home_page_footer.md")
       ) # END fluidRow

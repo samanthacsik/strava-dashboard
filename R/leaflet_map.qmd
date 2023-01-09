@@ -5,7 +5,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-**LAST UPDATED: 08 November 2022**
+**LAST UPDATED: 09 January 2023**
 
 ## Load packages
 
@@ -24,7 +24,7 @@ library(htmltools)
 ```{r}
 
 #............load data (wrangled in scrape_strava.Rmd)...........
-acts <- readRDS("strava_dashboard/data/strava_acts_2022-11-29.rds")
+acts <- readRDS("strava_dashboard/data/strava_acts_2023-01-09.rds")
 
 #...................create subsets by activity...................
 hike_data <- acts %>% filter(sport_type == "Hike")
@@ -148,6 +148,6 @@ map
 
 #............................save map............................
 # saveWidget(map,
-#            file = "outputs/leaflet_2022-11-29.html",
+#            file = "outputs/leaflet_2023-01-09.html",
 #            selfcontained = TRUE)
 ```
