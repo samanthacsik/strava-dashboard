@@ -64,32 +64,42 @@ body <- dashboardBody(
         # scrape data box ----
         box(width = 6,
             title = tags$div(#class = "intro_box_title",
-                       span(
-                         tags$i(class="fa-solid fa-database"),
-                         tags$b("Getting Strava Data")
-                       ), # EO span
-              ), # EO div
+
+                       span(tags$i(class="fa-solid fa-database"), tags$b("Getting Strava Data")),
+
+              ), # END div
+
             includeMarkdown("text/getting_data.md")
+
             ), # END scrape strava box
+
       ), # END fluidRow,
 
 
       # fluidRow with update data box ----
       fluidRow(
+
         box(width = 12,
             title = tags$div(
-              span(
-                tags$i(class="fa-solid fa-table"),
-                tags$b("Updating App Data")
-              ), # EO span
-            ), # EO div
+
+              span(tags$i(class="fa-solid fa-table"), tags$b("Updating App Data")),
+
+            ), # END div
+
+            # updating data text ----
             includeMarkdown("text/updating_data.md")
+
             ) # END box
+
       ), # END fluidRow
 
       # fluidRow with footer ----
       fluidRow(
-        includeMarkdown("text/home_page_footer.md")) # END fluidRow
+
+        # footer text ----
+        includeMarkdown("text/home_page_footer.md")
+
+        ) # END fluidRow
 
     ), # END "about" tabItem
 
@@ -120,9 +130,9 @@ body <- dashboardBody(
 
             # gear garage box ----
             box(width = 4, # height = 930, (setting height causes problems with dynamic screen size)
-                span(
-                  tags$div(includeMarkdown("text/gear_garage.md"))
-                ), # END span
+
+                # gear garage caption ----
+                span(tags$div(includeMarkdown("text/gear_garage.md"))),
 
                 # gear_shoes pickerInput ----
                 pickerInput(inputId = "gear_shoes", label = "Select shoes:",
@@ -150,8 +160,7 @@ body <- dashboardBody(
                          src = "media/danner.jpeg"),
 
                 # danner description ----
-                span(
-                  tags$div(includeMarkdown("text/danner.md")))
+                span(tags$div(includeMarkdown("text/danner.md")))
 
             ), # END gear garage box
 
@@ -197,6 +206,7 @@ body <- dashboardBody(
                             sport_type_pickerInput(inputId = "sport_scatterplot"), # sport type input
                             date_range_airDatepickerInput(inputId = "date_scatterplot"), # date range input
                             plotly::plotlyOutput(outputId = "elev_dist_scatterplot") |> withSpinner(color = "#cb9e72", type = 1) # elev ~ dist scatterplot output
+
                    ), # END tabPanel (scatterplot)
 
                    # dist & elev histograms ----
@@ -209,6 +219,7 @@ body <- dashboardBody(
                             headerPanel(""),
                             headerPanel(""),
                             tableOutput(outputId = "dist_elev_stats_table")
+
                    ), # END tabPanel (histograms)
 
             ) # END tabBox
@@ -233,35 +244,36 @@ body <- dashboardBody(
 
       # separator box ----
       fluidRow(
+
         box(width = 12,
-            span(
-              tags$div(includeMarkdown("text/data_info.md"))
-            ), # END span
+
+            # data table caption ----
+            span(tags$div(includeMarkdown("text/data_info.md"))),
 
             # dataTableOutput ----
             DT::dataTableOutput(outputId = "strava_data_trimmed") |> withSpinner(color = "#cb9e72", type = 1)
+
         ) # END box
+
       ), # END fluidRow
+
     ), # END "data" tab
 
   # ---------- photos tab ----------
     tabItem(
       tabName = "photos",
 
-      h3("Coming soon!")
-
       # box ----
-      # box(width = 12,
+      box(width = 12,
 
-          # # actionButton input ----
-          # actionButton(inputId = "previous", label = "Previous"),
-          # actionButton(inputId = "next", label = "Next")
-          #
-          # # image output ----
-          # imageOutput(outputId = "image")
+          # actionButton input ----
+          actionButton(inputId = "previous", label = "Previous"),
+          actionButton(inputId = "next", label = "Next"),
 
-          # slickROutput(outputId = "slick_output", width = "100%", height = "200px")
-          # ), # END box
+          # image output ----
+          imageOutput(outputId = "gallery_image")
+
+          ), # END box
 
     ) # END "photos" tab
 

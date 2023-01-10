@@ -14,8 +14,9 @@ library(fontawesome)
 library(markdown)
 library(fresh)
 # library(bsplus)
-library(slickR)
+# library(slickR)
 library(reactlog)
+library(fs)
 
 # IMPORT DATA ----
 acts <- readRDS("data/strava_acts_2023-01-09.rds")
@@ -24,6 +25,9 @@ acts <- readRDS("data/strava_acts_2023-01-09.rds")
 source("R/sport_type_pickerInput.R")
 source("R/date_range_inputs.R")
 # source("R/fresh_theme.R")
+
+# GALLERY PHOTOS ----
+imgs <- dir_ls(path = "www", glob = "*.jpeg")
 
 # create icons for leaflet ----
 hiker_icon_custom <- makeIcon(

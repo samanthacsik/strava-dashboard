@@ -306,6 +306,20 @@ server <- function(input, output) {
   # photo slideshow
   ##############################
 
+  index <- reactiveVal(1)
+
+  observeEvent(input[["previous"]], {
+    index(max(index()-1, 1))
+  })
+  observeEvent(input[["next"]], {
+    index(min(index()+1, length(imgs)))
+  })
+
+  output$gallery_image <- renderImage({
+    x <- imgs[index()]
+    list(src = x, alt = "alternate text")
+  }, deleteFile = FALSE)
+
   # # set initial value ----
   # index <- reactiveVal(value = 1)
   #
