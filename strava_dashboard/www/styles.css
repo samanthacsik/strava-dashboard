@@ -47,15 +47,31 @@ img.banner {
   color: #64605f; /* gray */
 }
 
-/* dynamic image resizing (added for danner boots photo) */
-/* img {
-      border: 1;
-      max-width: 100%;
-    }
-    element.style {
-      width: 33.33%;
-    } */
+/* box header colors */
+.box-header {
+    color: #444; /*444*/
+    background-color: #fff;
+    display: block;
+    padding: 10px;
+    position: relative;
+}
 
+/* highlighted tab color */
+.nav-tabs-custom>.nav-tabs>li.active {
+    border-top-color: #98A08D;
+}
+
+/* tabset panel (not selected) */
+#dashboard_tabsetPanel a {
+    color: #fff !important;
+    background-color: #BECAB0; /* light sage green */
+    font-size: medium;
+}
+
+/* tabset panel (selected) */
+#dashboard_tabsetPanel > li.active > a {
+    background: #98A08D;
+}
 
 /* NOT WORKING Box header background color*/
 /*.box-header .with-border {
