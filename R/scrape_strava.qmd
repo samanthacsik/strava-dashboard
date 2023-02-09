@@ -34,7 +34,7 @@ my_token <- httr::config(token = strava_oauth(app_name, app_client_id, app_secre
 my_actvities <- rStrava::get_activity_list(stoken = my_token)
 
 #......................number of activities......................
-length(my_actvities) # 253 activities as of 01/09/2023
+length(my_actvities) # 258 activities as of 02/09/2023
 ```
 
 ## Wrangle data
@@ -143,7 +143,7 @@ y2023[3, 14] = 1
 wrangled_acts <- rbind(y2023, y2022, y2021, y2020)
 
 #............................save data...........................
-# saveRDS(wrangled_acts, here::here("strava_dashboard/data/strava_acts_2023-01-09.rds"))
+# saveRDS(wrangled_acts, here::here("strava_dashboard/data/strava_acts_2023-02-09.rds"))
 ```
 
 The above processed data does not contain the following variables (they were removed because they felt unnecessary to keep, at least for now, and/or it was unclear what they represented):
