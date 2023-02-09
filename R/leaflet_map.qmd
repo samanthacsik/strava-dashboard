@@ -24,7 +24,7 @@ library(htmltools)
 ```{r}
 
 #............load data (wrangled in scrape_strava.Rmd)...........
-acts <- readRDS("strava_dashboard/data/strava_acts_2023-01-09.rds")
+acts <- readRDS("strava_dashboard/data/strava_acts_2023-02-09.rds")
 
 #...................create subsets by activity...................
 hike_data <- acts %>% filter(sport_type == "Hike")
@@ -148,6 +148,6 @@ map
 
 #............................save map............................
 # saveWidget(map,
-#            file = "outputs/leaflet_2023-01-09.html",
+#            file = "outputs/leaflet_2023-02-09.html",
 #            selfcontained = TRUE)
 ```
