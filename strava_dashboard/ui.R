@@ -5,15 +5,14 @@ header <- dashboardHeader(
 
   # add title ----
   title = span(img(src="media/strava_logo.png", width = 38,
-                   href = "https://www.strava.com/",
-                   target = "_blank"), # target = "_blank" opens link in new tab
+                   href = "https://www.strava.com/", target = "_blank"), # target = "_blank" opens link in new tab
                span("Sam's Strava Stats", style = "font-size: 18px;"))
-  ) # END dashboardHeader
+) # END dashboardHeader
 
 # ------------------------------------------ sidebar ------------------------------------------
 sidebar <- dashboardSidebar(
 
-  # START sidebarMenu
+  # sidebarMenu ----
   sidebarMenu(
 
     menuItem("About the app", tabName = "about", icon = icon("star")),
@@ -28,82 +27,64 @@ sidebar <- dashboardSidebar(
 # ------------------------------------------ body ------------------------------------------
 body <- dashboardBody(
 
-  # import theme (HAVEN'T QUITE FIGURED THIS OUT YET) ----
-  # use_theme(my_theme),
-
-  # load stylesheet & fontawesome kit ----
+  # header; load stylesheet & fontawesome kit ----
   tags$head(
     tags$link(rel = "stylesheet", type = "text/css", href = "styles.css"),
     tags$script(src = "https://kit.fontawesome.com/b7f4c476ba.js"),
-  ), # END tags$head
+  ), # END header
 
-  # tabItems() ----
+  # tabItems ----
   tabItems(
 
     # ---------- about tab ----------
-    tabItem(
-      tabName = "about",
-      tags$img(class = "banner",
-               src = "media/camuesa_cropped.jpeg",
-               alt = "A landscape photo of a golden field of grass that stretches towards rolling dark green/brown hills. The sun is rising over the hilltops to the left and the sky is clear. A narrow trail weaves down the center. In the foreground, there are a few bent metal posts with barbed wire streteched between them. In front of the fence, there is a crooked metal sign reading 'Camuesa Connector Trail'."),
+    tabItem(tabName = "about",
+            tags$img(class = "banner", src = "media/camuesa_cropped.jpeg",
+                     alt = "A landscape photo of a golden field of grass that stretches towards rolling dark green/brown hills. The sun is rising over the hilltops to the left and the sky is clear. A narrow trail weaves down the center. In the foreground, there are a few bent metal posts with barbed wire streteched between them. In front of the fence, there is a crooked metal sign reading 'Camuesa Connector Trail'."),
 
-      # fluidRow with intro & getting data text boxes ----
-      fluidRow(
+            # fluidRow with intro & getting data text boxes ----
+            fluidRow(
 
-        # intro box ----
-        box(width = 6,
-            title = tags$div(#class = "intro_box_title",
-              span(
-                tags$i(class="fa-solid fa-tachometer-alt"),
-                tags$b("Why Build a Strava Dashboard?")
-              ), # EO span
-            ), # EO div
-          includeMarkdown("text/intro.md")
-        ), # END intro box
+              # intro box ----
+              box(width = 6,
+                  title = tagList(icon("tachometer-alt"), strong("Why Build a Strava Dashboard?")),
+                  includeMarkdown("text/intro.md")
+              ), # END intro box
 
-        # scrape data box ----
-        box(width = 6,
-            title = tags$div(#class = "intro_box_title",
-                       span(
-                         tags$i(class="fa-solid fa-database"),
-                         tags$b("Getting Strava Data")
-                       ), # EO span
-              ), # EO div
-            includeMarkdown("text/getting_data.md")
-            ), # END scrape strava box
-      ), # END fluidRow,
+              # scrape data box ----
+              box(width = 6,
+                  title = tagList(icon("database"), strong("Getting Strava Data")),
+                  includeMarkdown("text/getting_data.md")
+              ), # END scrape strava box
 
+            ), # END fluidRow
 
-      # fluidRow with update data box ----
-      fluidRow(
-        box(width = 12,
-            title = tags$div(
-              span(
-                tags$i(class="fa-solid fa-table"),
-                tags$b("Updating App Data")
-              ), # EO span
-            ), # EO div
-            includeMarkdown("text/updating_data.md")
-            ) # END box
-      ), # END fluidRow
+            # fluidRow with update data box ----
+            fluidRow(
 
-      # fluidRow with footer ----
-      fluidRow(
-        includeMarkdown("text/home_page_footer.md")) # END fluidRow
+              box(width = 12,
+                  title = tagList(icon("table"), strong("Updating App Data")),
+                  includeMarkdown("text/updating_data.md")
+              ) # END box
+
+            ), # END fluidRow
+
+            # fluidRow with footer ----
+            fluidRow(
+
+              includeMarkdown("text/home_page_footer.md")
+
+              ) # END fluidRow
 
     ), # END "about" tabItem
 
     # ---------- dashboard tab ----------
-    tabItem(
-      tabName = "dashboard",
+    tabItem(tabName = "dashboard",
 
       # dashboard tabsetPanel ----
-      tabsetPanel(
-        id = "dashboard_tabsetPanel",
+      tabsetPanel(id = "dashboard_tabsetPanel",
 
         # map tabPanel ----
-        tabPanel(
-          title = "Gear Tracker & Heat Map",
+        tabPanel(title = "Gear Tracker & Heat Map",
 
           # style valueBox colors (tried moving this to styles.css but haven't got it working yet)
           tags$style(".small-box.bg-orange { background-color: #b35702 !important; color: #FFFFFF !important; }"),
@@ -111,57 +92,40 @@ body <- dashboardBody(
           tags$style(".small-box.bg-green { background-color: #366643 !important; color: #FFFFFF !important; }"),
           tags$style(".small-box.bg-black { background-color: #64605f !important; color: #FFFFFF !important; }"),
 
-
-          # style box header colors
-          # tags$style(".box.box-solid.box-primary>.box-header {background-color: #98A08D!important; } color: #FFFFFF !important; }"),
-
           # first row  (contains gear garage & leaflet boxes)----
           fluidRow(
 
             # gear garage box ----
-            box(width = 4, # height = 930, (setting height causes problems with dynamic screen size)
-                span(
-                  tags$div(includeMarkdown("text/gear_garage.md"))
-                ), # END span
+            box(width = 4,
+                title = tagList(icon("warehouse"), strong("Gear Garage")),
+                includeMarkdown("text/gear_garage.md"),
 
-                # gear_shoes pickerInput ----
-                pickerInput(inputId = "gear_shoes", label = "Select shoes:",
-                            choices = c("Danner Jag #3" = "danner3", "Danner Jag #2" = "danner2", "Danner Jag #1 (retired)" = "danner1",
-                                        "Lowa Renegade" = "lowa", "Reebok Nano (black/white)" = "nano"),
-                            selected = "Danner Jag #3",
-                            multiple = FALSE), # END gear pickerInput
+                # creates some extra space ----
+                headerPanel(""),
+                headerPanel(""),
 
-                # shoes mileage infoBoxOutput ----
+                # shoes pickerInput & valueBoxOutput ----
+                shoes_pickerInput(inputId = "gear_shoes_input"),
                 valueBoxOutput(outputId = "gear_shoes_mileage", width = 12) |> withSpinner(color = "#cb9e72", type = 1),
 
-                # gear_bike pickerInput ----
-                pickerInput(inputId = "gear_bike", label = "Select bike:",
-                            choices = c("Canyon Grail 7 (gravel)" = "grail", "Tandemania (tandem road bike)" = "tandem", "Yeti (MTB)" = "yeti",
-                                        "Trek (MTB)" = "trek", "Cannondale (MTB)" = "cannondale"),
-                            selected = "Canyon Grail 7 (gravel)",
-                            multiple = FALSE), # END gear pickerInput
-
-
-                # bike mileage infoBoxOutput ----
+                # bike pickerInput & valueBoxOutput----
+                bike_pickerInput(inputId = "gear_bike_input"),
                 valueBoxOutput(outputId = "gear_bike_mileage", width = 12) |> withSpinner(color = "#cb9e72", type = 1),
 
-                # photo of boots ----
-                tags$img(class = "banner",
-                         src = "media/danner.jpeg"),
-
-                # danner description ----
-                span(
-                  tags$div(includeMarkdown("text/danner.md")))
+                # photo of boots & caption ----
+                tags$img(class = "banner", src = "media/danner.jpeg"),
+                includeMarkdown("text/danner.md")
 
             ), # END gear garage box
 
             # leaflet box ----
-            box(width = 8, # height = 930,
+            box(width = 8,
+                title = tagList(icon("map-location-dot"), strong("Activity Heat Map")),
+                includeMarkdown("text/leaflet_info.md"),
 
-                # leaflet box header text ----
-                span(
-                  tags$div(includeMarkdown("text/leaflet_info.md"))
-                ), # END span
+                # creates some extra space
+                headerPanel(""),
+                headerPanel(""),
 
                 # value boxes, sliderInputs, leaflet map ----
                 valueBoxOutput(outputId = "total_filtered_hikes"),
@@ -179,37 +143,38 @@ body <- dashboardBody(
 
           ) # END first fluidRow
 
-        ), # END map tabPanel ----
+        ), # END map tabPanel
 
         # dist & elev tabPanel ----
-        tabPanel(
-          title = "Distance & Elevation Stats",
+        tabPanel(title = "Distance & Elevation Stats",
 
-          # dist $ elev fluidRow ----
+          # dist & elev fluidRow ----
           fluidRow(
 
             tabBox(width = 12,
-                   title = tags$strong("Explore distance and elevation stats"),
+                   title = tagList(icon("mountain-sun"), strong("Explore distance and elevation stats")),
                    side = "right", selected = "Distance & Elevation Summary Stats",
 
-                   # elev ~ dist scatterplot ----
+                   # elev by dist scatterplot tabPanel ----
                    tabPanel("Elevation Gain / Distance Scatterplot",
-                            sport_type_pickerInput(inputId = "sport_scatterplot"), # sport type input
-                            date_range_airDatepickerInput(inputId = "date_scatterplot"), # date range input
-                            plotly::plotlyOutput(outputId = "elev_dist_scatterplot") |> withSpinner(color = "#cb9e72", type = 1) # elev ~ dist scatterplot output
-                   ), # END tabPanel (scatterplot)
 
-                   # dist & elev histograms ----
+                            sportType_pickerInput(inputId = "sport_scatterplot_input"),
+                            dateRange_airDatepickerInput(inputId = "date_scatterplot_input"),
+                            plotly::plotlyOutput(outputId = "elev_dist_scatterplot") |> withSpinner(color = "#cb9e72", type = 1)
+
+                   ), # END elev by dist scatterplot tabPanel
+
+                   # dist & elev histograms tabPanel ----
                    tabPanel("Distance & Elevation Summary Stats",
-                            sport_type_pickerInput(inputId = "sport_histogram"), # sport type input
-                            date_range_airDatepickerInput(inputId = "date_histogram"), # date range input
-                            splitLayout(cellWidths = c("50%", "50%"), # histogram outputs
+                            sportType_pickerInput(inputId = "sport_histogram_input"),
+                            dateRange_airDatepickerInput(inputId = "date_histogram_input"),
+                            splitLayout(cellWidths = c("50%", "50%"),
                                         plotOutput(outputId = "dist_histogram") |> withSpinner(color = "#cb9e72", type = 1),
                                         plotOutput(outputId = "elev_histogram") |> withSpinner(color = "#cb9e72", type = 1)),
                             headerPanel(""),
                             headerPanel(""),
                             tableOutput(outputId = "dist_elev_stats_table")
-                   ), # END tabPanel (histograms)
+                   ), # END dist & elev histograms tabPanel
 
             ) # END tabBox
 
@@ -228,40 +193,40 @@ body <- dashboardBody(
     ), # END "dashboard" tab
 
     # ---------- data tab ----------
-    tabItem(
-      tabName = "data",
+    tabItem(tabName = "data",
 
       # separator box ----
       fluidRow(
-        box(width = 12,
-            span(
-              tags$div(includeMarkdown("text/data_info.md"))
-            ), # END span
 
-            # dataTableOutput ----
+        box(width = 12,
+
+            # caption & table ----
+            includeMarkdown("text/data_info.md"),
             DT::dataTableOutput(outputId = "strava_data_trimmed") |> withSpinner(color = "#cb9e72", type = 1)
+
         ) # END box
+
       ), # END fluidRow
+
     ), # END "data" tab
 
-  # ---------- photos tab ----------
-    tabItem(
-      tabName = "photos",
+    # ---------- photos tab ----------
+    tabItem(tabName = "photos",
 
       h3("Coming soon!")
 
       # box ----
       # box(width = 12,
 
-          # # actionButton input ----
-          # actionButton(inputId = "previous", label = "Previous"),
-          # actionButton(inputId = "next", label = "Next")
-          #
-          # # image output ----
-          # imageOutput(outputId = "image")
+      # # actionButton input ----
+      # actionButton(inputId = "previous", label = "Previous"),
+      # actionButton(inputId = "next", label = "Next")
+      #
+      # # image output ----
+      # imageOutput(outputId = "image")
 
-          # slickROutput(outputId = "slick_output", width = "100%", height = "200px")
-          # ), # END box
+      # slickROutput(outputId = "slick_output", width = "100%", height = "200px")
+      # ), # END box
 
     ) # END "photos" tab
 
