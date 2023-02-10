@@ -34,7 +34,7 @@ my_token <- httr::config(token = strava_oauth(app_name, app_client_id, app_secre
 my_actvities <- rStrava::get_activity_list(stoken = my_token)
 
 #......................number of activities......................
-length(my_actvities) # 258 activities as of 02/09/2023
+length(my_actvities) # 259 activities as of 02/09/2023
 ```
 
 ## Wrangle data
