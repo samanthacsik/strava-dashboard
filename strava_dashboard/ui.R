@@ -73,160 +73,160 @@ body <- dashboardBody(
 
               includeMarkdown("text/home_page_footer.md")
 
-              ) # END fluidRow
+            ) # END fluidRow
 
     ), # END "about" tabItem
 
     # ---------- dashboard tab ----------
     tabItem(tabName = "dashboard",
 
-      # dashboard tabsetPanel ----
-      tabsetPanel(id = "dashboard_tabsetPanel",
+            # dashboard tabsetPanel ----
+            tabsetPanel(id = "dashboard_tabsetPanel",
 
-        # map tabPanel ----
-        tabPanel(title = "Gear Tracker & Heat Map",
+                        # map tabPanel ----
+                        tabPanel(title = "Gear Tracker & Heat Map",
 
-          # style valueBox colors (tried moving this to styles.css but haven't got it working yet)
-          tags$style(".small-box.bg-orange { background-color: #b35702 !important; color: #FFFFFF !important; }"),
-          tags$style(".small-box.bg-purple { background-color: #744082 !important; color: #FFFFFF !important; }"),
-          tags$style(".small-box.bg-green { background-color: #366643 !important; color: #FFFFFF !important; }"),
-          tags$style(".small-box.bg-black { background-color: #64605f !important; color: #FFFFFF !important; }"),
+                                 # style valueBox colors (tried moving this to styles.css but haven't got it working yet)
+                                 tags$style(".small-box.bg-orange { background-color: #b35702 !important; color: #FFFFFF !important; }"),
+                                 tags$style(".small-box.bg-purple { background-color: #744082 !important; color: #FFFFFF !important; }"),
+                                 tags$style(".small-box.bg-green { background-color: #366643 !important; color: #FFFFFF !important; }"),
+                                 tags$style(".small-box.bg-black { background-color: #64605f !important; color: #FFFFFF !important; }"),
 
-          # first row  (contains gear garage & leaflet boxes)----
-          fluidRow(
+                                 # first row  (contains gear garage & leaflet boxes)----
+                                 fluidRow(
 
-            # gear garage box ----
-            box(width = 4,
-                title = tagList(icon("warehouse"), strong("Gear Garage")),
-                includeMarkdown("text/gear_garage.md"),
+                                   # gear garage box ----
+                                   box(width = 4,
+                                       title = tagList(icon("warehouse"), strong("Gear Garage")),
+                                       includeMarkdown("text/gear_garage.md"),
 
-                # creates some extra space ----
-                headerPanel(""),
-                headerPanel(""),
+                                       # creates some extra space ----
+                                       headerPanel(""),
+                                       headerPanel(""),
 
-                # shoes pickerInput & valueBoxOutput ----
-                shoes_pickerInput(inputId = "gear_shoes_input"),
-                valueBoxOutput(outputId = "gear_shoes_mileage", width = 12) |> withSpinner(color = "#cb9e72", type = 1),
+                                       # shoes pickerInput & valueBoxOutput ----
+                                       shoes_pickerInput(inputId = "gear_shoes_input"),
+                                       valueBoxOutput(outputId = "gear_shoes_mileage", width = 12) |> withSpinner(color = "#cb9e72", type = 1),
 
-                # bike pickerInput & valueBoxOutput----
-                bike_pickerInput(inputId = "gear_bike_input"),
-                valueBoxOutput(outputId = "gear_bike_mileage", width = 12) |> withSpinner(color = "#cb9e72", type = 1),
+                                       # bike pickerInput & valueBoxOutput----
+                                       bike_pickerInput(inputId = "gear_bike_input"),
+                                       valueBoxOutput(outputId = "gear_bike_mileage", width = 12) |> withSpinner(color = "#cb9e72", type = 1),
 
-                # photo of boots & caption ----
-                tags$img(class = "banner", src = "media/danner.jpeg"),
-                includeMarkdown("text/danner.md")
+                                       # photo of boots & caption ----
+                                       tags$img(class = "banner", src = "media/danner.jpeg"),
+                                       includeMarkdown("text/danner.md")
 
-            ), # END gear garage box
+                                   ), # END gear garage box
 
-            # leaflet box ----
-            box(width = 8,
-                title = tagList(icon("map-location-dot"), strong("Activity Heat Map")),
-                includeMarkdown("text/leaflet_info.md"),
+                                   # leaflet box ----
+                                   box(width = 8,
+                                       title = tagList(icon("map-location-dot"), strong("Activity Heat Map")),
+                                       includeMarkdown("text/leaflet_info.md"),
 
-                # creates some extra space
-                headerPanel(""),
-                headerPanel(""),
+                                       # creates some extra space
+                                       headerPanel(""),
+                                       headerPanel(""),
 
-                # value boxes, sliderInputs, leaflet map ----
-                valueBoxOutput(outputId = "total_filtered_hikes"),
-                valueBoxOutput(outputId = "total_filtered_rides"),
-                valueBoxOutput(outputId = "total_filtered_walks"),
-                sliderInput(inputId = "distance_sliderInput", label = "Select a distance (miles) range:",
-                            min = min(acts$total_miles), max = max(acts$total_miles),
-                            value = c(min(acts$total_miles), max(acts$total_miles))),
-                sliderInput(inputId = "elevation_sliderInput", label = "Select a range of elevation gain (ft):",
-                            min = min(acts$elevation_gain_ft), max = max(acts$elevation_gain_ft),
-                            value = c(min(acts$elevation_gain_ft), max(acts$elevation_gain_ft))),
-                leafletOutput(outputId = "strava_map") |> withSpinner(color = "#cb9e72", type = 1)
+                                       # value boxes, sliderInputs, leaflet map ----
+                                       valueBoxOutput(outputId = "total_filtered_hikes"),
+                                       valueBoxOutput(outputId = "total_filtered_rides"),
+                                       valueBoxOutput(outputId = "total_filtered_walks"),
+                                       sliderInput(inputId = "distance_sliderInput", label = "Select a distance (miles) range:",
+                                                   min = min(acts$total_miles), max = max(acts$total_miles),
+                                                   value = c(min(acts$total_miles), max(acts$total_miles))),
+                                       sliderInput(inputId = "elevation_sliderInput", label = "Select a range of elevation gain (ft):",
+                                                   min = min(acts$elevation_gain_ft), max = max(acts$elevation_gain_ft),
+                                                   value = c(min(acts$elevation_gain_ft), max(acts$elevation_gain_ft))),
+                                       leafletOutput(outputId = "strava_map") |> withSpinner(color = "#cb9e72", type = 1)
 
-            ) # END leaflet box
+                                   ) # END leaflet box
 
-          ) # END first fluidRow
+                                 ) # END first fluidRow
 
-        ), # END map tabPanel
+                        ), # END map tabPanel
 
-        # dist & elev tabPanel ----
-        tabPanel(title = "Distance & Elevation Stats",
+                        # dist & elev tabPanel ----
+                        tabPanel(title = "Distance & Elevation Stats",
 
-          # dist & elev fluidRow ----
-          fluidRow(
+                                 # dist & elev fluidRow ----
+                                 fluidRow(
 
-            tabBox(width = 12,
-                   title = tagList(icon("mountain-sun"), strong("Explore distance and elevation stats")),
-                   side = "right", selected = "Distance & Elevation Summary Stats",
+                                   tabBox(width = 12,
+                                          title = tagList(icon("mountain-sun"), strong("Explore distance and elevation stats")),
+                                          side = "right", selected = "Distance & Elevation Summary Stats",
 
-                   # elev by dist scatterplot tabPanel ----
-                   tabPanel("Elevation Gain / Distance Scatterplot",
+                                          # elev by dist scatterplot tabPanel ----
+                                          tabPanel("Elevation Gain / Distance Scatterplot",
 
-                            sportType_pickerInput(inputId = "sport_scatterplot_input"),
-                            dateRange_airDatepickerInput(inputId = "date_scatterplot_input"),
-                            plotly::plotlyOutput(outputId = "elev_dist_scatterplot") |> withSpinner(color = "#cb9e72", type = 1)
+                                                   sportType_pickerInput(inputId = "sport_scatterplot_input"),
+                                                   dateRange_airDatepickerInput(inputId = "date_scatterplot_input"),
+                                                   plotly::plotlyOutput(outputId = "elev_dist_scatterplot") |> withSpinner(color = "#cb9e72", type = 1)
 
-                   ), # END elev by dist scatterplot tabPanel
+                                          ), # END elev by dist scatterplot tabPanel
 
-                   # dist & elev histograms tabPanel ----
-                   tabPanel("Distance & Elevation Summary Stats",
-                            sportType_pickerInput(inputId = "sport_histogram_input"),
-                            dateRange_airDatepickerInput(inputId = "date_histogram_input"),
-                            splitLayout(cellWidths = c("50%", "50%"),
-                                        plotOutput(outputId = "dist_histogram") |> withSpinner(color = "#cb9e72", type = 1),
-                                        plotOutput(outputId = "elev_histogram") |> withSpinner(color = "#cb9e72", type = 1)),
-                            headerPanel(""),
-                            headerPanel(""),
-                            tableOutput(outputId = "dist_elev_stats_table")
-                   ), # END dist & elev histograms tabPanel
+                                          # dist & elev histograms tabPanel ----
+                                          tabPanel("Distance & Elevation Summary Stats",
+                                                   sportType_pickerInput(inputId = "sport_histogram_input"),
+                                                   dateRange_airDatepickerInput(inputId = "date_histogram_input"),
+                                                   splitLayout(cellWidths = c("50%", "50%"),
+                                                               plotOutput(outputId = "dist_histogram") |> withSpinner(color = "#cb9e72", type = 1),
+                                                               plotOutput(outputId = "elev_histogram") |> withSpinner(color = "#cb9e72", type = 1)),
+                                                   headerPanel(""),
+                                                   headerPanel(""),
+                                                   tableOutput(outputId = "dist_elev_stats_table")
+                                          ), # END dist & elev histograms tabPanel
 
-            ) # END tabBox
+                                   ) # END tabBox
 
-          ) # END dist & elev fluidRow
+                                 ) # END dist & elev fluidRow
 
-          # fluidRow cluster analysis ----
-          # fluidRow(
-          #   box(width = 12,
-          #       title = tags$strong("Kmeans Cluster Analysis"))
-          # ) # END fluidRow
+                                 # fluidRow cluster analysis ----
+                                 # fluidRow(
+                                 #   box(width = 12,
+                                 #       title = tags$strong("Kmeans Cluster Analysis"))
+                                 # ) # END fluidRow
 
-        ) # END dist & elev tabPanel
+                        ) # END dist & elev tabPanel
 
-      ) # END dashboard tabsetPanels
+            ) # END dashboard tabsetPanels
 
     ), # END "dashboard" tab
 
     # ---------- data tab ----------
     tabItem(tabName = "data",
 
-      # separator box ----
-      fluidRow(
+            # separator box ----
+            fluidRow(
 
-        box(width = 12,
+              box(width = 12,
 
-            # caption & table ----
-            includeMarkdown("text/data_info.md"),
-            DT::dataTableOutput(outputId = "strava_data_trimmed") |> withSpinner(color = "#cb9e72", type = 1)
+                  # caption & table ----
+                  includeMarkdown("text/data_info.md"),
+                  DT::dataTableOutput(outputId = "strava_data_trimmed") |> withSpinner(color = "#cb9e72", type = 1)
 
-        ) # END box
+              ) # END box
 
-      ), # END fluidRow
+            ), # END fluidRow
 
     ), # END "data" tab
 
     # ---------- photos tab ----------
     tabItem(tabName = "photos",
 
-      h3("Coming soon!")
+            h3("Coming soon!")
 
-      # box ----
-      # box(width = 12,
+            # box ----
+            # box(width = 12,
 
-      # # actionButton input ----
-      # actionButton(inputId = "previous", label = "Previous"),
-      # actionButton(inputId = "next", label = "Next")
-      #
-      # # image output ----
-      # imageOutput(outputId = "image")
+            # # actionButton input ----
+            # actionButton(inputId = "previous", label = "Previous"),
+            # actionButton(inputId = "next", label = "Next")
+            #
+            # # image output ----
+            # imageOutput(outputId = "image")
 
-      # slickROutput(outputId = "slick_output", width = "100%", height = "200px")
-      # ), # END box
+            # slickROutput(outputId = "slick_output", width = "100%", height = "200px")
+            # ), # END box
 
     ) # END "photos" tab
 

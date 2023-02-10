@@ -1,3 +1,5 @@
+# ~~~~~~~~~ global ~~~~~~~~~ #
+
 # LOAD LIBRARIES ----
 library(shiny)
 library(shinydashboard)
