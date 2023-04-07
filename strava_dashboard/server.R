@@ -27,6 +27,32 @@ server <- function(input, output) {
   # photo slideshow
   ##############################
 
+  # output$caption_ui <- renderUI({
+  #   if(input$caption_check) {
+  #     textInput("caption", "Caption", value=captions)
+  #   }
+  # })
+  #
+  # output$gallery_imgs <- pixture::renderPixfigure({
+  #
+  #   # path <- "www/slideshow_photos"
+  #
+  #
+  #   if(!is.null(input$path)) path <- unlist(strsplit(input$path, ";"))
+  #
+  #   if(input$caption_check){
+  #     if(!is.null(input$caption)){
+  #       cpt <- unlist(strsplit(input$caption, ";"))
+  #       if(length(cpt)!=length(path)) stop("Number of captions do not match number of images.")
+  #       pixture::pixfigure(path, caption=cpt, h = input$height, w = input$width, fit = input$fit, position = input$position)
+  #     }
+  #   }else{
+  #     pixture::pixfigure(path, h = input$height, w = input$width, fit = input$fit, position = input$position)
+  #   }
+  # })
+
+  # })
+
   # # set initial value ----
   # index <- reactiveVal(value = 1)
   #

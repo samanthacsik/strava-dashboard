@@ -94,6 +94,9 @@ my_acts <- rStrava::compile_activities(my_actvities) |>
     gear_id == "b9263624" ~ "trek",
     gear_id == "b9263626" ~ "cannondale"
   )) |> 
+  
+  # filter out only_me visibility
+  filter(visibility != "only_me") |> 
 
   # remove columns that were mutated above  
   dplyr::select(-c(distance, total_elevation_gain)) |> 
@@ -144,7 +147,7 @@ y2023[3, 14] = 1
 wrangled_acts <- rbind(y2023, y2022, y2021, y2020)
 
 #............................save data...........................
-# saveRDS(wrangled_acts, here::here("strava_dashboard/data/strava_acts_2023-02-09.rds"))
+# saveRDS(wrangled_acts, here::here("strava_dashboard/data/strava_acts_2023-04-07.rds"))
 ```
 
 The above processed data does not contain the following variables (they were removed because they felt unnecessary to keep, at least for now, and/or it was unclear what they represented):

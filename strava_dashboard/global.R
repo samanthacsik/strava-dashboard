@@ -15,12 +15,13 @@ library(htmltools)
 library(fontawesome)
 library(markdown)
 library(fresh)
+library(pixture)
 # library(bsplus)
-library(slickR)
+# library(slickR)
 # library(reactlog)
 
 # IMPORT DATA ----
-acts <- readRDS("data/strava_acts_2023-02-09.rds")
+acts <- readRDS("data/strava_acts_2023-04-07.rds")
 
 # GGPLOT THEME ----
 stravaTheme <- theme_light() +
@@ -41,5 +42,5 @@ stravaTheme <- theme_light() +
 # options(spinner.type = 6, spinner.size = 2 , spinner.color = "#cb9e72")
 
 # SLIDESHOW IMAGES ----
-imgs <- list.files("strava_dashboard/www/slideshow_photos", pattern = ".jpeg", full.names = TRUE)
+# imgs <- list.files("strava_dashboard/www/slideshow_photos", pattern = ".jpeg", full.names = TRUE)
 

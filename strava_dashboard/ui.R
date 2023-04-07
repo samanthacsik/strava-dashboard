@@ -215,6 +215,20 @@ body <- dashboardBody(
 
             h3("Coming soon!")
 
+            # sidebarLayout(
+            #   sidebarPanel(width=3,
+            #                textAreaInput("path", "Image URLs", value=path, height="200px"),
+            #                checkboxInput("caption_check", "Use captions", value=FALSE),
+            #                uiOutput("caption_ui"),
+            #                textInput("height", label = "Height", value="auto"),
+            #                textInput("width", label = "Width", value="100%"),
+            #                textInput("fit", label = "Object fit", value="cover"),
+            #                textInput("position", label = "Object position", value="center"),
+            #                HTML("Image from <a href='https://www.pexels.com/'>Pexels.</a>")
+            #   ),
+            #   mainPanel(width=9,
+            #             pixture::pixfigureOutput("fig")))
+
             # box ----
             # box(width = 12,
 
