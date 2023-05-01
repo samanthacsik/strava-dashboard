@@ -21,7 +21,7 @@ library(pixture)
 # library(reactlog)
 
 # IMPORT DATA ----
-acts <- readRDS("data/strava_acts_2023-04-07.rds")
+acts <- readRDS("data/strava_acts_2023-05-01.rds")
 
 # GGPLOT THEME ----
 stravaTheme <- theme_light() +
