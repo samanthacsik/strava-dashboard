@@ -131,6 +131,7 @@ body <- dashboardBody(
                                        valueBoxOutput(outputId = "total_filtered_hikes"),
                                        valueBoxOutput(outputId = "total_filtered_rides"),
                                        valueBoxOutput(outputId = "total_filtered_walks"),
+                                       setSliderColor(color = c("#98A08D", "#98A08D"), sliderId = c(1, 2)),
                                        sliderInput(inputId = "distance_sliderInput", label = "Select a distance (miles) range:",
                                                    min = min(acts$total_miles), max = max(acts$total_miles),
                                                    value = c(min(acts$total_miles), max(acts$total_miles))),

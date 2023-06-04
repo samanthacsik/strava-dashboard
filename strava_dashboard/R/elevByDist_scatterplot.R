@@ -14,13 +14,22 @@ elevByDist_scatterplot <- function(input) {
 
     acts |>
       filter(sport_type %in% input$sport_scatterplot_input) |>
-      filter(start_date_local > input$date_scatterplot_input[1] & start_date_local < input$date_scatterplot_input[2])
+      filter(start_date_local > input$date_scatterplot_input[1] & start_date_local < input$date_scatterplot_input[2]) %>%
+      mutate(marker = paste0("Activity Title: ", name, "<br>",
+                             "Date: ", start_date_local, "<br>",
+                             "Total Miles: ", total_miles, "<br>",
+                             "Total Elevation Gain: ", elevation_gain_ft, "<br>",
+                             "Moving Time: ", moving_time_hrs_mins, "<br>",
+                             "Total Time: ", elapsed_time_hrs_mins))
   })
 
   # renderPlotly ----
   renderPlotly({
 
-    elev_dist_scatterplot <- ggplot(filtered_sport_date_scatterplot(), aes(x = total_miles, y = elevation_gain_ft, color = sport_type_alt, shape = sport_type_alt)) +
+    elev_dist_scatterplot <- ggplot(filtered_sport_date_scatterplot(),
+                                    aes(x = total_miles, y = elevation_gain_ft,
+                                        color = sport_type_alt, shape = sport_type_alt,
+                                        text = marker, group = total_miles)) +
       geom_point(alpha = 0.8, size = 3) +
       labs(x = "Total Distance Traveled (miles)",
            y = "Total Elevation Gain (feet)") +
@@ -29,7 +38,8 @@ elevByDist_scatterplot <- function(input) {
       stravaTheme
 
     plotly::ggplotly(elev_dist_scatterplot,
-                     tooltip = c("total_miles", "elevation_gain_ft"))
+                     tooltip = c("text"))
+                     # tooltip = c("total_miles", "elevation_gain_ft"))
 
   })
 

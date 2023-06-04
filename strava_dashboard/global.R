@@ -15,13 +15,13 @@ library(htmltools)
 library(fontawesome)
 library(markdown)
 library(fresh)
-library(pixture)
+# library(pixture)
 # library(bsplus)
 # library(slickR)
 # library(reactlog)
 
 # IMPORT DATA ----
-acts <- readRDS("data/strava_acts_2023-05-01.rds")
+acts <- readRDS("data/strava_acts_2023-06-03.rds")
 
 # GGPLOT THEME ----
 stravaTheme <- theme_light() +
