@@ -24,7 +24,7 @@ library(htmltools)
 ```{r}
 
 #............load data (wrangled in scrape_strava.Rmd)...........
-acts <- readRDS("strava_dashboard/data/strava_acts_2023-05-01.rds")
+acts <- readRDS("strava_dashboard/data/strava_acts_2023-06-03.rds")
 
 #...................create subsets by activity...................
 hike_data <- acts %>% filter(sport_type == "Hike")
@@ -62,8 +62,10 @@ walk_icon_custom <- makeIcon(
 map <- leaflet() %>% 
   
   # add tiles
-  addProviderTiles("Esri.WorldTerrain", 
-                   options = providerTileOptions(maxNativeZoom = 19, maxZoom = 100)) %>%
+  addProviderTiles(providers$Esri.WorldTerrain, group = "ESRI Terrain") %>%
+  # addProviderTiles(providers$Esri.WorldImagery, group = "ESRI World Imagery") %>% 
+  # addProviderTiles("Esri.WorldTerrain", 
+  #                  options = providerTileOptions(maxNativeZoom = 19, maxZoom = 100)) %>%
   
   # add miniMap (corner)
   addMiniMap(toggleDisplay = TRUE) %>% 
@@ -101,6 +103,7 @@ map <- leaflet() %>%
 
   # allow for toggling makers on/off
   addLayersControl(
+    # baseGroups = c("ESRI Terrain", "ESRI World Imagery"),
     overlayGroups = c("Display Hike Icons", "Display Bike Ride Icons", "Display Walk Icons"),
     options = layersControlOptions(collapsed = TRUE)
   ) %>%
@@ -148,6 +151,6 @@ map
 
 #............................save map............................
 # saveWidget(map,
-#            file = "outputs/leaflet_2023-05-01.html",
+#            file = "outputs/leaflet_2023-06-03.html",
 #            selfcontained = TRUE)
 ```
