@@ -82,7 +82,11 @@ leaflet_map <- function(input) {
       # add heatmap legend
       addLegend(colors = c("#b35702", "#744082", "#366643"), # "#DF0101", "#070A8D", "#0F9020"
                 labels = c("Hike", "Ride", "Walk"),
-                position = "bottomleft")
+                position = "bottomleft") %>%
+
+      # add reset map button
+      leaflet.extras::addResetMapButton()
+
 
     # get unique activity ids ----
     unique_acts_ids <- unique(filtered_map()$id)
