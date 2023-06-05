@@ -39,8 +39,9 @@ leaflet_map <- function(input) {
     heatmap <- leaflet() |>
 
       # add tiles
-      addProviderTiles("Esri.WorldTerrain",
-                       options = providerTileOptions(maxNativeZoom = 19, maxZoom = 100)) |>
+      addProviderTiles(providers$Esri.WorldTerrain, group = "ESRI Terrain") |>
+      # addProviderTiles("Esri.WorldTerrain",
+      #                  options = providerTileOptions(maxNativeZoom = 19, maxZoom = 100)) |>
 
       # add miniMap (corner)
       addMiniMap(toggleDisplay = TRUE) |>

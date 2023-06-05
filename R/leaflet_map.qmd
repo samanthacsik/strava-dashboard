@@ -62,16 +62,16 @@ walk_icon_custom <- makeIcon(
 map <- leaflet() %>% 
   
   # add tiles
-  addProviderTiles(providers$Esri.WorldTerrain, group = "ESRI Terrain") %>%
+  addProviderTiles(providers$Esri.WorldTerrain, group = "ESRI Terrain") |> 
   # addProviderTiles(providers$Esri.WorldImagery, group = "ESRI World Imagery") %>% 
   # addProviderTiles("Esri.WorldTerrain", 
   #                  options = providerTileOptions(maxNativeZoom = 19, maxZoom = 100)) %>%
   
   # add miniMap (corner)
-  addMiniMap(toggleDisplay = TRUE) %>% 
+  addMiniMap(toggleDisplay = TRUE) |>
   
   # set view over Santa Barbara 
-  setView(lng = -119.753042, lat = 34.484782, zoom = 10) %>% 
+  setView(lng = -119.753042, lat = 34.484782, zoom = 10) |> 
   
   # add clickable hiker markers with info about each hike
   addMarkers(data = hike_data, icon = hiker_icon_custom, 
@@ -80,7 +80,7 @@ map <- leaflet() %>%
              lng = ~jitter(lng, factor = 0.01), lat = ~jitter(lat, factor = 0.01),
              popup = paste("Hike Title:", hike_data$name, "<br>",
                            "Distance (miles):", hike_data$total_miles, "<br>",
-                           "Elevation gain (ft):", hike_data$elevation_gain_ft)) %>%
+                           "Elevation gain (ft):", hike_data$elevation_gain_ft)) |>
 
   # add clickable bike markers with info about each ride 
   addMarkers(data = ride_data, icon = bike_icon_custom, 
@@ -89,7 +89,7 @@ map <- leaflet() %>%
              lng = ~jitter(lng, factor = 0.01), lat = ~jitter(lat, factor = 0.01),
              popup = paste("Ride Title:", ride_data$name, "<br>",
                            "Distance (miles):", ride_data$total_miles, "<br>",
-                           "Elevation gain (ft):", ride_data$elevation_gain_ft)) %>%
+                           "Elevation gain (ft):", ride_data$elevation_gain_ft)) |>
 
   # add clickable walker markers with info about each  walk
   addMarkers(data = walk_data, icon = walk_icon_custom, 
@@ -99,19 +99,22 @@ map <- leaflet() %>%
              # clusterOptions = markerClusterOptions(),
              popup = paste("Walk Title:", walk_data$name, "<br>",
                            "Distance (miles):", walk_data$total_miles, "<br>",
-                           "Elevation gain (ft):", walk_data$elevation_gain_ft)) %>%
+                           "Elevation gain (ft):", walk_data$elevation_gain_ft)) |>
 
   # allow for toggling makers on/off
   addLayersControl(
     # baseGroups = c("ESRI Terrain", "ESRI World Imagery"),
     overlayGroups = c("Display Hike Icons", "Display Bike Ride Icons", "Display Walk Icons"),
     options = layersControlOptions(collapsed = TRUE)
-  ) %>%
+  ) |>
   
   # add heatmap legend
   addLegend(colors = c("#b35702", "#744082", "#366643"), # "#DF0101", "#070A8D", "#0F9020"
             labels = c("Hike", "Ride", "Walk"), 
-            position = "bottomleft")
+            position = "bottomleft") |> 
+  
+  # add reset map button
+  leaflet.extras::addResetMapButton()
 
 
 map
