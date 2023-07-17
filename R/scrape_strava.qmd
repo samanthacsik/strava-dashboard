@@ -34,7 +34,7 @@ my_token <- httr::config(token = strava_oauth(app_name, app_client_id, app_secre
 my_actvities <- rStrava::get_activity_list(stoken = my_token)
 
 #......................number of activities......................
-length(my_actvities) # 300 activities as of 06/19/2023
+length(my_actvities) # 308 activities as of 07/17/2023
 ```
 
 ## Wrangle data
@@ -126,7 +126,7 @@ my_acts <- rStrava::compile_activities(my_actvities) |>
 
   # filter out any obs that we don't want to include
   filter(id != "5502812467", # remove hike that didn't recorded correctly
-         !sport_type %in% c("Workout")) # remove recorded workouts (don't have location data associated with them)
+         !sport_type %in% c("Workout", "Kayaking")) # remove recorded workouts (don't have location data associated with them)
 
 #...................fix incorrect week numbers...................
 y2020 <- my_acts |> filter(year == "2020")
@@ -147,7 +147,7 @@ y2023[3, 14] = 1
 wrangled_acts <- rbind(y2023, y2022, y2021, y2020)
 
 #............................save data...........................
-saveRDS(wrangled_acts, here::here("strava_dashboard/data/strava_acts_2023-06-19.rds"))
+# saveRDS(wrangled_acts, here::here("strava_dashboard/data/strava_acts_2023-07-17.rds"))
 ```
 
 The above processed data does not contain the following variables (they were removed because they felt unnecessary to keep, at least for now, and/or it was unclear what they represented):
