@@ -24,11 +24,12 @@ library(htmltools)
 ```{r}
 
 #............load data (wrangled in scrape_strava.Rmd)...........
-acts <- readRDS("strava_dashboard/data/strava_acts_2023-07-17.rds")
+acts <- readRDS("strava_dashboard/data/strava_acts_2023-08-05.rds")
 
 #...................create subsets by activity...................
 hike_data <- acts %>% filter(sport_type == "Hike")
-ride_data <- acts %>% filter(sport_type == "Ride")
+# ride_data <- acts %>% filter(sport_type == "Ride")
+ride_data <- acts %>% filter(sport_type %in% c("Ride", "GravelRide"))
 walk_data <- acts %>% filter(sport_type == "Walk")
 
 ```
@@ -137,7 +138,7 @@ for (i in unique_acts_ids) {
   coords <- googleway::decode_pl(activity$map.summary_polyline)
   
   #3) plot activity trace on basemap; color-code according to activity type
-  if (activity$sport_type == "Ride") {
+  if (activity$sport_type %in% c("Ride", "GravelRide")) {
     map <- addPolylines(map, lng = coords$lon, lat = coords$lat,
                       color = "#744082", opacity = 2/4, weight = 2) #070A8D
   } else if (activity$sport_type == "Hike") { 
@@ -155,6 +156,6 @@ map
 
 #............................save map............................
 # saveWidget(map,
-#            file = "outputs/leaflet_2023-07-17.html",
+#            file = "outputs/leaflet_2023-08-05.html",
 #            selfcontained = TRUE)
 ```
