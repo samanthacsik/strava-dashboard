@@ -8,6 +8,7 @@ editor_options:
 ```{r}
 #..........................load packages.........................
 library(tidyverse)
+library(rStrava) # see here: https://github.com/fawda123/rStrava#api-functions-token
 library(googleway)
 
 # pausing bc I'm afraid of setting up a Google API billing account??

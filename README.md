@@ -86,7 +86,7 @@ A browser window should open asking you to authorize Strava to access your data.
 You're now ready to retrieve, wrangle, and plot your data! Check out my [`scrape_strava.qmd`](https://github.com/samanthacsik/strava-dashboard/blob/main/R/scrape_strava.qmd) file to see how I retrieved and wrangled my data in preparation for plotting and analysis.
 
 **Other resources:**
-
+- [`{rStrava}` package](https://github.com/fawda123/rStrava)
 -   [How to Scrape and Store Strava Data Using R](https://rviews.rstudio.com/2021/11/22/strava-data/), by Julian During
 -   [Animate your Strava activities in R using rStrava and gganimate](https://padpadpadpad.github.io/post/animate-your-strava-activities-using-rstrava-and-gganimate/) by Daniel Padfield
 -   [Creating a Heatmap in R with Google Polylines](https://www.dancullen.me/articles/creating-a-heatmap-in-r-with-google-polylines), by Daniel Cullen

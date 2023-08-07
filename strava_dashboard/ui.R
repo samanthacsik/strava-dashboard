@@ -31,6 +31,7 @@ body <- dashboardBody(
   tags$head(
     tags$link(rel = "stylesheet", type = "text/css", href = "styles.css"),
     tags$script(src = "https://kit.fontawesome.com/b7f4c476ba.js"),
+    includeHTML("www/google-analytics.html")
   ), # END header
 
   # tabItems ----
