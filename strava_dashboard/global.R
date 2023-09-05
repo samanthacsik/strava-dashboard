@@ -22,7 +22,7 @@ library(fresh)
 # library(reactlog)
 
 # IMPORT DATA ----
-acts <- readRDS("data/strava_acts_2023-08-06.rds")
+acts <- readRDS("data/strava_acts_2023-09-05.rds")
 
 # GGPLOT THEME ----
 stravaTheme <- theme_light() +
