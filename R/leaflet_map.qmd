@@ -24,14 +24,12 @@ library(htmltools)
 ```{r}
 
 #............load data (wrangled in scrape_strava.Rmd)...........
-acts <- readRDS("strava_dashboard/data/strava_acts_2023-11-15.rds")
+acts <- readRDS("strava_dashboard/data/strava_acts_2024-02-24.rds")
 
 #...................create subsets by activity...................
 hike_data <- acts %>% filter(sport_type == "Hike")
-# ride_data <- acts %>% filter(sport_type == "Ride")
 ride_data <- acts %>% filter(sport_type %in% c("Ride", "GravelRide"))
 walk_data <- acts %>% filter(sport_type == "Walk")
-
 ```
 
 ## Create base map & add icons and heatmap legend
@@ -110,8 +108,11 @@ map <- leaflet() %>%
     options = layersControlOptions(collapsed = TRUE)
   ) |>
   
+  # hide all three groups icons by default
+  hideGroup(c("Display Hike Icons", "Display Bike Ride Icons", "Display Walk Icons")) |> 
+  
   # add heatmap legend
-  addLegend(colors = c("#b35702", "#744082", "#366643"), # "#DF0101", "#070A8D", "#0F9020"
+  addLegend(colors = c("#b35702", "#744082", "#366643"), # "#DF0101", "#070A8D", "#0F9020"; ; "#b35702", "#3D0C02", "#114C54"
             labels = c("Hike", "Ride", "Walk"), 
             position = "bottomleft") |> 
   
@@ -140,13 +141,13 @@ for (i in unique_acts_ids) {
   #3) plot activity trace on basemap; color-code according to activity type
   if (activity$sport_type %in% c("Ride", "GravelRide")) {
     map <- addPolylines(map, lng = coords$lon, lat = coords$lat,
-                      color = "#744082", opacity = 2/4, weight = 2) #070A8D
+                      color = "#744082", opacity = 2/4, weight = 2) #070A8D (tried cb-friendly; not great on map though #3D0C02)
   } else if (activity$sport_type == "Hike") { 
     map <- addPolylines(map, lng = coords$lon, lat = coords$lat,
                       color = "#b35702", opacity = 2/4, weight = 2) #DF0101 #b35702
   } else if (activity$sport_type == "Walk") {
    map  <- addPolylines(map, lng = coords$lon, lat = coords$lat,
-                      color = "#366643", opacity = 2/4, weight = 2) #0F9020
+                      color = "#366643", opacity = 2/4, weight = 2) #0F9020  (tried cb-friendly; not graet on map though #114C54)
   }
    
 }
@@ -155,7 +156,7 @@ for (i in unique_acts_ids) {
 map
 
 #............................save map............................
-saveWidget(map,
-           file = "outputs/leaflet_2023-11-15.html",
-           selfcontained = TRUE)
+# saveWidget(map,
+#            file = "outputs/leaflet_2024-02-24.html",
+#            selfcontained = TRUE)
 ```
