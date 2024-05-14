@@ -14,7 +14,7 @@ elevDist_histogram <- function(input, xvar, xlab) {
 
     acts |>
       filter(sport_type %in% input$sport_histogram_input) |>
-      filter(start_date_local > input$date_histogram_input[1] & start_date_local < input$date_histogram_input[2])
+      filter(start_date_local >= input$date_histogram_input[1] & start_date_local <= input$date_histogram_input[2])
 
   })
 
