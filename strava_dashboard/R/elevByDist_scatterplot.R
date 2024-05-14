@@ -14,7 +14,7 @@ elevByDist_scatterplot <- function(input) {
 
     acts |>
       filter(sport_type %in% input$sport_scatterplot_input) |>
-      filter(start_date_local > input$date_scatterplot_input[1] & start_date_local < input$date_scatterplot_input[2]) %>%
+      filter(start_date_local >= input$date_scatterplot_input[1] & start_date_local <= input$date_scatterplot_input[2]) %>%
       mutate(marker = paste0("Activity Title: ", name, "<br>",
                              "Date: ", start_date_local, "<br>",
                              "Total Miles: ", total_miles, "<br>",

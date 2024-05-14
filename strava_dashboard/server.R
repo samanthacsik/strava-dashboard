@@ -23,8 +23,17 @@ server <- function(input, output) {
   #......................DT table (raw data).......................
   output$strava_data_trimmed <- stravaData_DTdatatable(input)
 
+
+
+
+
+
+
+
+
+
   ##############################
-  # photo slideshow
+  # photo slideshow -- COME BACK TO THIS LATER
   ##############################
 
   # output$caption_ui <- renderUI({

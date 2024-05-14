@@ -155,7 +155,7 @@ y2024 <- my_acts |> filter(year == "2024") # no jan 1 hike, so no updates needed
 wrangled_acts <- rbind(y2024, y2023, y2022, y2021, y2020)
 
 #............................save data...........................
-# saveRDS(wrangled_acts, here::here("strava_dashboard/data/strava_acts_2024-02-24.rds"))
+# saveRDS(wrangled_acts, here::here("strava_dashboard/data/strava_acts_2024-04-29.rds"))
 ```
 
 The above processed data does not contain the following variables (they were removed because they felt unnecessary to keep, at least for now, and/or it was unclear what they represented):
