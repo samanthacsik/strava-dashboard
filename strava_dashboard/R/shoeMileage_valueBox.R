@@ -9,7 +9,7 @@ shoeMileage_valueBox <- function(input) {
   # render valueBox ----
   renderInfoBox({
     valueBox("Total Mileage", value = filtered_shoes(), color = "black", icon = icon("shoe-prints", lib = "font-awesome"))
-  }) #  | Hiking boots should be replaced every ~500-1,000 miles
+  })
 
 
 }

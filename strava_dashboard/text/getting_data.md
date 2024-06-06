@@ -6,7 +6,7 @@ Next, I used the following [`{rStrava}`](https://cran.r-project.org/web/packages
 
 2. pull a list of desired activities using [`get_activity_list()`](https://search.r-project.org/CRAN/refmans/rStrava/html/get_activity_list.html)
 
-3. convert your activity list into a dataframe for easier wrangling using [`compile_activities()`](https://search.r-project.org/CRAN/refmans/rStrava/html/compile_activities.html)
+3. convert your activity list into a data frame for easier wrangling using [`compile_activities()`](https://search.r-project.org/CRAN/refmans/rStrava/html/compile_activities.html)
 
 From there, you'll likely need to do a bit of data wrangling (e.g. unit conversions) and cleaning to get things in a plot-friendly format. If interested, check out my cleaning script ([`R/scrape_strava.qmd`](https://github.com/samanthacsik/strava-dashboard/blob/main/R/scrape_strava.qmd)) to see how I approached this.
 

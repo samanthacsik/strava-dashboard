@@ -1,6 +1,6 @@
 library(tidyverse)
 
-test_acts <- readRDS(here::here("strava_dashboard", "data", "strava_acts_2024-04-29.rds"))
+test_acts <- readRDS(here::here("strava_dashboard", "data", "strava_acts_2024-06-05.rds"))
 
 
 hikes_only <- test_acts |>

@@ -17,8 +17,8 @@ sidebar <- dashboardSidebar(
 
     menuItem("About the app", tabName = "about", icon = icon("star")),
     menuItem("Strava Dashboard", tabName = "dashboard", icon = icon("tachometer-alt")),
-    menuItem("Data", tabName = "data", icon = icon("database")),
-    menuItem("Photo Gallery", tabName = "photos", icon = icon("camera"))
+    menuItem("Data", tabName = "data", icon = icon("database"))
+    # menuItem("Photo Gallery", tabName = "photos", icon = icon("camera"))
 
   ) # END sidebarMenu
 
@@ -210,41 +210,41 @@ body <- dashboardBody(
 
             ), # END fluidRow
 
-    ), # END "data" tab
+    ) # END "data" tab
 
-    # ---------- photos tab ----------
-    tabItem(tabName = "photos",
-
-            h3("Coming soon!")
-
-            # sidebarLayout(
-            #   sidebarPanel(width=3,
-            #                textAreaInput("path", "Image URLs", value=path, height="200px"),
-            #                checkboxInput("caption_check", "Use captions", value=FALSE),
-            #                uiOutput("caption_ui"),
-            #                textInput("height", label = "Height", value="auto"),
-            #                textInput("width", label = "Width", value="100%"),
-            #                textInput("fit", label = "Object fit", value="cover"),
-            #                textInput("position", label = "Object position", value="center"),
-            #                HTML("Image from <a href='https://www.pexels.com/'>Pexels.</a>")
-            #   ),
-            #   mainPanel(width=9,
-            #             pixture::pixfigureOutput("fig")))
-
-            # box ----
-            # box(width = 12,
-
-            # # actionButton input ----
-            # actionButton(inputId = "previous", label = "Previous"),
-            # actionButton(inputId = "next", label = "Next")
-            #
-            # # image output ----
-            # imageOutput(outputId = "image")
-
-            # slickROutput(outputId = "slick_output", width = "100%", height = "200px")
-            # ), # END box
-
-    ) # END "photos" tab
+    # # ---------- photos tab ----------
+    # tabItem(tabName = "photos",
+    #
+    #         h3("Coming soon!")
+    #
+    #         # sidebarLayout(
+    #         #   sidebarPanel(width=3,
+    #         #                textAreaInput("path", "Image URLs", value=path, height="200px"),
+    #         #                checkboxInput("caption_check", "Use captions", value=FALSE),
+    #         #                uiOutput("caption_ui"),
+    #         #                textInput("height", label = "Height", value="auto"),
+    #         #                textInput("width", label = "Width", value="100%"),
+    #         #                textInput("fit", label = "Object fit", value="cover"),
+    #         #                textInput("position", label = "Object position", value="center"),
+    #         #                HTML("Image from <a href='https://www.pexels.com/'>Pexels.</a>")
+    #         #   ),
+    #         #   mainPanel(width=9,
+    #         #             pixture::pixfigureOutput("fig")))
+    #
+    #         # box ----
+    #         # box(width = 12,
+    #
+    #         # # actionButton input ----
+    #         # actionButton(inputId = "previous", label = "Previous"),
+    #         # actionButton(inputId = "next", label = "Next")
+    #         #
+    #         # # image output ----
+    #         # imageOutput(outputId = "image")
+    #
+    #         # slickROutput(outputId = "slick_output", width = "100%", height = "200px")
+    #         # ), # END box
+    #
+    # ) # END "photos" tab
 
   ) # END tabItems
 
