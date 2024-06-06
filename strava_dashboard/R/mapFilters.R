@@ -4,8 +4,10 @@ mapFilters <- function(input) {
 
     acts |>
       filter(total_miles >= input$distance_sliderInput[1] & total_miles <= input$distance_sliderInput[2]) |>
-      filter(elevation_gain_ft >= input$elevation_sliderInput[1] & elevation_gain_ft <= input$elevation_sliderInput[2])
+      filter(elevation_gain_ft >= input$elevation_sliderInput[1] & elevation_gain_ft <= input$elevation_sliderInput[2]) |>
+      # ---- NEW ----
+      filter(name %in% input$activity_title_input)
 
-  }) # END filtered_map
+  })
 
 }

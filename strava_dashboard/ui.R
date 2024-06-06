@@ -128,7 +128,7 @@ body <- dashboardBody(
                                        headerPanel(""),
                                        headerPanel(""),
 
-                                       # value boxes, sliderInputs, leaflet map ----
+                                       # value boxes, searchInput, sliderInputs, leaflet map ----
                                        valueBoxOutput(outputId = "total_filtered_hikes"),
                                        valueBoxOutput(outputId = "total_filtered_rides"),
                                        valueBoxOutput(outputId = "total_filtered_walks"),
@@ -139,6 +139,19 @@ body <- dashboardBody(
                                        sliderInput(inputId = "elevation_sliderInput", label = "Select a range of elevation gain (ft):",
                                                    min = min(acts$elevation_gain_ft), max = max(acts$elevation_gain_ft),
                                                    value = c(min(acts$elevation_gain_ft), max(acts$elevation_gain_ft))),
+                                       # ----- NEW -----
+                                       pickerInput(inputId = "activity_title_input", label = "Filter by an activity title (all titles selected by default):",
+                                         choices = c(acts$name),
+                                         #selected = c(acts$name),
+                                         options = pickerOptions(actionsBox = TRUE,
+                                                                 liveSearch = TRUE),
+                                         multiple = TRUE),
+                                         # options = list(`live-search` = TRUE)),
+
+                                       # options = pickerOptions(actionsBox = TRUE),
+                                       # searchInput(inputId = "title_input", label = "Enter an activity title (see Data tab for all activity names):",
+                                       #             placeholder = "This is a placeholder",
+                                       #             btnSearch = icon("search"), btnReset = icon("remove"), width = "100%"),
                                        leafletOutput(outputId = "strava_map") |> withSpinner(color = "#cb9e72", type = 1)
 
                                    ) # END leaflet box
@@ -211,40 +224,6 @@ body <- dashboardBody(
             ), # END fluidRow
 
     ) # END "data" tab
-
-    # # ---------- photos tab ----------
-    # tabItem(tabName = "photos",
-    #
-    #         h3("Coming soon!")
-    #
-    #         # sidebarLayout(
-    #         #   sidebarPanel(width=3,
-    #         #                textAreaInput("path", "Image URLs", value=path, height="200px"),
-    #         #                checkboxInput("caption_check", "Use captions", value=FALSE),
-    #         #                uiOutput("caption_ui"),
-    #         #                textInput("height", label = "Height", value="auto"),
-    #         #                textInput("width", label = "Width", value="100%"),
-    #         #                textInput("fit", label = "Object fit", value="cover"),
-    #         #                textInput("position", label = "Object position", value="center"),
-    #         #                HTML("Image from <a href='https://www.pexels.com/'>Pexels.</a>")
-    #         #   ),
-    #         #   mainPanel(width=9,
-    #         #             pixture::pixfigureOutput("fig")))
-    #
-    #         # box ----
-    #         # box(width = 12,
-    #
-    #         # # actionButton input ----
-    #         # actionButton(inputId = "previous", label = "Previous"),
-    #         # actionButton(inputId = "next", label = "Next")
-    #         #
-    #         # # image output ----
-    #         # imageOutput(outputId = "image")
-    #
-    #         # slickROutput(outputId = "slick_output", width = "100%", height = "200px")
-    #         # ), # END box
-    #
-    # ) # END "photos" tab
 
   ) # END tabItems
 

@@ -3,7 +3,7 @@
 server <- function(input, output) {
 
   #.....................gear garage valueBoxes.....................
-  output$gear_shoes_mileage <-  shoeMileage_valueBox(input)
+  output$gear_shoes_mileage <- shoeMileage_valueBox(input)
   output$gear_bike_mileage <- bikeMileage_valueBox(input)
 
   #....................valueBoxes & leaflet map....................
