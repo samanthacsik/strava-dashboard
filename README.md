@@ -1,4 +1,4 @@
-# [Sam's Strava Stats](https://samanthacsik.shinyapps.io/strava_dashboard/) - a shiny dashboard for exploring my Strava data
+# A shiny dashboard for exploring my personal Strava data
 
 ## Why build a [Strava](https://www.strava.com/) dashboard?
 
@@ -8,26 +8,22 @@ A few reasons!
 - Despite the fact that I teach an Intro to Shiny workshop to UCSB's Master of Environmental Data Science (MEDS) students, I don't have a *ton* of personal experiences building Shiny apps or dashboards. What better way to learn than to embark on a personal project that you're excited about, right?! 
 - I want to get into the habit of having a personal project to work on for learning new skills (and to add to my portfolio). Shiny is exciting because there are tons of ways to optimize your code to make your app run more efficiently, lots of complementary packages to enhace features, and endless ways to look at data.
 
-## What's in this repo?
+**You can explore the current version of the dashboard (which I've affectionately dubbed, Sam's Strava Stats) at <https://samanthacsik.shinyapps.io/strava_dashboard/>.**
+
+## Repository organization
+
+There are lots of files in this repo, some of which are non-functional works-in-progress. Below is a map of the most important (and yes, functioning) files for making this dashboard run.
 
 ```
 .
 ├── R/                                # scripts for trying out visuals and analyses before adding to the app
 │   └── scrape_strava.R                 # retrieve and wrangle Strava data  
-│   └── leaflet_map.R                   # build leaflet map (can also save widget for embedding in personal website here)
-│   └── test_viz.R                      # trying out random visualizations and analyses
-│   └── elevation_profiles.R            # an attempt to parse elevation data from Google polylines, cut short bc the Google API requries a billing account
+│   └── leaflet_map.qmd                 # build leaflet map (used for saving widget to embed in my personal website)
 |   └── /media                          # pngs for leaflet marker icons
 |
-├── strava_dashboard/                 # folder containing the shiny dashboard 
+├── strava_dashboard/                 # app directory 
 |   └── R                              # functions, themes, plots
-|      └── sport_type_pickerInput.R     # sport type pickerInput function
-|      └── date_range_inputs.R          # date range input functions
-|      └── fresh_theme.R                # shinydashboard theme created using `{fresh}` (NOT WORKING YET)
-|      └── leaflet.R                    # leaflet map for embedding in dashboard (NOT WORKING YET)
-|   
-|   └── data/                          # rds files for reading into app
-|        
+|   └── data/                          # .rds files (generated in ./R/scrape_strava.R) for reading into app   
 |   └── text/                          # markdown files containing text to be used throughout the app
 |      └── danner.md                    # caption for danner boots photo in gear garage
 |      └── data_info.md                 # title and caption for DT dataTable
@@ -35,25 +31,23 @@ A few reasons!
 |      └── home_page_footer.md          # landing page footer 
 |      └── intro.md                     # landing page intro text
 |      └── leaflet_info.md              # leaflet box title and description
-|       
+|      └── updating_data.md             # note about app updates   
 |   └── www/                           # special directory in shiny for images, stylesheets, etc. 
-|      └── media/                       # photos & logos used throughout app
-|      └── slideshow_photos/            # photos to be used in the 'Photos' tab (NOT WORKING YET)
+|      └── media/                       # images & logos used throughout app
 |      └── styles.css                   # stylesheet for customzing dashboard
-|      └── strava_theme.css             # created when `fresh_theme.R` is run (NOT WORKING/USED YET)
-|
-|   └── global.R                       # data, objects, etc. that need to be available across multiple components of app
-|   └── ui.R                           # user interface
-|   └── server.R                       # server
-|   └── rsconnect/shinyapps.io/samanthacsik
+|   └── global.R                            # data, objects, etc. that need to be available across app
+|   └── ui.R                                # user interface
+|   └── server.R                            # server
+|   └── rsconnect/shinyapps.io/samanthacsik # shinyapps.io deployment
 |
 ├── README.md
 ├── .gitignore        
-├── .DS_store
 └── strava_dashboard.Rproj
 ```
 
-## Retrieving my Strava data
+## Excited about retrieving your own Strava data, but don't know where to begin?
+
+I've detailed my steps in [this wiki]()! 
 
 If you're looking to work with your own Strava data, the most challenging part (in my experience) was just getting my account set up correctly. You should start by checking out the [Strava API documentation](https://developers.strava.com/docs/getting-started/). If you need a concrete example, here are the exact steps I followed:
 
@@ -85,10 +79,22 @@ A browser window should open asking you to authorize Strava to access your data.
 
 You're now ready to retrieve, wrangle, and plot your data! Check out my [`scrape_strava.qmd`](https://github.com/samanthacsik/strava-dashboard/blob/main/R/scrape_strava.qmd) file to see how I retrieved and wrangled my data in preparation for plotting and analysis.
 
-**Other resources:**
-- [`{rStrava}` package](https://github.com/fawda123/rStrava)
--   [How to Scrape and Store Strava Data Using R](https://rviews.rstudio.com/2021/11/22/strava-data/), by Julian During
--   [Animate your Strava activities in R using rStrava and gganimate](https://padpadpadpad.github.io/post/animate-your-strava-activities-using-rstrava-and-gganimate/) by Daniel Padfield
--   [Creating a Heatmap in R with Google Polylines](https://www.dancullen.me/articles/creating-a-heatmap-in-r-with-google-polylines), by Daniel Cullen
--   [Getting Started with the Strava API](https://developers.strava.com/docs/getting-started/)
+## Acknowledgements
 
+I was first inspired to embark on this little personal project when I stumbled upon by [Daniel Cullen](https://www.dancullen.me/home)'s blog post, [Creating a Heatmap in R with Google Polylines](https://www.dancullen.me/articles/creating-a-heatmap-in-r-with-google-polylines). Daniel shareed instructions for creating a heatmap using Strava data *just* like I was hoping to do (and ironically, his map features his runs in my current home town of Santa Barbara, CA -- small world!). This blog post is also what introduced me to [Marcus Beck](https://github.com/fawda123)'s [`{rStrava}` package](https://github.com/fawda123/rStrava), a package that provides functions for accessing data from Strava's v3 API. A few other resources that I referenced include: 
+
+-  [Getting Started with the Strava API](https://developers.strava.com/docs/getting-started/)
+-  [How to Scrape and Store Strava Data Using R](https://rviews.rstudio.com/2021/11/22/strava-data/), by Julian During
+-  [Animate your Strava activities in R using rStrava and gganimate](https://padpadpadpad.github.io/post/animate-your-strava-activities-using-rstrava-and-gganimate/) by Daniel Padfield
+
+## Report a bug
+
+I certainly don't expect the community at large to be doing deep dives into this code base, but if you *happen* to be checking things out and spot something that's not working like it seems it should, feel free to [file an issue](https://github.com/samanthacsik/strava-dashboard/issues) (brief but informative descriptions of the issue and screenshots are helpful!). 
+
+## Contributors
+
+This is a personal project by yours truly, [Samantha Csik](https://github.com/samanthacsik).
+
+## License
+
+The source code for this dashboard is licensed under the MIT license, which you can find in the LICENSE.txt file.
