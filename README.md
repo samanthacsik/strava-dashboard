@@ -4,9 +4,9 @@
 
 A few reasons! 
 
-- I started recording my hikes on Strava during the pandemic and quickly became obsessed with my log of activites -- both to look back on where I've been and what I've done, and also for chasing those top 10s (I hate to admit it, but it's true...). I created a leaflet heat map (find my original `strava-hikes` repo [here](https://github.com/samanthacsik/strava-hikes)) of my activities (check it out on my [personal website](https://samanthacsik.github.io/about.html)!) to include with my first [introduction Tweet](https://twitter.com/WeAreRLadies/status/1533837942782775297) when I curated for [@WeAreRLadies](https://twitter.com/WeAreRLadies) in June 2022 and quickly discovered that I wanted more ways to interact with my data.
-- Despite the fact that I teach an Intro to Shiny workshop to UCSB's Master of Environmental Data Science (MEDS) students, I don't have a *ton* of personal experiences building Shiny apps or dashboards. What better way to learn than to embark on a personal project that you're excited about, right?! 
-- I want to get into the habit of having a personal project to work on for learning new skills (and to add to my portfolio). Shiny is exciting because there are tons of ways to optimize your code to make your app run more efficiently, lots of complementary packages to enhace features, and endless ways to look at data.
+- I started recording my hikes on Strava during the pandemic and quickly became obsessed with my log of activites -- both to look back on where I've been and what I've done, and also for chasing those top 10s (a little embarrassed to admit...). I created a leaflet heat map (find my original `strava-hikes` repo [here](https://github.com/samanthacsik/strava-hikes)) of my activities (check it out on my [personal website](https://samanthacsik.github.io/about.html)!) to include with my first [introduction Tweet](https://twitter.com/WeAreRLadies/status/1533837942782775297) when I curated for [@WeAreRLadies](https://twitter.com/WeAreRLadies) in June 2022 and quickly discovered that I wanted more ways to interact with my data (read: a Shiny app).
+- I've been teaching an [Intro to Shiny](https://ucsb-meds.github.io/EDS-430-Intro-to-Shiny/) short course for UCSB's [Master of Environmental Data Science](https://bren.ucsb.edu/masters-programs/master-environmental-data-science/academics-meds) (MEDS) program since 2022, but didn't have a *ton* of personal experiences building Shiny apps or dashboards when I first started. What better way to learn than to embark on a personal project that you're excited about, right?! 
+- I want to get into the habit of having a personal project to work on for learning new skills (and to add to my portfolio). Shiny is exciting because there are tons of ways to optimize your code to make your app run more efficiently, lots of complementary packages to enhace features, and endless ways to look at data. While it's a bit hard to find time to iterate consistently on this dashboard, it's a fun project to return to when I'm trying to learn a new Shiny skill for the first time.
 
 **You can explore the current version of the dashboard (which I've affectionately dubbed, Sam's Strava Stats) at <https://samanthacsik.shinyapps.io/strava_dashboard/>.**
 
@@ -47,37 +47,7 @@ There are lots of files in this repo, some of which are non-functional works-in-
 
 ## Excited about retrieving your own Strava data, but don't know where to begin?
 
-I've detailed my steps in [this wiki]()! 
-
-If you're looking to work with your own Strava data, the most challenging part (in my experience) was just getting my account set up correctly. You should start by checking out the [Strava API documentation](https://developers.strava.com/docs/getting-started/). If you need a concrete example, here are the exact steps I followed:
-
-1.  Log into Strava (or create an account if you don't already have one)
-2.  Click on your profile icon (top right corner) \> Settings \> My API Application (from the left-hand menu)
-3.  Provide Strava some information about your app (NOTE: I don't *totally* know what I'm doing here, but the information below worked for me):
-    1.  Give your application a name (this can be anything, but I called mine `SamsHeatmaps`)
-
-    2.  Select a category (since I wanted to create a heatmap, I chose `Visualizer` from the dropdown menu)
-
-    3.  Provide a website URL for your app (I included the link to this GitHub repo)
-
-    4.  Give it an Application Description (my description is, `Learning to use the rStrava package and hopefully create my own heatmaps`)
-
-    5.  Provide an Authorized Callback Domain (I wrote `localhost`)
-
-Once you save your API Application information, you'll be provided with both a `Client Secret` and an `Access Token`, both of which you need in order to scrape your data. Using the `rStrava` package makes it pretty easy to do so. The first step is to create a "Strava Token", using the following code:
-
-```{r, eval = FALSE}
-app_name <- "<APP NAME>"
-app_client_id <- "<CLIENT ID>"
-app_secret <- "<CLIENT SECRET>"
-
-my_token <- httr::config(token = strava_oauth(app_name, app_client_id, app_secret,
-                                              app_scope = "activity:read_all"))
-```
-
-A browser window should open asking you to authorize Strava to access your data. Once you agree, it'll return a message in the browser, `Authentication complete. Please close this page and return to R.` This means things are working!
-
-You're now ready to retrieve, wrangle, and plot your data! Check out my [`scrape_strava.qmd`](https://github.com/samanthacsik/strava-dashboard/blob/main/R/scrape_strava.qmd) file to see how I retrieved and wrangled my data in preparation for plotting and analysis.
+I've detailed my steps in [this wiki](https://github.com/samanthacsik/strava-dashboard/wiki/Creating-a-Strava-API-Application-&-authentication)! 
 
 ## Acknowledgements
 
@@ -98,3 +68,4 @@ This is a personal project by yours truly, [Samantha Csik](https://github.com/sa
 ## License
 
 The source code for this dashboard is licensed under the MIT license, which you can find in the LICENSE.txt file.
+
