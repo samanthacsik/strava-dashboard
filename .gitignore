@@ -41,3 +41,7 @@ vignettes/*.pdf
 # files hidden for privacy
 R/keys.R
 data/
+
+# .DS_Store
+.DS_Store
+**/.DS_Store
