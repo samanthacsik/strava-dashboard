@@ -49,14 +49,6 @@ There are lots of files in this repo, some of which are non-functional works-in-
 
 I've detailed my steps in [this wiki](https://github.com/samanthacsik/strava-dashboard/wiki/Creating-a-Strava-API-Application-&-authentication)! 
 
-## Acknowledgements
-
-I was first inspired to embark on this little personal project when I stumbled upon by [Daniel Cullen](https://www.dancullen.me/home)'s blog post, [Creating a Heatmap in R with Google Polylines](https://www.dancullen.me/articles/creating-a-heatmap-in-r-with-google-polylines). Daniel shareed instructions for creating a heatmap using Strava data *just* like I was hoping to do (and ironically, his map features his runs in my current home town of Santa Barbara, CA -- small world!). This blog post is also what introduced me to [Marcus Beck](https://github.com/fawda123)'s [`{rStrava}` package](https://github.com/fawda123/rStrava), a package that provides functions for accessing data from Strava's v3 API. A few other resources that I referenced include: 
-
--  [Getting Started with the Strava API](https://developers.strava.com/docs/getting-started/)
--  [How to Scrape and Store Strava Data Using R](https://rviews.rstudio.com/2021/11/22/strava-data/), by Julian During
--  [Animate your Strava activities in R using rStrava and gganimate](https://padpadpadpad.github.io/post/animate-your-strava-activities-using-rstrava-and-gganimate/) by Daniel Padfield
-
 ## Report a bug
 
 I certainly don't expect the community at large to be doing deep dives into this code base, but if you *happen* to be checking things out and spot something that's not working like it seems it should, feel free to [file an issue](https://github.com/samanthacsik/strava-dashboard/issues) (brief but informative descriptions of the issue and screenshots are helpful!). 
@@ -68,4 +60,17 @@ This is a personal project by yours truly, [Samantha Csik](https://github.com/sa
 ## License
 
 The source code for this dashboard is licensed under the MIT license, which you can find in the [LICENSE file](https://github.com/samanthacsik/strava-dashboard/blob/main/LICENSE).
+
+## Acknowledgements
+
+I was first inspired to embark on this little personal project when I stumbled upon by [Daniel Cullen](https://www.dancullen.me/home)'s blog post, [Creating a Heatmap in R with Google Polylines](https://www.dancullen.me/articles/creating-a-heatmap-in-r-with-google-polylines). Daniel shareed instructions for creating a heatmap using Strava data *just* like I was hoping to do (and ironically, his map features his runs in my current home town of Santa Barbara, CA -- small world!). This blog post is also what introduced me to [Marcus Beck](https://github.com/fawda123)'s [`{rStrava}` package](https://github.com/fawda123/rStrava), a package that provides functions for accessing data from Strava's v3 API. A few other resources that I referenced include: 
+
+-  [Getting Started with the Strava API](https://developers.strava.com/docs/getting-started/)
+-  [How to Scrape and Store Strava Data Using R](https://rviews.rstudio.com/2021/11/22/strava-data/), by Julian During
+-  [Animate your Strava activities in R using rStrava and gganimate](https://padpadpadpad.github.io/post/animate-your-strava-activities-using-rstrava-and-gganimate/) by Daniel Padfield
+
+Lastly, all of my gratitude and love for these three muskateers -- from left to right: Levi, Molly, & Tallie -- who make exploring the outdoors more fun, always.  
+
+![Levi, Molly, and Tallie](https://github.com/samanthacsik/strava-dashboard/assets/43836046/2f45202d-5a64-4439-8d44-c1cde796465b)
+
 
