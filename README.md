@@ -67,5 +67,5 @@ This is a personal project by yours truly, [Samantha Csik](https://github.com/sa
 
 ## License
 
-The source code for this dashboard is licensed under the MIT license, which you can find in the LICENSE.txt file.
+The source code for this dashboard is licensed under the MIT license, which you can find in the [LICENSE file](https://github.com/samanthacsik/strava-dashboard/blob/main/LICENSE).
 
