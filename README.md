@@ -71,5 +71,5 @@ Lastly, all of my gratitude and love for these three muskateers -- from left to 
 
 ## License
 
-The source code for this dashboard is licensed under the MIT license, which you can find in the [LICENSE file](https://github.com/samanthacsik/strava-dashboard/blob/main/LICENSE).
+The source code for this dashboard is licensed under the [MIT license](https://github.com/samanthacsik/strava-dashboard/blob/main/LICENSE).
 
