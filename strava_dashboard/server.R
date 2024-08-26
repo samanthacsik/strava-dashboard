@@ -22,6 +22,7 @@ server <- function(input, output) {
 
   #......................DT table (raw data).......................
   output$strava_data_trimmed <- stravaData_DTdatatable(input)
+  output$strava_map_table <- leaflet_map_table(input)
 
 
 

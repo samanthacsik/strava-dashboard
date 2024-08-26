@@ -204,6 +204,7 @@ body <- dashboardBody(
 
                   # caption & table ----
                   includeMarkdown("text/data_info.md"),
+                  leafletOutput(outputId = "strava_map_table") |> withSpinner(color = "#cb9e72", type = 1),
                   DT::dataTableOutput(outputId = "strava_data_trimmed") |> withSpinner(color = "#cb9e72", type = 1)
 
               ) # END box
