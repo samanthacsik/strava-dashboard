@@ -45,9 +45,9 @@ There are lots of files in this repo, some of which are non-functional works-in-
 └── strava_dashboard.Rproj
 ```
 
-## Excited about retrieving your own Strava data, but don't know where to begin?
+## Retrieving Strava data 
 
-I've detailed my steps in [this wiki](https://github.com/samanthacsik/strava-dashboard/wiki/Creating-a-Strava-API-Application-&-authentication)! 
+I retrieved my personal Strava data using the [`{rStrava}` package](https://github.com/fawda123/rStrava), which provides some really nice functions for accessing data from Strava's [v3 API](https://developers.strava.com/docs/reference/). If you're interested in grabbing your own Strava data, but aren't sure where to begin, I've detailed my steps in [this wiki](https://github.com/samanthacsik/strava-dashboard/wiki/Creating-a-Strava-API-Application-&-authentication).
 
 ## Report a bug
 
