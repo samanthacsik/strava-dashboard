@@ -47,7 +47,9 @@ There are lots of files in this repo, some of which are non-functional works-in-
 
 ## Retrieving Strava data 
 
-I retrieved my personal Strava data using the [`{rStrava}` package](https://github.com/fawda123/rStrava), which provides some really nice functions for accessing data from Strava's [v3 API](https://developers.strava.com/docs/reference/). If you're interested in grabbing your own Strava data, but aren't sure where to begin, I've detailed my steps in [this wiki](https://github.com/samanthacsik/strava-dashboard/wiki/Creating-a-Strava-API-Application-&-authentication).
+I retrieve my personal Strava data using the [`{rStrava}` package](https://github.com/fawda123/rStrava), which provides some really nice functions for accessing data from Strava's [v3 API](https://developers.strava.com/docs/reference/). This retrieval and data cleaning / wrangling occurs *outside* of my dashboard in `./R/scrape-strava.R`. A cleaned version of the data set is then saved as an RDS file to my app directory, `./strava_dashboard/data/my-strava-activities.rds`.
+
+If you're interested in grabbing your own Strava data, but aren't sure where to begin, I've detailed my steps in [this wiki](https://github.com/samanthacsik/strava-dashboard/wiki/Creating-a-Strava-API-Application-&-authentication).
 
 ## Report a bug
 
