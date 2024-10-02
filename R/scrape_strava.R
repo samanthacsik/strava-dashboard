@@ -1,0 +1,168 @@
+
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##                                load packages                             ----
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+library(rStrava)
+library(tidyverse)
+library(lubridate)
+library(leaflet)
+library(googleway)
+library(htmlwidgets)
+library(htmltools)
+library(aws.s3)
+
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##                                    setup                                 ----
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#.......Strava app name, client ID, secret, and athlete id.......
+# source("R/keys.R")
+
+#......................create strava token.......................
+# my_token <- httr::config(token = strava_oauth(app_name, app_client_id, app_secret,
+#                                               app_scope = "activity:read_all",
+#                                               cache = TRUE))
+
+#..................create strava token (cached)..................
+my_token <- httr::config(token = readRDS('.httr-oauth')[[1]])
+
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##                                scrape data                               ----
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#....................scrape strava activities....................
+my_actvities <- rStrava::get_activity_list(stoken = my_token)
+
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##                            wrangle / clean data                          ----
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#...............compile and clean up activity data...............
+my_acts <- rStrava::compile_activities(my_actvities) |>
+
+  # convert units ----
+  mutate(total_miles = round(distance * 0.62137, digits = 2), # convert km to miles
+         elevation_gain_ft = round(total_elevation_gain * 3.28084, digits = 2), # convert meters to ft
+         elev_high_ft = round(elev_high * 3.28084, digits = 2), # convert meters to ft
+         elev_low_ft = round(elev_low * 3.28084, digits = 2), # convert meters to ft
+         avg_speed_mi_hr = round(average_speed/1.609, digits = 2), # convert km/hr to mi/hr
+         max_speed_mi_hr = round(max_speed/1.609, digits = 2), # convert km/hr to mi/hr
+         moving_time_hrs_mins = seconds_to_period(moving_time), # convert sec to hr/min/sec
+         elapsed_time_hrs_mins = seconds_to_period(elapsed_time)) |> # convert sec to hr/min/sec
+
+  # convert start_date_local to Date object ----
+  mutate(start_date_time_local = as_datetime(x = start_date_local),
+         start_date_local = as_date(x = start_date_local),
+         start_date = as_datetime(x = start_date),
+         week_number = isoweek(start_date_local)) |>
+
+  # separate date/time components into different columns ----
+  mutate(year = year(start_date_local),
+         month = month(start_date_local),
+         day = day(start_date_local),
+         hour = hour(start_date_local),
+         minute = minute(start_date_local),
+         second = second(start_date_local)) |>
+
+  # convert character vars to factors ----
+  mutate_at(c("visibility", "sport_type", "has_heartrate",
+              "gear_id", "athlete.id",
+              "upload_id_str", "private"),
+            factor) |>
+
+  # add column of alternate sport_type names ----
+  mutate(sport_type_alt = case_when(
+    sport_type == "Hike" ~ "Hike",
+    sport_type == "Ride" ~ "Bike",
+    sport_type == "GravelRide" ~ "Bike",
+    sport_type == "Walk" ~ "Walk"
+  )) |>
+
+  # add gear name based on gear_id ----
+  mutate(gear_name = case_when(
+    gear_id == "g8567330" ~ "danner1",
+    gear_id == "g8567301" ~ "danner2",
+    gear_id == "g9707381" ~ "danner3",
+    gear_id == "g12612884" ~ "danner4",
+    gear_id == "g10199228" ~ "lowa",
+    gear_id == "g14316125" ~ "hoka1",
+    gear_id == "g18225795" ~ "hoka2",
+    gear_id == "g18258672" ~ "tevas",
+    gear_id == "g10257186" ~ "nano",
+    gear_id == "b9318843" ~ "grail",
+    gear_id == "b9263591" ~ "tandem",
+    gear_id == "b9263606" ~ "yeti",
+    gear_id == "b9263624" ~ "trek",
+    gear_id == "b9263626" ~ "cannondale"
+  )) |>
+
+  # filter out only_me visibility ----
+  filter(visibility != "only_me") |>
+
+  # remove columns that were mutated above ----
+  dplyr::select(-c(distance, total_elevation_gain)) |>
+
+  # select, rename & reorder columns ----
+  dplyr::select(
+    # activity & athlete info ----
+    id, name, visibility, sport_type, sport_type_alt, start_date_time_local, start_date_local,
+    year, month, day, hour, minute, second, week_number, timezone,
+    athlete_count, achievement_count, pr_count,
+    # activity stats ----
+    total_miles, elevation_gain_ft,
+    avg_speed_mi_hr, max_speed_mi_hr,
+    moving_time_hrs_mins, moving_time_sec = moving_time,
+    elapsed_time_hrs_mins, elapsed_time_sec = elapsed_time,
+    elev_high_ft, elev_low_ft,
+    # map info ----
+    map.id, map.resource_state, map.summary_polyline,
+    lat = start_latlng1, lng = start_latlng2, end_latlng1, end_latlng2,
+    # other vars ----
+    has_heartrate, average_heartrate, gear_id, gear_name, max_heartrate,
+    # interactions ----
+    kudos_count, comment_count,
+    # other metadata ----
+    athlete.id, upload_id, upload_id_str, external_id, id, private, start_date, utc_offset
+  ) |>
+
+  # filter out any obs that we don't want to include ----
+  filter(id != "5502812467", # remove hike that didn't recorded correctly
+         !sport_type %in% c("Workout", "Kayaking")) # remove recorded workouts (don't have location data associated with them)
+
+#...................fix incorrect week numbers...................
+y2020 <- my_acts |> filter(year == "2020")
+
+y2021 <- my_acts |> filter(year == "2021") # jan 1 needs to be updated to week_number 1
+y2021[109, 14] = 1
+
+y2022 <- my_acts |> filter(year == "2022") # jan 1 needs to be updated to week_number 1
+y2022[104, 14] = 1
+
+y2023 <- my_acts |> filter(year == "2023") # jan 1 needs to be updated to week_number 1
+y2023[101, 14] = 1
+
+y2024 <- my_acts |> filter(year == "2024") # no jan 1 hike, so no updates needed
+
+#..........................recombine dfs.........................
+wrangled_activities <- rbind(y2024, y2023, y2022, y2021, y2020)
+
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##                              write data to AWS                           ----
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# saveRDS(wrangled_acts, here::here("strava_dashboard", "data", "sams-strava_data.rds"))
+
+# bucket_exists("s3://sams-strava-dashboard-data/")
+
+# put_object(
+#   file = here::here("strava_dashboard", "data", "strava_acts_2024-09-05.rds"),
+#   object = "strava_acts_2024-09-05.rds",
+#   bucket = "s3://sams-strava-dashboard-data/",
+#   acl = "private"
+# )
+
+s3saveRDS(
+  x = wrangled_activities,
+  bucket = "sams-strava-dashboard-data"
+)

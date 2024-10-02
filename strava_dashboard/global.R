@@ -16,13 +16,12 @@ library(htmltools)
 library(fontawesome)
 library(markdown)
 library(fresh)
-# library(pixture)
-# library(bsplus)
-# library(slickR)
-# library(reactlog)
+library(aws.s3)
 
 # IMPORT DATA ----
-acts <- readRDS("data/strava_acts_2024-08-06.rds")
+#acts <- readRDS("data/strava_acts_2024-09-05.rds")
+acts <- s3readRDS(object = "wrangled_activities.rds",
+                  bucket = "sams-strava-dashboard-data")
 
 # GGPLOT THEME ----
 stravaTheme <- theme_light() +

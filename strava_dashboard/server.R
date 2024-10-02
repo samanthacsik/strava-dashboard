@@ -1,4 +1,3 @@
-# ~~~~~~~~~ server ~~~~~~~~~ #
 
 server <- function(input, output) {
 
@@ -23,79 +22,6 @@ server <- function(input, output) {
   #......................DT table (raw data).......................
   output$strava_data_trimmed <- stravaData_DTdatatable(input)
 
-
-
-
-
-
-
-
-
-
-  ##############################
-  # photo slideshow -- COME BACK TO THIS LATER
-  ##############################
-
-  # output$caption_ui <- renderUI({
-  #   if(input$caption_check) {
-  #     textInput("caption", "Caption", value=captions)
-  #   }
-  # })
-  #
-  # output$gallery_imgs <- pixture::renderPixfigure({
-  #
-  #   # path <- "www/slideshow_photos"
-  #
-  #
-  #   if(!is.null(input$path)) path <- unlist(strsplit(input$path, ";"))
-  #
-  #   if(input$caption_check){
-  #     if(!is.null(input$caption)){
-  #       cpt <- unlist(strsplit(input$caption, ";"))
-  #       if(length(cpt)!=length(path)) stop("Number of captions do not match number of images.")
-  #       pixture::pixfigure(path, caption=cpt, h = input$height, w = input$width, fit = input$fit, position = input$position)
-  #     }
-  #   }else{
-  #     pixture::pixfigure(path, h = input$height, w = input$width, fit = input$fit, position = input$position)
-  #   }
-  # })
-
-  # })
-
-  # # set initial value ----
-  # index <- reactiveVal(value = 1)
-  #
-  # # event handler ----
-  # observeEvent(input[["previous"]], {
-  #   index(max(index()-1, 1))
-  # })
-  # observeEvent(input[["next"]], {
-  #   index(min(index()+1, length(imgs)))
-  # })
-  #
-  # # render image ----
-  # output$image <- renderImage({
-  #   x <- imgs[index()]
-  #   list(src = x)
-  # }, deleteFile = FALSE)
-
-  # # slickR option not working ----
-  # output$slick_output <- slickR::renderSlickR({
-  #   slickR::slickR(imgs)
-  # })
-
-  ##############################
-  # END SERVER
-  ##############################
-
 } # END SERVER
-
-
-
-
-
-
-
-
 
 

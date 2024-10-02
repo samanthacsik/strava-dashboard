@@ -41,6 +41,7 @@ vignettes/*.pdf
 # files hidden for privacy
 R/keys.R
 data/
+strava_dashboard/data/
 
 # .DS_Store
 .DS_Store
