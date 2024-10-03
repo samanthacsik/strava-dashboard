@@ -21,6 +21,7 @@ my_token <- httr::config(token = strava_oauth(app_name, app_client_id, app_secre
                                               app_scope = "activity:read_all",
                                               cache = TRUE))
 
+print(my_token)
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##                                scrape data                               ----
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
