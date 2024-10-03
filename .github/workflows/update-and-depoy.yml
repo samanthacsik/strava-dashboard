@@ -17,21 +17,7 @@ jobs:
           packages: |
             any::httr
             any::rStrava
-            any::dplyr
-            any::lubridate
             any::aws.s3
-            any::shiny
-            any::shinydashboard
-            any::shinyWidgets
-            any::shinycssloaders
-            any::markdown
-            any::fontawesome
-            any::leaflet
-            any::leaflet.extras
-            any::ggplot2
-            any::plotly
-            any::DT
-            any::rsconnect
 
       - name: Check out repository
         uses: actions/checkout@v3

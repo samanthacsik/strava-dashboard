@@ -4,9 +4,9 @@
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 library(rStrava)
-library(dplyr)
-library(lubridate)
-library(leaflet)
+# library(dplyr)
+# library(lubridate)
+# library(leaflet)
 library(aws.s3)
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -35,6 +35,9 @@ if (is.null(my_token)) {
 
 #....................scrape strava activities....................
 my_actvities <- rStrava::get_activity_list(my_token)
+
+
+stop()
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##                            wrangle / clean data                          ----
@@ -152,17 +155,6 @@ wrangled_activities <- rbind(y2024, y2023, y2022, y2021, y2020)
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##                              write data to AWS                           ----
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-# saveRDS(wrangled_acts, here::here("strava_dashboard", "data", "sams-strava_data.rds"))
-
-# bucket_exists("s3://sams-strava-dashboard-data/")
-
-# put_object(
-#   file = here::here("strava_dashboard", "data", "strava_acts_2024-09-05.rds"),
-#   object = "strava_acts_2024-09-05.rds",
-#   bucket = "s3://sams-strava-dashboard-data/",
-#   acl = "private"
-# )
 
 s3saveRDS(
   x = wrangled_activities,

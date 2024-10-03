@@ -22,6 +22,10 @@ refresh_strava_token <- function(refresh_token) {
 retrieve_strava_token <- function() {
   strava_refresh_token <- rawToChar(get_object(refresh_token_filename, bucket=strava_s3_bucket))
   print(substr(strava_refresh_token, 1, 5))
+  if (substr(strava_refresh_token, 1, 5) == "<?xml") {
+    print(strava_refresh_token)
+    return(NULL)
+  }
   strava_app <- httr::oauth_app("strava", key = app_client_id, secret = app_secret)
 
   strava_end <-httr::oauth_endpoint(
