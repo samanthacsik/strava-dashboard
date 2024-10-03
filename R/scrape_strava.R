@@ -20,6 +20,10 @@ source("R/keys-from-env.R")
 source("R/strava_authentication.R")
 my_token <- retrieve_strava_token()
 
+if (is.null(my_token)) {
+  stop("No Token Retrieved!")
+}
+
 #......................create strava token.......................
 # my_token <- httr::config(token = strava_oauth(app_name, app_client_id, app_secret,
 #                                               app_scope = "activity:read_all",

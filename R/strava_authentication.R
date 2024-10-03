@@ -21,7 +21,7 @@ refresh_strava_token <- function(refresh_token) {
 
 retrieve_strava_token <- function() {
   strava_refresh_token <- rawToChar(get_object(refresh_token_filename, bucket=strava_s3_bucket))
-
+  print(substr(strava_refresh_token, 1, 5))
   strava_app <- httr::oauth_app("strava", key = app_client_id, secret = app_secret)
 
   strava_end <-httr::oauth_endpoint(
@@ -30,6 +30,17 @@ retrieve_strava_token <- function() {
     access = "https://www.strava.com/oauth/token")
 
   new_token <- refresh_strava_token(strava_refresh_token)
+
+  if (is.null(new_token)) {
+    print("No Token Provided from refresh!")
+    return(NULL)
+  }
+  print(ls(new_token))
+  if (is.null(new_token$refresh_token)) {
+    print("No Refresh Token found in response!")
+    return(NULL)
+  }
+
 
   put_object(file = charToRaw(new_token$refresh_token), object=refresh_token_filename, bucket=strava_s3_bucket)
 
