@@ -15,7 +15,7 @@ jobs:
         with:
           packages: |
             any::httr
-            any::RStrava
+            any::rStrava
             any::dplyr
             any::lubridate
             any::aws.s3
