@@ -17,15 +17,12 @@ library(aws.s3)
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #.......Strava app name, client ID, secret, and athlete id.......
-# source("R/keys.R")
+source("R/keys-from-env.R")
 
 #......................create strava token.......................
-# my_token <- httr::config(token = strava_oauth(app_name, app_client_id, app_secret,
-#                                               app_scope = "activity:read_all",
-#                                               cache = TRUE))
-
-#..................create strava token (cached)..................
-my_token <- httr::config(token = readRDS('.httr-oauth')[[1]])
+my_token <- httr::config(token = strava_oauth(app_name, app_client_id, app_secret,
+                                              app_scope = "activity:read_all",
+                                              cache = TRUE))
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##                                scrape data                               ----

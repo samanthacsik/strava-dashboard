@@ -1,5 +1,3 @@
-# ~~~~~~~~~ global ~~~~~~~~~ #
-
 # LOAD LIBRARIES ----
 library(shiny)
 library(shinydashboard)
@@ -10,7 +8,6 @@ library(plotly)
 library(DT)
 library(leaflet)
 library(leaflet.extras)
-library(googleway)
 library(htmlwidgets)
 library(htmltools)
 library(fontawesome)
