@@ -12,8 +12,8 @@ jobs:
 
       - name: Install packages
         uses: r-lib/actions/setup-r-dependencies@v2
-        cache: "always"
         with:
+          cache: "always"
           packages: |
             any::httr
             any::rStrava
