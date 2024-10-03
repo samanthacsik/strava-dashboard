@@ -4,11 +4,9 @@
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 library(rStrava)
-library(tidyverse)
+library(dplyr)
 library(lubridate)
 library(leaflet)
-# library(htmlwidgets)
-# library(htmltools)
 library(aws.s3)
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
