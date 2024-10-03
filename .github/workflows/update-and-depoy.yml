@@ -14,21 +14,22 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           packages: |
+            any::httr
+            any::RStrava
+            any::dplyr
+            any::lubridate
+            any::aws.s3
             any::shiny
             any::shinydashboard
             any::shinyWidgets
             any::shinycssloaders
-            any::tidyverse
-            any::plotly
-            any::DT
+            any::markdown
+            any::fontawesome
             any::leaflet
             any::leaflet.extras
-            any::htmlwidgets
-            any::htmltools
-            any::fontawesome
-            any::markdown
-            any::fresh
-            any::aws.s3
+            any::ggplot2
+            any::plotly
+            any::DT
             any::rsconnect
 
       - name: Check out repository

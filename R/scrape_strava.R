@@ -7,9 +7,8 @@ library(rStrava)
 library(tidyverse)
 library(lubridate)
 library(leaflet)
-library(googleway)
-library(htmlwidgets)
-library(htmltools)
+# library(htmlwidgets)
+# library(htmltools)
 library(aws.s3)
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
