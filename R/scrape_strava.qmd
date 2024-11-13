@@ -7,7 +7,7 @@ editor_options:
 
 ```{r}
 #..........................load packages.........................
-library(rStrava) # devtools::install_github('fawda123/rStrava')
+library(rStrava) 
 library(tidyverse)
 library(lubridate)
 library(leaflet)
@@ -21,32 +21,31 @@ library(aws.s3)
 
 ```{r}
 #.......Strava app name, client ID, secret, and athlete id.......
-source("R/keys.R")
+app_name <- Sys.getenv("STRAVA_APP_NAME")
+app_client_id <- Sys.getenv("STRAVA_KEY")
+app_secret <- Sys.getenv("STRAVA_SECRET")
 
 #......................create strava token.......................
-# my_token <- httr::config(token = strava_oauth(app_name, app_client_id, app_secret,
-#                                               app_scope = "activity:read_all",
-#                                               cache = TRUE))
-
-#..................create strava token (cached)..................
-my_token <- httr::config(token = readRDS('.httr-oauth')[[1]])
+my_token <- httr::config(token = strava_oauth(app_name, app_client_id, app_secret,
+                                              app_scope = "activity:read_all",
+                                              cache = TRUE))
 ```
 
 ## Scrape data
 
 ```{r}
 #....................scrape strava activities....................
-my_actvities <- rStrava::get_activity_list(stoken = my_token)
+my_activities <- rStrava::get_activity_list(stoken = my_token)
 
 #......................number of activities......................
-length(my_actvities) 
+length(my_activities) 
 ```
 
 ## Wrangle data
 
 ```{r}
 #...............compile and clean up activity data...............
-my_acts <- rStrava::compile_activities(my_actvities) |> 
+my_acts <- rStrava::compile_activities(my_activities) |> 
   
   # convert units
   mutate(total_miles = round(distance * 0.62137, digits = 2), # convert km to miles
@@ -158,12 +157,12 @@ y2024 <- my_acts |> filter(year == "2024") # no jan 1 hike, so no updates needed
 wrangled_activities <- rbind(y2024, y2023, y2022, y2021, y2020)
 
 #............................save data...........................
-# saveRDS(wrangled_acts, here::here("strava_dashboard/data/strava_acts_2024-09-05.rds"))
-s3saveRDS(
-  x = wrangled_activities,
-  bucket = "sams-strava-dashboard-data"
-)
+saveRDS(wrangled_activities, here::here("strava_dashboard/data/wrangled_activities.rds"))
 
+# s3saveRDS(
+#   x = wrangled_activities,
+#   bucket = "sams-strava-dashboard-data"
+# )
 ```
 
 The above processed data does not contain the following variables (they were removed because they felt unnecessary to keep, at least for now, and/or it was unclear what they represented):

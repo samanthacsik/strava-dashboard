@@ -19,9 +19,9 @@ library(DT)
 # library(fresh)
 
 # IMPORT DATA ----
-#acts <- readRDS("data/strava_acts_2024-09-05.rds")
-acts <- s3readRDS(object = "wrangled_activities.rds",
-                  bucket = "sams-strava-dashboard-data")
+acts <- readRDS("data/wrangled_activities.rds")
+# acts <- s3readRDS(object = "wrangled_activities.rds",
+#                   bucket = "sams-strava-dashboard-data")
 
 # GGPLOT THEME ----
 stravaTheme <- theme_light() +
