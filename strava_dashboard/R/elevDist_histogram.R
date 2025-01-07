@@ -22,7 +22,7 @@ elevDist_histogram <- function(input, xvar, xlab) {
   renderPlot({
 
     ggplot(filtered_sport_date_histogram(), aes(x = {{ xvar }}, fill = sport_type_alt)) +
-      geom_histogram() +
+      geom_histogram(position = "identity", alpha = 0.7) +
       scale_x_continuous(expand = c(0, 0), breaks = scales::pretty_breaks(n = 8)) +
       scale_y_continuous(expand = c(0, 0), breaks = scales::pretty_breaks(n = 5)) +
       labs(x = xlab,

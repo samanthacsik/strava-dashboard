@@ -150,19 +150,21 @@ y2023[101, 14] = 1
 
 y2024 <- my_acts |> filter(year == "2024") # no jan 1 hike, so no updates needed
 
+y2025 <- my_acts |> filter(year == "2025") # no jan 1 hike, so no updates needed
+
 #..............add 0s during weeks with no activity..............
 #tbd
 
 #..........................recombine dfs.........................
-wrangled_activities <- rbind(y2024, y2023, y2022, y2021, y2020)
+wrangled_activities <- rbind(y2025, y2024, y2023, y2022, y2021, y2020)
 
 #............................save data...........................
 saveRDS(wrangled_activities, here::here("strava_dashboard/data/wrangled_activities.rds"))
 
-# s3saveRDS(
-#   x = wrangled_activities,
-#   bucket = "sams-strava-dashboard-data"
-# )
+s3saveRDS(
+  x = wrangled_activities,
+  bucket = "sams-strava-dashboard-data"
+)
 ```
 
 The above processed data does not contain the following variables (they were removed because they felt unnecessary to keep, at least for now, and/or it was unclear what they represented):
