@@ -24,11 +24,15 @@ acts <- readRDS("data/wrangled_activities.rds")
 #                   bucket = "sams-strava-dashboard-data")
 
 # GGPLOT THEME ----
-stravaTheme <- theme_light() +
-  theme(text = element_text(family = "Avenir"), # chosen from Font Book app on my Mac
-        axis.text = element_text(color = "black", size = 12),
-        axis.title = element_text(size = 14, face = "bold"),
-        legend.title = element_text(size = 14, face = "bold"),
-        legend.text = element_text(size = 13),
-        panel.border = element_rect(colour = "black", fill = NA, linewidth = 0.7),
-        plot.caption = element_text(size = 10, hjust = 0))
+stravaTheme <- function() {
+  theme_light() +
+    theme(text = element_text(family = "Avenir"), # chosen from Font Book app on my Mac
+          axis.text = element_text(color = "black", size = 12),
+          axis.title = element_text(size = 14, face = "bold"),
+          # axis.title.x = element_text(margin = margin(t = 0.5, unit = "cm")),
+          # axis.title.y = element_text(margin = margin(r = 0.5, unit = "cm")),
+          legend.title = element_text(size = 14, face = "bold"),
+          legend.text = element_text(size = 13),
+          panel.border = element_rect(colour = "black", fill = NA, linewidth = 0.7),
+          plot.caption = element_text(size = 10, hjust = 0))
+}

@@ -27,15 +27,21 @@ elevByDist_scatterplot <- function(input) {
   renderPlotly({
 
     elev_dist_scatterplot <- ggplot(filtered_sport_date_scatterplot(),
-                                    aes(x = total_miles, y = elevation_gain_ft,
-                                        color = sport_type_alt, shape = sport_type_alt,
-                                        text = marker, group = total_miles)) +
+                                    aes(x = total_miles,
+                                        y = elevation_gain_ft,
+                                        color = sport_type_alt,
+                                        shape = sport_type_alt,
+                                        text = marker,
+                                        group = total_miles)) +
       geom_point(alpha = 0.8, size = 3) +
       labs(x = "Total Distance Traveled (miles)",
            y = "Total Elevation Gain (feet)") +
-      scale_color_manual(name = "Sport", values = c("Hike" = "#b35702", "Bike" = "#744082", "Walk" = "#366643")) +
-      scale_shape_manual(name = "Sport", values = c("Hike" = 15, "Bike" = 16, "Walk" = 17)) +
-      stravaTheme
+      scale_y_continuous(labels = scales::label_number(scale = 0.001, suffix = "k")) +
+      scale_color_manual(name = "Sport",
+                         values = c("Hike" = "#b35702", "Bike" = "#744082", "Walk" = "#366643")) +
+      scale_shape_manual(name = "Sport",
+                         values = c("Hike" = 15, "Bike" = 16, "Walk" = 17)) +
+      stravaTheme()
 
     plotly::ggplotly(elev_dist_scatterplot,
                      tooltip = c("text"))

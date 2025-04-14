@@ -23,12 +23,15 @@ elevDist_histogram <- function(input, xvar, xlab) {
 
     ggplot(filtered_sport_date_histogram(), aes(x = {{ xvar }}, fill = sport_type_alt)) +
       geom_histogram(position = "identity", alpha = 0.7) +
-      scale_x_continuous(expand = c(0, 0), breaks = scales::pretty_breaks(n = 8)) +
-      scale_y_continuous(expand = c(0, 0), breaks = scales::pretty_breaks(n = 5)) +
+      scale_x_continuous(expand = c(0, 0),
+                         breaks = scales::pretty_breaks(n = 8)) +
+      scale_y_continuous(expand = c(0, 0),
+                         breaks = scales::pretty_breaks(n = 5)) +
       labs(x = xlab,
-           y = "Count") +
-      scale_fill_manual(name = "Sport", values = c("Hike" = "#b35702", "Bike" = "#744082", "Walk" = "#366643")) +
-      stravaTheme
+           y = "Number of Recorded Activities") +
+      scale_fill_manual(name = "Sport",
+                        values = c("Hike" = "#b35702", "Bike" = "#744082", "Walk" = "#366643")) +
+      stravaTheme()
 
   })
 
