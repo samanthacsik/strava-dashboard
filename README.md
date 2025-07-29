@@ -16,28 +16,21 @@ There are lots of files in this repo, some of which are non-functional works-in-
 
 ```
 .
-├── R/                                # scripts for trying out visuals and analyses before adding to the app
-│   └── scrape_strava.R                 # retrieve and wrangle Strava data  
-│   └── leaflet_map.qmd                 # build leaflet map (used for saving widget to embed in my personal website)
-|   └── /media                          # pngs for leaflet marker icons
+├── R/                                # scripts for scraping data & trying out visuals and analyses 
+│   └── scrape_strava.qmd             # retrieve and wrangle Strava data  
+│   └── leaflet_map.qmd               # build leaflet map (used for saving widget to embed in my personal website)
+|   └── media/                        # pngs for leaflet marker icons
 |
 ├── strava_dashboard/                 # app directory 
-|   └── R                              # functions, themes, plots
-|   └── data/                          # .rds files (generated in ./R/scrape_strava.R) for reading into app   
-|   └── text/                          # markdown files containing text to be used throughout the app
-|      └── danner.md                    # caption for danner boots photo in gear garage
-|      └── data_info.md                 # title and caption for DT dataTable
-|      └── gear_garage.md               # gear garage box title and description
-|      └── home_page_footer.md          # landing page footer 
-|      └── intro.md                     # landing page intro text
-|      └── leaflet_info.md              # leaflet box title and description
-|      └── updating_data.md             # note about app updates   
-|   └── www/                           # special directory in shiny for images, stylesheets, etc. 
-|      └── media/                       # images & logos used throughout app
-|      └── styles.css                   # stylesheet for customzing dashboard
-|   └── global.R                            # data, objects, etc. that need to be available across app
-|   └── ui.R                                # user interface
-|   └── server.R                            # server
+|   └── R/                            # functions, themes, plots
+|   └── data/                         # .rds file (generated in ./R/scrape_strava.qmd) containing cleaned activity data, for reading into app   
+|   └── text/                         # markdown files containing text used throughout the app
+|   └── www/                          # special directory in shiny for images, stylesheets, etc. 
+|      └── media/                     # images & logos used throughout app
+|      └── styles.css                 # stylesheet for customzing dashboard
+|   └── global.R                      # data, objects, etc. that need to be available across app
+|   └── ui.R                          # user interface
+|   └── server.R                      # server
 |   └── rsconnect/shinyapps.io/samanthacsik # shinyapps.io deployment
 |
 ├── README.md
